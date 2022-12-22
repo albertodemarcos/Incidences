@@ -1,7 +1,7 @@
 package es.myhome.portal.service.mapper;
 
-import es.myhome.portal.domain.Authority;
-import es.myhome.portal.domain.User;
+import es.myhome.portal.domain.users.Authority;
+import es.myhome.portal.domain.users.User;
 import es.myhome.portal.service.dto.AdminUserDTO;
 import es.myhome.portal.service.dto.UserDTO;
 import java.util.*;

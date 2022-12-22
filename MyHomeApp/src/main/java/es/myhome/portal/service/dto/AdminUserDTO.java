@@ -1,8 +1,9 @@
 package es.myhome.portal.service.dto;
 
 import es.myhome.portal.config.Constants;
-import es.myhome.portal.domain.Authority;
-import es.myhome.portal.domain.User;
+import es.myhome.portal.domain.users.Authority;
+import es.myhome.portal.domain.users.User;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Set;

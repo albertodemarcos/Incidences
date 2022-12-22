@@ -2,7 +2,7 @@ package es.myhome.portal.service.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import es.myhome.portal.domain.User;
+import es.myhome.portal.domain.users.User;
 import es.myhome.portal.service.dto.AdminUserDTO;
 import es.myhome.portal.service.dto.UserDTO;
 import java.util.ArrayList;

@@ -6,7 +6,8 @@ import static org.mockito.Mockito.*;
 
 import es.myhome.portal.IntegrationTest;
 import es.myhome.portal.config.Constants;
-import es.myhome.portal.domain.User;
+import es.myhome.portal.domain.users.User;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;

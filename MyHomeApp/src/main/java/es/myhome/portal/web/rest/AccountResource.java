@@ -1,7 +1,7 @@
 package es.myhome.portal.web.rest;
 
-import es.myhome.portal.domain.PersistentToken;
-import es.myhome.portal.domain.User;
+import es.myhome.portal.domain.users.PersistentToken;
+import es.myhome.portal.domain.users.User;
 import es.myhome.portal.repository.PersistentTokenRepository;
 import es.myhome.portal.repository.UserRepository;
 import es.myhome.portal.security.SecurityUtils;

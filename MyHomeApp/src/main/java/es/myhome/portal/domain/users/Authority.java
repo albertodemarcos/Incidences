@@ -1,4 +1,4 @@
-package es.myhome.portal.domain;
+package es.myhome.portal.domain.users;
 
 import java.io.Serializable;
 import java.util.Objects;

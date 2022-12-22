@@ -1,4 +1,4 @@
-package es.myhome.portal.domain;
+package es.myhome.portal.domain.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;

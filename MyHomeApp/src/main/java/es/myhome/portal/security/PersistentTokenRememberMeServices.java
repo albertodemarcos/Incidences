@@ -1,6 +1,6 @@
 package es.myhome.portal.security;
 
-import es.myhome.portal.domain.PersistentToken;
+import es.myhome.portal.domain.users.PersistentToken;
 import es.myhome.portal.repository.PersistentTokenRepository;
 import es.myhome.portal.repository.UserRepository;
 import java.io.Serializable;

@@ -1,6 +1,5 @@
 package es.myhome.portal.service;
 
-import es.myhome.portal.domain.User;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import javax.mail.MessagingException;
@@ -15,6 +14,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import es.myhome.portal.domain.users.User;
 import tech.jhipster.config.JHipsterProperties;
 
 /**

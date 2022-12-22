@@ -1,7 +1,8 @@
 package es.myhome.portal.service.dto;
 
-import es.myhome.portal.domain.User;
 import java.io.Serializable;
+
+import es.myhome.portal.domain.users.User;
 
 /**
  * A DTO representing a user, with only the public attributes.

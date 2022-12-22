@@ -10,8 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import es.myhome.portal.IntegrationTest;
 import es.myhome.portal.config.Constants;
-import es.myhome.portal.domain.PersistentToken;
-import es.myhome.portal.domain.User;
+import es.myhome.portal.domain.users.PersistentToken;
+import es.myhome.portal.domain.users.User;
 import es.myhome.portal.repository.AuthorityRepository;
 import es.myhome.portal.repository.PersistentTokenRepository;
 import es.myhome.portal.repository.UserRepository;

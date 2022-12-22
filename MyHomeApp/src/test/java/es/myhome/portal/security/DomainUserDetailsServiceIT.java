@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import es.myhome.portal.IntegrationTest;
-import es.myhome.portal.domain.User;
+import es.myhome.portal.domain.users.User;
 import es.myhome.portal.repository.UserRepository;
 import java.util.Locale;
 import org.apache.commons.lang3.RandomStringUtils;

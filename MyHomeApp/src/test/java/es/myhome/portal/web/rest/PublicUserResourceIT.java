@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import es.myhome.portal.IntegrationTest;
-import es.myhome.portal.domain.User;
+import es.myhome.portal.domain.users.User;
 import es.myhome.portal.repository.UserRepository;
 import es.myhome.portal.security.AuthoritiesConstants;
 import javax.persistence.EntityManager;

@@ -1,7 +1,7 @@
 package es.myhome.portal.web.rest;
 
 import es.myhome.portal.config.Constants;
-import es.myhome.portal.domain.User;
+import es.myhome.portal.domain.users.User;
 import es.myhome.portal.repository.UserRepository;
 import es.myhome.portal.security.AuthoritiesConstants;
 import es.myhome.portal.service.MailService;
@@ -35,7 +35,7 @@ import tech.jhipster.web.util.ResponseUtil;
 /**
  * REST controller for managing users.
  * <p>
- * This class accesses the {@link es.myhome.portal.domain.User} entity, and needs to fetch its collection of authorities.
+ * This class accesses the {@link es.myhome.portal.domain.users.User} entity, and needs to fetch its collection of authorities.
  * <p>
  * For a normal use-case, it would be better to have an eager relationship between User and Authority,
  * and send everything to the client side: there would be no View Model and DTO, a lot less code, and an outer-join

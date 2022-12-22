@@ -1,7 +1,7 @@
 package es.myhome.portal.security;
 
-import es.myhome.portal.domain.Authority;
-import es.myhome.portal.domain.User;
+import es.myhome.portal.domain.users.Authority;
+import es.myhome.portal.domain.users.User;
 import es.myhome.portal.repository.UserRepository;
 import java.util.*;
 import java.util.stream.Collectors;
