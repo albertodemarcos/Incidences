@@ -23,15 +23,25 @@ import org.hibernate.annotations.Type;
 public class Organization {
 	
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organization_sequence")
+	@SequenceGenerator(name = "organization_sequence", sequenceName="sequence_organization", allocationSize=1)
 	private Long id;
+
+	@Size(max = 255)
+	@Column(name = "name", length = 255)
 	private String name;
+	
+	@Lob
+	@Type(type="org.hibernate.type.TextType")
 	private String description;
+	
+	@Enumerated(EnumType.STRING)
 	private OrganizationType type;
+	
+	@Embedded
 	private Geolocation geolocation;
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organization_sequence")
-    @SequenceGenerator(name = "organization_sequence", sequenceName="sequence_organization", allocationSize=1)
 	public Long getId() {
 		return id;
 	}
@@ -40,8 +50,6 @@ public class Organization {
 		this.id = id;
 	}
 
-	@Size(max = 255)
-	@Column(name = "name", length = 255)
 	public String getName() {
 		return name;
 	}
@@ -50,8 +58,6 @@ public class Organization {
 		this.name = name;
 	}
 
-	@Lob
-	@Type(type="org.hibernate.type.TextType")
 	public String getDescription() {
 		return description;
 	}
@@ -60,7 +66,6 @@ public class Organization {
 		this.description = description;
 	}
 
-	@Enumerated(EnumType.STRING)
 	public OrganizationType getType() {
 		return type;
 	}
@@ -69,7 +74,6 @@ public class Organization {
 		this.type = type;
 	}
 
-	@Embedded
 	public Geolocation getGeolocation() {
 		return geolocation;
 	}

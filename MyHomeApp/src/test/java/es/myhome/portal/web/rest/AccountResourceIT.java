@@ -20,6 +20,7 @@ import es.myhome.portal.service.UserService;
 import es.myhome.portal.service.dto.AdminUserDTO;
 import es.myhome.portal.service.dto.PasswordChangeDTO;
 import es.myhome.portal.service.dto.UserDTO;
+import es.myhome.portal.web.rest.login.AccountResource;
 import es.myhome.portal.web.rest.vm.KeyAndPasswordVM;
 import es.myhome.portal.web.rest.vm.ManagedUserVM;
 import java.time.Instant;

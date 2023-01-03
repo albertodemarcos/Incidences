@@ -9,6 +9,8 @@ import es.myhome.portal.IntegrationTest;
 import es.myhome.portal.domain.users.User;
 import es.myhome.portal.repository.UserRepository;
 import es.myhome.portal.security.AuthoritiesConstants;
+import es.myhome.portal.web.rest.login.UserResource;
+
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

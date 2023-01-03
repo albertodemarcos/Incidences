@@ -20,6 +20,9 @@ import org.hibernate.annotations.BatchSize;
  */
 @Entity
 @Table(name = "jhi_user")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type_user", discriminatorType = DiscriminatorType.STRING, length = 20)
+@DiscriminatorValue("USER")
 public class User extends AbstractAuditingEntity<Long> implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -92,6 +95,10 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     private Set<PersistentToken> persistentTokens = new HashSet<>();
+    
+    @Column(name = "type_user", insertable = false, updatable = false)
+    @Size(max = 20)
+    private String typeUser;
 
     public Long getId() {
         return id;
@@ -206,7 +213,15 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
         this.persistentTokens = persistentTokens;
     }
 
-    @Override
+    public String getTypeUser() {
+		return typeUser;
+	}
+
+	public void setTypeUser(String typeUser) {
+		this.typeUser = typeUser;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

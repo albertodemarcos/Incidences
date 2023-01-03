@@ -24,27 +24,49 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 
+import es.myhome.portal.domain.users.Employee;
+
 @Entity
 @Table(name = "jhi_incidence")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Incidence {
 
-	private Long id;
-	private String title;
-	private String description;
-	private Date start;
-	private Date end;
-	private IncidenceStatus status;
-	private Boolean resolved;
-	private Geolocation location;
-	private Organization organization;
-	private List<Photo> photos;
-	// private Citizen citizen; //this user create incidence
-	// private Employee employee; //this user finish incidence
-	
 	@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organization_sequence")
-    @SequenceGenerator(name = "organization_sequence", sequenceName="sequence_organization", allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "incidence_sequence")
+	@SequenceGenerator(name = "incidence_sequence", sequenceName="sequence_incidence", allocationSize=1)
+	private Long id;
+
+	@Size(max = 255)
+	@Column(name = "title", length = 255)
+	private String title;
+
+	@Lob
+	@Type(type="org.hibernate.type.TextType")
+	@Column(name = "description")
+	private String description;
+	
+	@Column(name = "start_date")
+	private Date startDate;
+
+	@Column(name = "end_date")
+	private Date endDate;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private IncidenceStatus status;
+	
+	@Embedded
+	private Geolocation location;
+	
+	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Organization organization;
+	
+	@OneToMany(mappedBy="incidence")
+	private List<Photo> photos;
+	
+	@ManyToOne(optional = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Employee employee;
+	
 	public Long getId() {
 		return id;
 	}
@@ -53,8 +75,6 @@ public class Incidence {
 		this.id = id;
 	}
 
-	@Size(max = 255)
-	@Column(name = "title", length = 255)
 	public String getTitle() {
 		return title;
 	}
@@ -63,8 +83,6 @@ public class Incidence {
 		this.title = title;
 	}
 
-	@Lob
-	@Type(type="org.hibernate.type.TextType")
 	public String getDescription() {
 		return description;
 	}
@@ -73,23 +91,23 @@ public class Incidence {
 		this.description = description;
 	}
 
-	public Date getStart() {
-		return start;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setStart(Date start) {
-		this.start = start;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
-	public Date getEnd() {
-		return end;
+	public Date getEndDate() {
+		return endDate;
 	}
 
-	public void setEnd(Date end) {
-		this.end = end;
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
-	@Enumerated(EnumType.STRING)
+	
 	public IncidenceStatus getStatus() {
 		return status;
 	}
@@ -98,15 +116,6 @@ public class Incidence {
 		this.status = status;
 	}
 
-	public Boolean getResolved() {
-		return resolved;
-	}
-
-	public void setResolved(Boolean resolved) {
-		this.resolved = resolved;
-	}
-
-	@Embedded
 	public Geolocation getLocation() {
 		return location;
 	}
@@ -115,7 +124,6 @@ public class Incidence {
 		this.location = location;
 	}
 
-	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public Organization getOrganization() {
 		return organization;
 	}
@@ -124,13 +132,20 @@ public class Incidence {
 		this.organization = organization;
 	}
 
-	@OneToMany(mappedBy="incidence")
 	public List<Photo> getPhotos() {
 		return photos;
 	}
 
 	public void setPhotos(List<Photo> photos) {
 		this.photos = photos;
+	}
+	
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 }

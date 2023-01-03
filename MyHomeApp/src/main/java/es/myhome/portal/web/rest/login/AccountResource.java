@@ -1,4 +1,4 @@
-package es.myhome.portal.web.rest;
+package es.myhome.portal.web.rest.login;
 
 import es.myhome.portal.domain.users.PersistentToken;
 import es.myhome.portal.domain.users.User;

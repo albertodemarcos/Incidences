@@ -13,6 +13,7 @@ import es.myhome.portal.repository.UserRepository;
 import es.myhome.portal.security.AuthoritiesConstants;
 import es.myhome.portal.service.dto.AdminUserDTO;
 import es.myhome.portal.service.mapper.UserMapper;
+import es.myhome.portal.web.rest.login.UserResource;
 import es.myhome.portal.web.rest.vm.ManagedUserVM;
 import java.time.Instant;
 import java.util.*;

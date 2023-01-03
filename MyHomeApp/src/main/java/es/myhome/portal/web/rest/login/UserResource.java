@@ -1,4 +1,4 @@
-package es.myhome.portal.web.rest;
+package es.myhome.portal.web.rest.login;
 
 import es.myhome.portal.config.Constants;
 import es.myhome.portal.domain.users.User;
@@ -7,6 +7,7 @@ import es.myhome.portal.security.AuthoritiesConstants;
 import es.myhome.portal.service.MailService;
 import es.myhome.portal.service.UserService;
 import es.myhome.portal.service.dto.AdminUserDTO;
+import es.myhome.portal.utilities.FilterUtils;
 import es.myhome.portal.web.rest.errors.BadRequestAlertException;
 import es.myhome.portal.web.rest.errors.EmailAlreadyUsedException;
 import es.myhome.portal.web.rest.errors.LoginAlreadyUsedException;
@@ -59,22 +60,6 @@ import tech.jhipster.web.util.ResponseUtil;
 @RestController
 @RequestMapping("/api/admin")
 public class UserResource {
-
-    private static final List<String> ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
-        Arrays.asList(
-            "id",
-            "login",
-            "firstName",
-            "lastName",
-            "email",
-            "activated",
-            "langKey",
-            "createdBy",
-            "createdDate",
-            "lastModifiedBy",
-            "lastModifiedDate"
-        )
-    );
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
@@ -175,7 +160,7 @@ public class UserResource {
     }
 
     private boolean onlyContainsAllowedProperties(Pageable pageable) {
-        return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(ALLOWED_ORDERED_PROPERTIES::contains);
+        return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(FilterUtils.USER_RESOURCE_ALLOWED_ORDERED_PROPERTIES::contains);
     }
 
     /**
