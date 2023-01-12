@@ -50,8 +50,5 @@ public class PhotoDTO implements Serializable {
 		this.idIncidence = idIncidence;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 }

@@ -42,6 +42,16 @@ public class FilterUtils {
         )
     );
 	
+	public static final List<String> INCIDENCE_RESOURCE_ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
+        Arrays.asList(
+            "id"
+        )
+    );
 	
+	public static final List<String> PHOTO_RESOURCE_ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
+        Arrays.asList(
+            "id"
+        )
+    );
 	
 }

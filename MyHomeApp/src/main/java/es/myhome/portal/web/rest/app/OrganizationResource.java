@@ -115,7 +115,7 @@ public class OrganizationResource {
      */
     @GetMapping("/organizations")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<List<OrganizationDTO>> getOrganization(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {        
+    public ResponseEntity<List<OrganizationDTO>> getOrganizations(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {        
     	log.debug("REST request to get all Organizations for an admin");        
         if (!onlyContainsAllowedProperties(pageable)) {
             return ResponseEntity.badRequest().build();

@@ -29,8 +29,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.myhome.portal.config.Constants;
 import es.myhome.portal.domain.app.Incidence;
-import es.myhome.portal.repository.IncidenceRepository;
-import es.myhome.portal.service.IncidenceService;
+import es.myhome.portal.repository.PhotoRepository;
+import es.myhome.portal.service.PhotoService;
 import es.myhome.portal.service.dto.IncidenceDTO;
 import es.myhome.portal.utilities.FilterUtils;
 import es.myhome.portal.web.rest.errors.BadRequestAlertException;
@@ -40,22 +40,23 @@ import tech.jhipster.web.util.ResponseUtil;
 
 @RestController
 @RequestMapping("/api")
-public class IncidenceResource {
-
-	private final Logger log = LoggerFactory.getLogger(OrganizationResource.class);
+public class PhotoResource {
+	
+private final Logger log = LoggerFactory.getLogger(OrganizationResource.class);
 	
 	@Value("${jhipster.clientApp.name}")
     private String applicationName;
 	
-	private final IncidenceService incidenceService;
+	private final PhotoService photoService;
 	
-	private final IncidenceRepository incidenceRepository;
+	private final PhotoRepository photoRepository;
 
-	public IncidenceResource(IncidenceService incidenceService, IncidenceRepository incidenceRepository) {
+	public PhotoResource(PhotoService photoService, PhotoRepository photoRepository) {
 		super();
-		this.incidenceService = incidenceService;
-		this.incidenceRepository = incidenceRepository;
+		this.photoService = photoService;
+		this.photoRepository = photoRepository;
 	}
+	
 	
 	/**
      * {@code POST  /incidences}  : Creates a new incidence.
@@ -70,7 +71,7 @@ public class IncidenceResource {
     @PostMapping("/incidences")
     public ResponseEntity<Incidence> createIncidence(@Valid @RequestBody IncidenceDTO incidenceDTO) throws URISyntaxException {
         log.debug("REST request to save Incidence : {}", incidenceDTO);
-        Incidence newIncidence = null;
+        /*Incidence newIncidence = null;
         if (incidenceDTO.getId() != null) {
  			throw new BadRequestAlertException("A new incidence cannot already have an ID", "incidenceManagement", "idexists");
         } else if (incidenceRepository.findOneByTitle(incidenceDTO.getTitle().toLowerCase()).isPresent()) { // Lowercase the incidence title before comparing with database
@@ -80,9 +81,10 @@ public class IncidenceResource {
         return ResponseEntity
                 .created(new URI("/api/incidences/" + newIncidence.getId() ))
                 .headers(HeaderUtil.createAlert(applicationName, "incidenceService.created", newIncidence.getId().toString() ))
-                .body(newIncidence);
+                .body(newIncidence);*/
+        return null;
     }
-
+    
     /**
      * {@code PUT /incidences} : Updates an existing Incidence.
      *
@@ -92,32 +94,16 @@ public class IncidenceResource {
      */
     @PutMapping("/incidences")
     public ResponseEntity<IncidenceDTO> updateIncidence(@Valid @RequestBody IncidenceDTO incidenceDTO) {
-        log.debug("REST request to update Incidence : {}", incidenceDTO);       
+        /*log.debug("REST request to update Incidence : {}", incidenceDTO);       
         Optional<Incidence> existingIncidence = incidenceRepository.findById(incidenceDTO.getId());        
         if (!existingIncidence.isPresent() ) {        	
         	throw new BadRequestAlertException("A incidence don't exist", "incidenceManagement", "idnotexists");
         }        
         Optional<IncidenceDTO> updatedIncidence = incidenceService.updateIncidence(incidenceDTO);
-        return ResponseUtil.wrapOrNotFound(updatedIncidence, HeaderUtil.createAlert(applicationName, "incidenceManagement.updated", incidenceDTO.getTitle() ) );
+        return ResponseUtil.wrapOrNotFound(updatedIncidence, HeaderUtil.createAlert(applicationName, "incidenceManagement.updated", incidenceDTO.getTitle() ) );*/
+        return null;
     }
-
-    /**
-     * {@code GET /incidences} : getIncidences with all the details - calling for all users.
-     *
-     * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all incidences.
-     */
-    @GetMapping("/incidences")
-    public ResponseEntity<List<IncidenceDTO>> getIncidences(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {        
-    	log.debug("REST request to get all Incidence");
-        if (!onlyContainsAllowedProperties(pageable)) {
-            return ResponseEntity.badRequest().build();
-        }
-        final Page<IncidenceDTO> page = incidenceService.getAllManagedIncidences(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
-
+    
     /**
      * {@code GET /incidences/:idIncidenceStr} : get the "id" incidence.
      *
@@ -126,8 +112,9 @@ public class IncidenceResource {
      */
     @GetMapping("/incidences/{idIncidenceStr}")
     public ResponseEntity<IncidenceDTO> getIncidence(@PathVariable @Pattern(regexp = Constants.ENTITIES_ID_REGEX) String idIncidenceStr) throws IllegalArgumentException, Exception {
-        log.debug("REST request to get Incidence : {}", idIncidenceStr);
-        return ResponseUtil.wrapOrNotFound(incidenceService.getIncidenceByIdIncidence(parseIdIncidence(idIncidenceStr)).map(IncidenceDTO::new));
+        /*log.debug("REST request to get Incidence : {}", idIncidenceStr);
+        return ResponseUtil.wrapOrNotFound(incidenceService.getIncidenceByIdIncidence(parseIdIncidence(idIncidenceStr)).map(IncidenceDTO::new));*/
+    	return null;
     }
 
     /**
@@ -138,17 +125,42 @@ public class IncidenceResource {
      */
     @DeleteMapping("/incidences/{idIncidenceStr}")
     public ResponseEntity<Void> deleteIncidence(@PathVariable @Pattern(regexp = Constants.ENTITIES_ID_REGEX) String idIncidenceStr) throws IllegalArgumentException, Exception {
-        log.debug("REST request to delete Incidence: {}", idIncidenceStr);
+        /*log.debug("REST request to delete Incidence: {}", idIncidenceStr);
         incidenceService.deleteIncidence( parseIdIncidence(idIncidenceStr) );
-        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "incidenceService.deleted", idIncidenceStr )).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "incidenceService.deleted", idIncidenceStr )).build();*/
+        return null;
     }
     
-    private boolean onlyContainsAllowedProperties(Pageable pageable) {
+    /**
+     * {@code GET /incidences} : getIncidences with all the details - calling for all users.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all incidences.
+     */
+    /*@GetMapping("/incidences")
+    public ResponseEntity<List<IncidenceDTO>> getIncidences(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {        
+    	log.debug("REST request to get all Incidence");
+        if (!onlyContainsAllowedProperties(pageable)) {
+            return ResponseEntity.badRequest().build();
+        }
+        final Page<IncidenceDTO> page = incidenceService.getAllManagedIncidences(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }*/
+    
+    /*private boolean onlyContainsAllowedProperties(Pageable pageable) {
         return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(FilterUtils.INCIDENCE_RESOURCE_ALLOWED_ORDERED_PROPERTIES::contains);
-    }
+    }*/
     
     private Long parseIdIncidence(String idIncidenceStr ) throws IllegalArgumentException {
     	return Long.parseLong( idIncidenceStr.replaceAll("\\D+", "") );    	
     }
 	
+	
+	
+	
+	
+	
+	
+
 }

@@ -12,24 +12,33 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.myhome.portal.domain.app.Geolocation;
 import es.myhome.portal.domain.app.Incidence;
+import es.myhome.portal.domain.app.Organization;
+import es.myhome.portal.domain.users.Employee;
+import es.myhome.portal.repository.EmployeeRepository;
 import es.myhome.portal.repository.IncidenceRepository;
+import es.myhome.portal.repository.OrganizationRepository;
 import es.myhome.portal.service.dto.IncidenceDTO;
 
 /**
- * Service class for managing organizations.
+ * Service class for managing incidences.
  */
 @Service
 @Transactional
 public class IncidenceService {
 
-private final Logger log = LoggerFactory.getLogger(OrganizationService.class);
-
+	private final Logger log = LoggerFactory.getLogger(IncidenceService.class);
 	
 	private final IncidenceRepository incidenceRepository;
 	
-	public IncidenceService(IncidenceRepository incidenceRepository) {
+	private final OrganizationRepository organizationRepository;
+	
+	private final EmployeeRepository employeeRepository;
+	
+	public IncidenceService(IncidenceRepository incidenceRepository, OrganizationRepository organizationRepository, EmployeeRepository employeeRepository) {
 		super();
 		this.incidenceRepository = incidenceRepository;
+		this.organizationRepository = organizationRepository;
+		this.employeeRepository = employeeRepository;
 	}
 
 
@@ -42,17 +51,25 @@ private final Logger log = LoggerFactory.getLogger(OrganizationService.class);
 		incidence.setEndDate(incidenceDTO.getEndDate());
 		incidence.setStatus(incidenceDTO.getStatus());
 		incidence.setLocation(getGeolocation(incidenceDTO));
-		//incidence.setOrganization(incidenceDTO.get);
-		//incidence.setPhotos(incidenceDTO.get);
-		//incidence.setEmployee(incidenceDTO.get);
+		
+		if(incidenceDTO.getIdOrganization() != null ) {
+			Organization organization = organizationRepository.findById(incidenceDTO.getIdOrganization()).orElse(null);
+			incidence.setOrganization(organization);
+		}
+		
+		if(incidenceDTO.getIdEmployee() != null) {
+			Employee employee = employeeRepository.findById(incidenceDTO.getIdEmployee()).orElse(null);
+			incidence.setEmployee(employee);
+		}
+		
 		incidenceRepository.save(incidence);
 		log.debug("Created Information for Incidence: {}", incidence);
 		return incidence;
 	}
 	
 	@Transactional(readOnly = true)
-	public Optional<Incidence> getIncidenceByIdIncidence(Long idOrganization) {
-	    return null;//organizationRepository.findById(idOrganization);
+	public Optional<Incidence> getIncidenceByIdIncidence(Long idIncidence) {
+	    return incidenceRepository.findById(idIncidence);
 	}
 
 	/**
@@ -62,41 +79,32 @@ private final Logger log = LoggerFactory.getLogger(OrganizationService.class);
      * @return updated organization.
      */
 	public Optional<IncidenceDTO> updateIncidence(IncidenceDTO incidenceDTO){
-		/*return Optional
-	            .of(organizationRepository.findById(organizationDTO.getId()))
+		return Optional
+	            .of(incidenceRepository.findById(incidenceDTO.getId()))
 	            .filter(Optional::isPresent)
 	            .map(Optional::get)
-	            .map(organization -> {
-	        		organization.setName(organizationDTO.getName());
-	        		organization.setDescription(organizationDTO.getDescription());
-	        		organization.setType(organizationDTO.getType());
-	        		Geolocation geolocation = organization.getGeolocation();
-	        		if( geolocation == null || geolocation.getLatitude() == null || geolocation.getLongitude() == null ) {
-	        			geolocation = new Geolocation();
-	        		}
-	        		geolocation.setLatitude(organizationDTO.getLatitude());
-	        		geolocation.setLongitude(organizationDTO.getLongitude());
-	        		organization.setGeolocation(geolocation);
-	                log.debug("Changed Information for Organization: {}", organization);
-	                return organization;
+	            .map(incidence -> {
+	        		incidence.setTitle(incidenceDTO.getTitle());
+	        		incidence.setDescription(incidenceDTO.getDescription());
+	        		incidence.setStartDate(incidenceDTO.getStartDate());
+	        		incidence.setEndDate(incidenceDTO.getEndDate());
+	        		incidence.setStatus(incidenceDTO.getStatus());
+	        		incidence.setLocation(getGeolocation(incidenceDTO));
+	                log.debug("Changed Information for Incidence: {}", incidence);
+	                return incidence;
 	            })
-	            .map(OrganizationDTO::new);
+	            .map(IncidenceDTO::new);
 	}
     
-	public void deleteOrganization(Long idOrganization) throws Exception {
-		int count = organizationRepository.countById(idOrganization);
-		if(count != 1 ) {
-			throw new Exception("Dont exit organization by ID: "+ idOrganization);
-		}
-		organizationRepository.deleteById(idOrganization);
-		log.debug("Deleted Organization: {}", idOrganization);*/
-		return null;
+	public void deleteIncidence(Long idIncidence) throws Exception {
+		incidenceRepository.deleteById(idIncidence);
+		log.debug("Deleted Incidence: {}", idIncidence);
 	}
 
 
 	@Transactional(readOnly = true)
     public Page<IncidenceDTO> getAllManagedIncidences(Pageable pageable) {
-        return  null;//organizationRepository.findAll(pageable).map(OrganizationDTO::new);
+        return  incidenceRepository.findAll(pageable).map(IncidenceDTO::new);
     }
 	
 	private Geolocation getGeolocation(IncidenceDTO incidenceDTO) {
