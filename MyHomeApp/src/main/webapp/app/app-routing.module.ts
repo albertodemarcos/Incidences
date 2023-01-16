@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { DEBUG_INFO_ENABLED } from 'app/app.constants';
 import { AccountModule } from './account/account.module';
 import { AdminRoutingModule } from './admin/admin-routing.module';
+import { MAIN_ROUTER } from './app-rounting.routing';
 import { Authority } from './config/authority.constants';
 import { UserRouteAccessService } from './core/auth/user-route-access.service';
 import { EntityRoutingModule } from './entities/entity-routing.module';
@@ -11,7 +12,7 @@ import { errorRoute } from './layouts/error/error.route';
 import { navbarRoute } from './layouts/navbar/navbar.route';
 import { LoginModule } from './login/login.module';
 
-
+/*
 @NgModule({
   imports: [
     RouterModule.forRoot(
@@ -49,8 +50,8 @@ import { LoginModule } from './login/login.module';
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
+*/
 
-/*
 @NgModule({
   imports: [
     RouterModule.forRoot(MAIN_ROUTER, { enableTracing: DEBUG_INFO_ENABLED }),
@@ -58,4 +59,3 @@ export class AppRoutingModule {}
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
-*/

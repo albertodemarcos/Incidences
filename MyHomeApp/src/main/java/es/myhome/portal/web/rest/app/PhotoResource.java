@@ -2,7 +2,6 @@ package es.myhome.portal.web.rest.app;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -11,11 +10,6 @@ import javax.validation.constraints.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +19,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.myhome.portal.config.Constants;
-import es.myhome.portal.domain.app.Incidence;
+import es.myhome.portal.domain.app.Photo;
 import es.myhome.portal.repository.PhotoRepository;
 import es.myhome.portal.service.PhotoService;
-import es.myhome.portal.service.dto.IncidenceDTO;
-import es.myhome.portal.utilities.FilterUtils;
+import es.myhome.portal.service.dto.PhotoDTO;
 import es.myhome.portal.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 @RestController
@@ -59,91 +50,88 @@ private final Logger log = LoggerFactory.getLogger(OrganizationResource.class);
 	
 	
 	/**
-     * {@code POST  /incidences}  : Creates a new incidence.
+     * {@code POST  /photos}  : Creates a new photo.
      * <p>
-     * The incidence not needs to be admin on creation.
+     * The photo not needs to be admin on creation.
      *
-     * @param incidenceDTO the incidence to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new incidence, or with status {@code 400 (Bad Request)} if the title is already in use.
+     * @param photoDTO the photo to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new photo, or with status {@code 400 (Bad Request)} if the title is already in use.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
-     * @throws BadRequestAlertException {@code 400 (Bad Request)} if the title is already in incidence.
+     * @throws BadRequestAlertException {@code 400 (Bad Request)} if the title is already in photo.
      */
-    @PostMapping("/incidences")
-    public ResponseEntity<Incidence> createIncidence(@Valid @RequestBody IncidenceDTO incidenceDTO) throws URISyntaxException {
-        log.debug("REST request to save Incidence : {}", incidenceDTO);
-        /*Incidence newIncidence = null;
-        if (incidenceDTO.getId() != null) {
- 			throw new BadRequestAlertException("A new incidence cannot already have an ID", "incidenceManagement", "idexists");
-        } else if (incidenceRepository.findOneByTitle(incidenceDTO.getTitle().toLowerCase()).isPresent()) { // Lowercase the incidence title before comparing with database
-        	throw new NameOrganizationAlreadyUsedException();
+    @PostMapping("/photos")
+    public ResponseEntity<Photo> createIncidence(@Valid @RequestBody PhotoDTO photoDTO) throws URISyntaxException {
+        log.debug("REST request to save Incidence : {}", photoDTO);
+        Photo newPhoto = null;
+        if (photoDTO.getId() != null) {
+ 			throw new BadRequestAlertException("A new photo cannot already have an ID", "photoManagement", "idexists");
+        /*} else if (photoRepository.findOneByTitle(photoDTO.getTitle().toLowerCase()).isPresent()) { // Lowercase the photo title before comparing with database
+        	throw new NameOrganizationAlreadyUsedException();*/
         }  
-        newIncidence = incidenceService.createIncidence(incidenceDTO);
+        newPhoto = photoService.createPhoto(photoDTO);
         return ResponseEntity
-                .created(new URI("/api/incidences/" + newIncidence.getId() ))
-                .headers(HeaderUtil.createAlert(applicationName, "incidenceService.created", newIncidence.getId().toString() ))
-                .body(newIncidence);*/
-        return null;
+                .created(new URI("/api/photos/" + newPhoto.getId() ))
+                .headers(HeaderUtil.createAlert(applicationName, "photoService.created", newPhoto.getId().toString() ))
+                .body(newPhoto);
+        
     }
     
     /**
-     * {@code PUT /incidences} : Updates an existing Incidence.
+     * {@code PUT /photos} : Updates an existing Photo.
      *
-     * @param incidenceDTO the incidence to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated incidence.
+     * @param photoDTO the photo to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated photo.
      * @throws BadRequestAlertException {@code 400 (Bad Request)} if the title don't already in use.
      */
-    @PutMapping("/incidences")
-    public ResponseEntity<IncidenceDTO> updateIncidence(@Valid @RequestBody IncidenceDTO incidenceDTO) {
-        /*log.debug("REST request to update Incidence : {}", incidenceDTO);       
-        Optional<Incidence> existingIncidence = incidenceRepository.findById(incidenceDTO.getId());        
-        if (!existingIncidence.isPresent() ) {        	
-        	throw new BadRequestAlertException("A incidence don't exist", "incidenceManagement", "idnotexists");
+    @PutMapping("/photos")
+    public ResponseEntity<PhotoDTO> updatePhoto(@Valid @RequestBody PhotoDTO photoDTO) {
+        log.debug("REST request to update Photo : {}", photoDTO);       
+        Optional<Photo> existingPhoto = photoRepository.findById(photoDTO.getId());        
+        if (!existingPhoto.isPresent() ) {        	
+        	throw new BadRequestAlertException("A photo don't exist", "photoManagement", "idnotexists");
         }        
-        Optional<IncidenceDTO> updatedIncidence = incidenceService.updateIncidence(incidenceDTO);
-        return ResponseUtil.wrapOrNotFound(updatedIncidence, HeaderUtil.createAlert(applicationName, "incidenceManagement.updated", incidenceDTO.getTitle() ) );*/
-        return null;
+        Optional<PhotoDTO> updatedPhoto = photoService.updatePhoto(photoDTO);
+        return ResponseUtil.wrapOrNotFound(updatedPhoto, HeaderUtil.createAlert(applicationName, "photoManagement.updated", photoDTO.getName() ) );
     }
     
     /**
-     * {@code GET /incidences/:idIncidenceStr} : get the "id" incidence.
+     * {@code GET /photos/:idPhotoStr} : get the "id" photo.
      *
-     * @param idIncidenceStr the id of the incidence to find.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the "idIncidenceStr" incidence, or with status {@code 404 (Not Found)}.
+     * @param idPhotoStr the id of the photo to find.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the "idPhotoStr" photo, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/incidences/{idIncidenceStr}")
-    public ResponseEntity<IncidenceDTO> getIncidence(@PathVariable @Pattern(regexp = Constants.ENTITIES_ID_REGEX) String idIncidenceStr) throws IllegalArgumentException, Exception {
-        /*log.debug("REST request to get Incidence : {}", idIncidenceStr);
-        return ResponseUtil.wrapOrNotFound(incidenceService.getIncidenceByIdIncidence(parseIdIncidence(idIncidenceStr)).map(IncidenceDTO::new));*/
-    	return null;
+    @GetMapping("/photos/{idPhotoStr}")
+    public ResponseEntity<PhotoDTO> getPhoto(@PathVariable @Pattern(regexp = Constants.ENTITIES_ID_REGEX) String idPhotoStr) throws IllegalArgumentException, Exception {
+        log.debug("REST request to get Photo : {}", idPhotoStr);
+        return ResponseUtil.wrapOrNotFound(photoService.getPhotoByIdPhoto(parseIdPhoto(idPhotoStr)).map(PhotoDTO::new));
     }
 
     /**
-     * {@code DELETE /incidences/:idIncidenceStr} : delete the "id" Incidence.
+     * {@code DELETE /photos/:idPhotoStr} : delete the "id" Photo.
      *
-     * @param idIncidenceStr the id of the incidence to delete.
+     * @param idPhotoStr the id of the photo to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/incidences/{idIncidenceStr}")
-    public ResponseEntity<Void> deleteIncidence(@PathVariable @Pattern(regexp = Constants.ENTITIES_ID_REGEX) String idIncidenceStr) throws IllegalArgumentException, Exception {
-        /*log.debug("REST request to delete Incidence: {}", idIncidenceStr);
-        incidenceService.deleteIncidence( parseIdIncidence(idIncidenceStr) );
-        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "incidenceService.deleted", idIncidenceStr )).build();*/
-        return null;
+    @DeleteMapping("/photos/{idPhotoStr}")
+    public ResponseEntity<Void> deletePhoto(@PathVariable @Pattern(regexp = Constants.ENTITIES_ID_REGEX) String idPhotoStr) throws IllegalArgumentException, Exception {
+        log.debug("REST request to delete Photo: {}", idPhotoStr);
+        photoService.deletePhoto( parseIdPhoto(idPhotoStr) );
+        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "photoService.deleted", idPhotoStr )).build();
     }
     
     /**
-     * {@code GET /incidences} : getIncidences with all the details - calling for all users.
+     * {@code GET /photos} : getPhotos with all the details - calling for all users.
      *
      * @param pageable the pagination information.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all incidences.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all photos.
      */
-    /*@GetMapping("/incidences")
-    public ResponseEntity<List<IncidenceDTO>> getIncidences(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {        
-    	log.debug("REST request to get all Incidence");
+    /*@GetMapping("/photos")
+    public ResponseEntity<List<PhotoDTO>> getPhotos(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {        
+    	log.debug("REST request to get all Photo");
         if (!onlyContainsAllowedProperties(pageable)) {
             return ResponseEntity.badRequest().build();
         }
-        final Page<IncidenceDTO> page = incidenceService.getAllManagedIncidences(pageable);
+        final Page<PhotoDTO> page = photoService.getAllManagedPhotos(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }*/
@@ -152,8 +140,8 @@ private final Logger log = LoggerFactory.getLogger(OrganizationResource.class);
         return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(FilterUtils.INCIDENCE_RESOURCE_ALLOWED_ORDERED_PROPERTIES::contains);
     }*/
     
-    private Long parseIdIncidence(String idIncidenceStr ) throws IllegalArgumentException {
-    	return Long.parseLong( idIncidenceStr.replaceAll("\\D+", "") );    	
+    private Long parseIdPhoto(String idPhotoStr ) throws IllegalArgumentException {
+    	return Long.parseLong( idPhotoStr.replaceAll("\\D+", "") );    	
     }
 	
 	

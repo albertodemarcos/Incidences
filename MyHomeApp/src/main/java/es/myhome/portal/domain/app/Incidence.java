@@ -61,7 +61,7 @@ public class Incidence {
 	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Organization organization;
 	
-	@OneToMany(mappedBy="incidence")
+	@OneToMany(mappedBy="incidence", cascade = CascadeType.ALL, fetch = FetchType.LAZY )
 	private List<Photo> photos;
 	
 	@ManyToOne(optional = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)

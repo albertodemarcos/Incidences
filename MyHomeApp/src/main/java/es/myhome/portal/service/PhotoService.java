@@ -11,9 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import es.myhome.portal.domain.app.Incidence;
 import es.myhome.portal.domain.app.Photo;
 import es.myhome.portal.repository.IncidenceRepository;
-import es.myhome.portal.repository.OrganizationRepository;
 import es.myhome.portal.repository.PhotoRepository;
-import es.myhome.portal.service.dto.IncidenceDTO;
 import es.myhome.portal.service.dto.PhotoDTO;
 
 /**
@@ -25,15 +23,12 @@ public class PhotoService {
 	
 	private final Logger log = LoggerFactory.getLogger(PhotoService.class);
 	
-	private final OrganizationRepository organizationRepository;
-	
 	private final IncidenceRepository incidenceRepository;
 	
 	private final PhotoRepository photoRepository;
 
-	public PhotoService(OrganizationRepository organizationRepository, PhotoRepository photoRepository, IncidenceRepository incidenceRepository) {
+	public PhotoService(PhotoRepository photoRepository, IncidenceRepository incidenceRepository) {
 		super();
-		this.organizationRepository = organizationRepository;
 		this.photoRepository = photoRepository;
 		this.incidenceRepository = incidenceRepository;
 	}
@@ -66,22 +61,21 @@ public class PhotoService {
      * @return updated organization.
      */
 	public Optional<PhotoDTO> updatePhoto(PhotoDTO photoDTO){
-		/*return Optional
-	            .of(PhotoRepository.findById(PhotoDTO.getId()))
-	            .filter(Optional::isPresent)
-	            .map(Optional::get)
-	            .map(photo -> {
-	        		photo.setTitle(PhotoDTO.getTitle());
-	        		Photo.setLocation(getGeolocation(PhotoDTO));
-	                log.debug("Changed Information for Photo: {}", Photo);
-	                return photo;
-	            })
-	            .map(PhotoDTO::new);*/
-		return null;
+		return Optional
+			.of(photoRepository.findById(photoDTO.getId()))
+			.filter(Optional::isPresent)
+			.map(Optional::get)
+			.map(photo -> {
+				photo.setName(photoDTO.getName());
+				//photo.setLocation(getGeolocation(photoDTO));
+				log.debug("Changed Information for Photo: {}", photo);
+				return photo;
+	        })
+	        .map(PhotoDTO::new);
 	}
     
 	public void deletePhoto(Long idPhoto) throws Exception {
-		///organizationRepository.deleteById(idPhoto);
+		photoRepository.deleteById(idPhoto);
 		log.debug("Deleted Photo: {}", idPhoto);
 	}
 
