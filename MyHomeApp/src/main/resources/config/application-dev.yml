@@ -55,6 +55,16 @@ spring:
 
 server:
   port: 8080
+  
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAR4YSV4DJBFKDXJML
+      secret-key: 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
+    region:
+      static: eu-west-3
+    stack:
+      auto: false
 
 # ===================================================================
 # JHipster specific properties
