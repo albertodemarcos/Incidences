@@ -293,6 +293,11 @@
 	        <groupId>io.awspring.cloud</groupId>
 	        <artifactId>spring-cloud-starter-aws-messaging</artifactId>
 	    </dependency>
+	    <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
 
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
@@ -779,6 +784,12 @@
                     <configuration>
                         <mainClass>${start-class}</mainClass>
                         <fork>true</fork>
+                        <excludes>
+	                        <exclude>
+	                            <groupId>org.projectlombok</groupId>
+	                            <artifactId>lombok</artifactId>
+	                        </exclude>
+	                    </excludes>
                         <!--
                         Enable the line below to have remote debugging of your application on port 5005
                         <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>

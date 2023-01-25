@@ -25,6 +25,12 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
+import { MapCityComponent } from './map/map-city/map-city.component';
+import { CreateIncidenceComponent } from './map/incidences/create/create-incidence/create-incidence.component';
+import { DeleteIncidenceComponent } from './map/incidences/delete/delete-incidence/delete-incidence.component';
+import { DetailIncidenceComponent } from './map/incidences/detail/detail-incidence/detail-incidence.component';
+import { ListIncidenceComponent } from './map/incidences/list/list-incidence/list-incidence.component';
+import { StatusIncidenceComponent } from './map/incidences/status/status-incidence/status-incidence.component';
 
 @NgModule({
   imports: [
@@ -45,7 +51,7 @@ import { ErrorComponent } from './layouts/error/error.component';
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent, MapCityComponent, CreateIncidenceComponent, DeleteIncidenceComponent, DetailIncidenceComponent, ListIncidenceComponent, StatusIncidenceComponent],
   bootstrap: [MainComponent],
 })
 export class AppModule {

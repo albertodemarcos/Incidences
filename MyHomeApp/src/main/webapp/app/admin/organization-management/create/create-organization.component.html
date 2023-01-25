@@ -1,0 +1,102 @@
+<div>
+    <div class="row justify-content-center">
+        
+        <div  class="col-12 p-ai-right" *ngIf="editForm">
+          <button pButton pRipple type="button" icon="pi pi-arrow-left" class="p-button-help" routerLink="/admin/organizations/list" >
+              <span jhiTranslate="organizations.list.volver_atras"> Go back</span>
+          </button>
+  
+        </div>
+      
+        <div class="col-12">
+
+            <h1 jhiTranslate="organizations.title" data-cy="organizationsTitle">Organization</h1>
+
+            <div class="alert alert-success" *ngIf="success" jhiTranslate="organizations.messages.success">
+                <strong>Organization saved!</strong> .
+            </div>
+        </div>
+    </div>
+
+  
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <form name="form" role="form" (ngSubmit)="createOrganization()" [formGroup]="organizationForm" *ngIf="!success">
+            <input type="hidden" id="id" class="form-control" name="id" formControlName="id">
+         
+            <div class="form-group">
+                <label class="form-control-label" for="name" jhiTranslate="organizations.form.name.label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" formControlName="name" data-cy="name" #name placeholder="{{ 'organizations.form.name.placeholder' | translate }}"/>
+                <div *ngIf="organizationForm.get('name')!.invalid && (organizationForm.get('name')!.dirty || organizationForm.get('name')!.touched)">
+                <small class="form-text text-danger" *ngIf="organizationForm.get('name')?.errors?.required" jhiTranslate="organizations.messages.validate.name.required">
+                    Your name is required.
+                </small>
+                <small class="form-text text-danger" *ngIf="organizationForm.get('name')?.errors?.minlength" jhiTranslate="organizations.messages.validate.name.minlength">
+                    Your name is required to be at least 5 characters.
+                </small>
+                <small class="form-text text-danger" *ngIf="organizationForm.get('name')?.errors?.maxlength" jhiTranslate="organizations.messages.validate.name.maxlength">
+                    Your name cannot be longer than 50 characters.
+                </small>    
+                </div>
+            </div>
+  
+            <div class="form-group">
+                <label class="form-control-label" for="description" jhiTranslate="organizations.form.description.label">Description</label>
+                <input type="description" class="form-control" id="description" name="description" formControlName="description" data-cy="description" placeholder="{{ 'organizations.form.description.placeholder' | translate }}"/>
+                <div *ngIf="organizationForm.get('description')!.invalid && (organizationForm.get('description')!.dirty || organizationForm.get('description')!.touched)">
+                <small class="form-text text-danger" *ngIf="organizationForm.get('description')?.errors?.required" jhiTranslate="organizations.messages.validate.description.required">
+                    Your description is required.
+                </small>
+                <small class="form-text text-danger" *ngIf="organizationForm.get('description')?.errors?.minlength" jhiTranslate="organizations.messages.validate.description.minlength">
+                    Your description is required to be at least 15 characters.
+                </small>  
+                <small class="form-text text-danger" *ngIf="organizationForm.get('description')?.errors?.maxlength" jhiTranslate="organizations.messages.validate.description.maxlength">
+                    Your description cannot be longer than 254 characters.
+                </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-control-label" for="type" jhiTranslate="organizations.form.type.label">Type</label>
+                <input type="type" class="form-control" id="type" name="type" formControlName="type" data-cy="type" placeholder="{{ 'organizations.form.type.placeholder' | translate }}"/>
+                <div *ngIf="organizationForm.get('type')!.invalid && (organizationForm.get('type')!.dirty || organizationForm.get('type')!.touched)">
+                <small class="form-text text-danger" *ngIf="organizationForm.get('type')?.errors?.required" jhiTranslate="organizations.messages.validate.type.required">
+                    Your type is required.
+                </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-control-label" for="longitude" jhiTranslate="organizations.form.longitude.label">Longitude</label>
+                <input type="longitude" class="form-control" id="longitude" name="longitude" formControlName="longitude" data-cy="longitude" placeholder="{{ 'organizations.form.longitude.placeholder' | translate }}"/>
+                <div *ngIf="organizationForm.get('longitude')!.invalid && (organizationForm.get('longitude')!.dirty || organizationForm.get('longitude')!.touched)">
+                <small class="form-text text-danger" *ngIf="organizationForm.get('longitude')?.errors?.required" jhiTranslate="organizations.messages.validate.longitude.required">
+                    Your longitude is required.
+                </small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-control-label" for="latitude" jhiTranslate="organizations.form.latitude.label">Latitude</label>
+                <input type="latitude" class="form-control" id="latitude" name="latitude" formControlName="latitude" data-cy="latitude" placeholder="{{ 'organizations.form.latitude.placeholder' | translate }}"/>
+                <div *ngIf="organizationForm.get('latitude')!.invalid && (organizationForm.get('latitude')!.dirty || organizationForm.get('latitude')!.touched)">
+                <small class="form-text text-danger" *ngIf="organizationForm.get('latitude')?.errors?.required" jhiTranslate="organizations.messages.validate.latitude.required">
+                    Your latitude is required.
+                </small>
+                </div>
+            </div>
+            
+            <!-- <button type="submit" [disabled]="organizationForm.invalid" class="btn btn-primary" jhiTranslate="organizations.form.button" data-cy="submit">
+                <span *ngIf="editForm"> Edit organization</span>
+                <span *ngIf="!editForm"> Create organization</span>
+            </button> -->
+
+            <button type="submit"  class="btn btn-primary" [disabled]="organizationForm.invalid"  data-cy="submit"  >
+                <span *ngIf="!editForm" jhiTranslate="organizations.form.button-create"> Create organization</span>
+                <span *ngIf="editForm" jhiTranslate="organizations.form.button-edit"> Edit organization</span>
+            </button>
+
+        </form>
+      </div>
+    </div>
+  </div>

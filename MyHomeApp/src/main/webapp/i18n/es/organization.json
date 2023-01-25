@@ -1,0 +1,81 @@
+{
+    "organizations": {
+        "title": "Organización",
+        "subtitle": "Localización",
+        "form": {
+          "button": "Crear organización",
+          "button-create": "Crear organización",
+          "button-edit": "Editar organización",
+          "name": {
+              "label": "Nombre",
+              "placeholder": "Ponga un nombre a la organización"
+          },
+          "description": {
+              "label": "Descripción",
+              "placeholder": "Describa la organización"
+          },        
+          "type": {
+              "label": "Tipo de organización",
+              "placeholder": "Seleccione el tipo de organización a la que pertenece"
+          },        
+          "longitude": {
+              "label": "Longitud",
+              "placeholder": "Coordenada del plano"
+          } ,        
+          "latitude": {
+              "label": "Latitud",
+              "placeholder": "Coordenada del plano"
+          }           
+        },
+        "list": {
+          "view" : "Ver",
+          "name" : "Nombre",
+          "description" : "Descripción",
+          "type" : "Tipo",
+          "actions" : "Acciones",
+          "placeholder_any": "Todos",
+          "volver_atras": "Volver atras"          
+        },
+        "messages": {
+          "validate": {
+            "name": {
+              "required": "El nombre es obligatorio.",
+              "minlength": "El nombre debe tener al menos 5 caracter.",
+              "maxlength": "El nombre no puede tener más de 50 caracteres.",
+              "pattern": "El nombre no es válido."
+            },
+            "description": {
+              "required": "La descripción es obligatoria.",
+              "minlength": "La descripción debe tener al menos 15 caracter.",
+              "maxlength": "La descripción no puede tener más de 254 caracteres.",
+              "pattern": "La descripción no es válida."
+            },
+            "type": {
+              "required": "El tipo de organización es obligatoria."              
+            },
+            "longitude": {
+              "required": "La longitud es obligatoria."
+            },   
+            "latitude": {
+              "required": "La latitud es obligatoria."
+            }         
+          },
+          "success": "<strong>¡Organización registrada!</strong>.",
+          "error": {
+            "fail": "<strong>¡La creación de la organización ha fallado!</strong> Por favor, inténtelo de nuevo más tarde."
+          }
+        },
+        "type": {
+          "TYPE_ORGANIZATION.TOWN_HALL" : "Ayuntamiento",
+          "TYPE_ORGANIZATION.COMMONWEALTH" : "Mancomunidad",
+          "TYPE_ORGANIZATION.ADMINISTRATIVE_REGIONS" : "Regiones administrativas",
+          "TYPE_ORGANIZATION.STATE" : "Estado",
+          "TYPE_ORGANIZATION.CONFEDERATION" : "Confederación",
+          "TYPE_ORGANIZATION.PRINCIPAL" : "Principal"
+        },
+        "delete": {
+          "delete_organization_ask": "¿Esta seguro/a de eliminar la organización?"
+        }
+      }
+
+}

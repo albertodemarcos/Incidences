@@ -167,6 +167,16 @@ info:
   # Comma separated list of profiles that will trigger the ribbon to show
   display-ribbon-on-profiles: 'dev'
 
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAR4YSV4DJBFKDXJML
+      secret-key: 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
+    region:
+      static: eu-west-3
+    stack:
+      auto: false
+
 # ===================================================================
 # JHipster specific properties
 #

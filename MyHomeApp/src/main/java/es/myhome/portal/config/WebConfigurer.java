@@ -39,7 +39,7 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
 
     private final JHipsterProperties jHipsterProperties;
     
-    private static final List<String> URIS_API = Arrays.asList("/api/**", "/management/**", "/v3/api-docs","/swagger-ui/**"); 
+    private static final List<String> URIS_API = Arrays.asList("/api/**", "/management/**", "/v3/api-docs","/swagger-ui/**", "/cloudStorage/**"); 
 
     public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties) {
         this.env = env;

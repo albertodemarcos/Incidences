@@ -42,7 +42,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/admin")
 public class OrganizationResource {
 	
 	private final Logger log = LoggerFactory.getLogger(OrganizationResource.class);

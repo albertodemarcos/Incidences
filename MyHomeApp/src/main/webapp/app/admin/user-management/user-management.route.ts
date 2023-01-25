@@ -30,7 +30,7 @@ export const userManagementRoute: Routes = [
     },
   },
   {
-    path: ':login/view',
+    path: ':id/view',
     component: UserManagementDetailComponent,
     resolve: {
       user: UserManagementResolve,
@@ -44,7 +44,7 @@ export const userManagementRoute: Routes = [
     },
   },
   {
-    path: ':login/edit',
+    path: ':id/edit',
     component: UserManagementUpdateComponent,
     resolve: {
       user: UserManagementResolve,
