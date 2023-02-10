@@ -5,7 +5,8 @@ export const createRequestOption = (req?: any): HttpParams => {
 
   if (req) {
     Object.keys(req).forEach(key => {
-      if (key !== 'sort' && req[key]) {
+      console.log('key' + key);
+      if ( (key !== 'sort' && key !== 'filter' ) && req[key]) {
         for (const value of [].concat(req[key]).filter(v => v !== '')) {
           options = options.append(key, value);
         }
@@ -15,6 +16,13 @@ export const createRequestOption = (req?: any): HttpParams => {
     if (req.sort) {
       req.sort.forEach((val: string) => {
         options = options.append('sort', val);
+      });
+    }
+
+    if (req.filter) {
+      req.filter.forEach((value: string, key: string) => {
+        console.log(`key: ${key} , value: ${value}`);
+        options = options.append(key, value);
       });
     }
   }

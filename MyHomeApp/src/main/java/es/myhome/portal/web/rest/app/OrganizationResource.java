@@ -20,26 +20,32 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.myhome.portal.config.Constants;
 import es.myhome.portal.domain.app.Organization;
+import es.myhome.portal.domain.app.OrganizationType;
 import es.myhome.portal.repository.OrganizationRepository;
 import es.myhome.portal.security.AuthoritiesConstants;
+import es.myhome.portal.service.EmailAlreadyUsedException;
 import es.myhome.portal.service.OrganizationService;
 import es.myhome.portal.service.dto.OrganizationDTO;
+import es.myhome.portal.service.filters.FilterOrganization;
 import es.myhome.portal.utilities.FilterUtils;
 import es.myhome.portal.web.rest.errors.BadRequestAlertException;
 import es.myhome.portal.web.rest.errors.LoginAlreadyUsedException;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
+
 
 @RestController
 @RequestMapping("/api/admin")
@@ -101,10 +107,10 @@ public class OrganizationResource {
         log.debug("REST request to update Organization : {}", organizationDTO);       
         Optional<Organization> existingOrganization = organizationRepository.findById(organizationDTO.getId());        
         if (!existingOrganization.isPresent() ) {        	
-        	throw new BadRequestAlertException("A organization don't exist", "organizationManagement", "idnotexists");
+        	throw new BadRequestAlertException("A organization don't exist", "organizations", "idnotexists");
         }        
         Optional<OrganizationDTO> updatedOrganization = organizationService.updateOrganization(organizationDTO);
-        return ResponseUtil.wrapOrNotFound(updatedOrganization, HeaderUtil.createAlert(applicationName, "organizationManagement.updated", organizationDTO.getName() ) );
+        return ResponseUtil.wrapOrNotFound(updatedOrganization, HeaderUtil.createAlert(applicationName, "organizations.updated", organizationDTO.getName() ) );
     }
 
     /**
@@ -114,13 +120,13 @@ public class OrganizationResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all users.
      */
     @GetMapping("/organizations")
-    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
-    public ResponseEntity<List<OrganizationDTO>> getOrganizations(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {        
-    	log.debug("REST request to get all Organizations for an admin");        
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")//
+    public ResponseEntity<List<OrganizationDTO>> getOrganizations(FilterOrganization filters,  Pageable pageable ) {        
+    	log.debug("REST request to get all Organizations for an admin");  
         if (!onlyContainsAllowedProperties(pageable)) {
             return ResponseEntity.badRequest().build();
         }
-        final Page<OrganizationDTO> page = organizationService.getAllManagedOrganizations(pageable);
+        final Page<OrganizationDTO> page = organizationService.getAllManagedOrganizations(filters, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -149,7 +155,7 @@ public class OrganizationResource {
     public ResponseEntity<Void> deleteOrganization(@PathVariable @Pattern(regexp = Constants.ENTITIES_ID_REGEX) String idOrganizationStr) throws IllegalArgumentException, Exception {
         log.debug("REST request to delete Organization: {}", idOrganizationStr);
         organizationService.deleteOrganization( parseIdOrganization(idOrganizationStr) );
-        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "organizationService.deleted", idOrganizationStr )).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "organizations.deleted", idOrganizationStr )).build();
     }
     
     private boolean onlyContainsAllowedProperties(Pageable pageable) {

@@ -1,22 +1,18 @@
 
-export interface IGeolocation {
-    longitude?: number;
-    latitude?: number;
-}
+import { Geolocation } from "app/core/model/geolocation.model";
 
-export class Geolocation implements IGeolocation {
-    constructor(
-        public longitude?: number,
-        public latitude?: number,
-    ) {}
-}
 
 export interface IOrganization {
     id?: number;
     name?: string | null;
     description?: string | null;
     type?: string | null;
-    geolocation?: Geolocation | null;
+    activated?: boolean | null,
+    geolocation?: Geolocation | null,
+    createdBy?: string;
+    createdDate?: Date;
+    lastModifiedBy?: string;
+    lastModifiedDate?: Date;
   }
   
   export class Organization implements IOrganization {
@@ -24,8 +20,13 @@ export interface IOrganization {
         public id?: number,
         public name?: string | null,
         public description?: string | null,
-        public  type?: string | null,
-        public geolocation?: Geolocation | null
+        public type?: string | null,
+        public activated?: boolean | null,
+        public geolocation?: Geolocation | null,
+        public createdBy?: string,
+        public createdDate?: Date,
+        public lastModifiedBy?: string,
+        public lastModifiedDate?: Date
     ) {}
   }
   

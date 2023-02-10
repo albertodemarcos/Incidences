@@ -47,7 +47,7 @@ import { UserManagementModule } from './user-management/user-management.module';
         loadChildren: () => MetricsModule,
       },
       {
-        path: 'organizations',
+        path: 'organization-management',
         loadChildren: ()=> OrganizationModule,
       }
       /* jhipster-needle-add-admin-route - JHipster will add admin routes here */

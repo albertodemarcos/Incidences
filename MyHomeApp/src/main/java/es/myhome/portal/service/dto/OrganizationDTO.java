@@ -1,7 +1,11 @@
 package es.myhome.portal.service.dto;
 
 import java.io.Serializable;
+import java.time.Instant;
 
+import javax.persistence.Embedded;
+
+import es.myhome.portal.domain.app.Geolocation;
 import es.myhome.portal.domain.app.Organization;
 import es.myhome.portal.domain.app.OrganizationType;
 
@@ -15,9 +19,13 @@ public class OrganizationDTO implements Serializable {
 	private Long id;
 	private String name;
 	private String description;
+	private boolean activated = true;
 	private OrganizationType type;
-	private Double longitude;
-	private Double latitude;
+	private Geolocation geolocation;
+    private String createdBy;
+    private Instant createdDate;
+    private String lastModifiedBy;
+    private Instant lastModifiedDate;
 
 	public OrganizationDTO() {
 		// Empty constructor needed for Jackson.
@@ -30,10 +38,12 @@ public class OrganizationDTO implements Serializable {
 		this.name = organization.getName();
 		this.description = organization.getDescription();
 		this.type = organization.getType();
-		if (organization.getGeolocation() != null) {
-			this.longitude = organization.getGeolocation().getLongitude();
-			this.latitude = organization.getGeolocation().getLatitude();
-		}
+		this.activated = organization.isActivated();
+		this.geolocation = organization.getGeolocation();
+		this.createdBy = organization.getCreatedBy();
+		this.createdDate = organization.getCreatedDate();
+		this.lastModifiedBy = organization.getLastModifiedBy();
+		this.lastModifiedDate = organization.getLastModifiedDate();
 	}
 
 	public Long getId() {
@@ -59,6 +69,14 @@ public class OrganizationDTO implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
 
 	public OrganizationType getType() {
 		return type;
@@ -67,21 +85,47 @@ public class OrganizationDTO implements Serializable {
 	public void setType(OrganizationType type) {
 		this.type = type;
 	}
-
-	public Double getLongitude() {
-		return longitude;
+	
+	@Embedded
+	public Geolocation getGeolocation() {
+		return geolocation;
 	}
 
-	public void setLongitude(Double longitude) {
-		this.longitude = longitude;
+	public void setGeolocation(Geolocation geolocation) {
+		this.geolocation = geolocation;
 	}
+	
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
-	public Double getLatitude() {
-		return latitude;
-	}
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
-	public void setLatitude(Double latitude) {
-		this.latitude = latitude;
-	}
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
 
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
+
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+	
 }

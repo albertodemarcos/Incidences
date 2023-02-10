@@ -65,6 +65,7 @@ export class UserManagementComponent implements OnInit {
         page: this.page - 1,
         size: this.itemsPerPage,
         sort: this.sort(),
+        filter: new Map<string, string>()
       })
       .subscribe({
         next: (res: HttpResponse<User[]>) => {
@@ -97,6 +98,14 @@ export class UserManagementComponent implements OnInit {
   }
 
   private sort(): string[] {
+    const result = [`${this.predicate},${this.ascending ? ASC : DESC}`];
+    if (this.predicate !== 'id') {
+      result.push('id');
+    }
+    return result;
+  }
+
+  private filter(): string[] {
     const result = [`${this.predicate},${this.ascending ? ASC : DESC}`];
     if (this.predicate !== 'id') {
       result.push('id');

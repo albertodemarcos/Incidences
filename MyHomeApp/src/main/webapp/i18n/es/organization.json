@@ -4,8 +4,8 @@
         "subtitle": "Localización",
         "form": {
           "button": "Crear organización",
-          "button-create": "Crear organización",
-          "button-edit": "Editar organización",
+          "title-form-create": "Crear organización",
+          "title-form-edit": "Editar organización",
           "name": {
               "label": "Nombre",
               "placeholder": "Ponga un nombre a la organización"
@@ -28,10 +28,16 @@
           }           
         },
         "list": {
+          "title" : "Organizaciones",
+          "createLabel" : "Crear una nueva organización",
           "view" : "Ver",
           "name" : "Nombre",
           "description" : "Descripción",
+          "activated" : "Activado",
           "type" : "Tipo",
+          "geolocation" : "Geolocalzación",
+          "longitude": "Longitud",        
+          "latitude": "Latitud",
           "actions" : "Acciones",
           "placeholder_any": "Todos",
           "volver_atras": "Volver atras"          
@@ -66,15 +72,36 @@
           }
         },
         "type": {
-          "TYPE_ORGANIZATION.TOWN_HALL" : "Ayuntamiento",
-          "TYPE_ORGANIZATION.COMMONWEALTH" : "Mancomunidad",
-          "TYPE_ORGANIZATION.ADMINISTRATIVE_REGIONS" : "Regiones administrativas",
-          "TYPE_ORGANIZATION.STATE" : "Estado",
-          "TYPE_ORGANIZATION.CONFEDERATION" : "Confederación",
-          "TYPE_ORGANIZATION.PRINCIPAL" : "Principal"
+          "type_organization.town_hall" : "Ayuntamiento",
+          "type_organization.commonwealth" : "Mancomunidad",
+          "type_organization.administrative_regions" : "Regiones administrativas",
+          "type_organization.state" : "Estado",
+          "type_organization.confederation" : "Confederación",
+          "type_organization.principal" : "Principal"
         },
+        "activestatus": {
+          "null": null,
+          "true": "Si",
+          "false": "No"
+        },
+        "created": "Se creó una nueva organización {{ param }}",
+        "updated": "Se actualizó la organización {{ param }}",
+        "deleted": "Se borró la organización {{ param }}",
         "delete": {
-          "delete_organization_ask": "¿Esta seguro/a de eliminar la organización?"
+          "question": "¿Seguro que quieres eliminarla organización {{ name }}?"
+        },
+        "detail": {
+          "title": "Organización",
+          "name": "Nombre",
+          "description": "Descripción",
+          "type": "Tipo",
+          "geolocation": "Geolocalzación",
+          "activated": "Activado",
+          "deactivated": "Desactivado",
+          "createdBy": "Creado por",
+          "createdDate": "Fecha de creación",
+          "lastModifiedBy": "Modificado por",
+          "lastModifiedDate": "Fecha de modificación"
         }
       }
 

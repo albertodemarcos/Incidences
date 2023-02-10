@@ -1,1 +1,131 @@
-<p>list-organizations works!</p>
+<div>
+    <h2>
+      <span id="organization-management-page-heading" jhiTranslate="organizations.list.title" data-cy="organizationManagementPageHeading">Organizaciones</span>
+  
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+          <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+          <span jhiTranslate="global.form.refreshListLabel">Refrescar lista</span>
+        </button>
+        <button class="btn btn-primary jh-create-entity" [routerLink]="['./new']">
+          <fa-icon icon="plus"></fa-icon> <span jhiTranslate="organizations.list.createLabel">Crear una nueva organización</span>
+        </button>
+      </div>
+    </h2>
+  
+    <jhi-alert-error></jhi-alert-error>
+  
+    <jhi-alert></jhi-alert>
+  
+    <div class="table-responsive" *ngIf="organizations">
+      <table class="table table-striped" aria-describedby="organization-management-page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="transition()">            
+            <th scope="col" jhiSortBy="name"><span jhiTranslate="organizations.list.name">Nombre</span> <fa-icon icon="sort"></fa-icon></th>
+            <th scope="col" jhiSortBy="type"><span jhiTranslate="organizations.list.type">Tipo</span> <fa-icon icon="sort"></fa-icon></th>
+            <th scope="col" jhiSortBy="activated"><span jhiTranslate="organizations.list.activated">Activo</span> <fa-icon icon="sort"></fa-icon></th>
+            <th scope="col"><span jhiTranslate="organizations.list.geolocation">Geolocalización</span></th>
+            <th scope="col" jhiSortBy="createdDate">
+              <span jhiTranslate="userManagement.createdDate">Fecha de creación</span> <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="lastModifiedBy">
+              <span jhiTranslate="userManagement.lastModifiedBy">Modificado por</span> <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="lastModifiedDate">
+              <span jhiTranslate="userManagement.lastModifiedDate">Fecha de modificación</span> <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col"></th>
+          </tr>
+          <tr>
+            <th><input type="text" class="form-control" id="name" name="name" [(ngModel)]="name" (keyup)="loadFilter()" placeholder="{{ 'organizations.form.name.placeholder' | translate }}" /></th>
+            <th>
+              <select class="form-control" id="type" name="type" [(ngModel)]="type" data-cy="type" (change)="loadFilter()" >
+                <option *ngFor="let type of organizationsTypes" [value]="type">{{ ('organizations.type.type_organization.' + type) | lowercase | translate }}</option>
+              </select>
+            </th>
+            <th>
+              <select class="form-control" id="activated" name="activated" [(ngModel)]="activated" data-cy="activated" (change)="loadFilter()" >
+                <option *ngFor="let activated of activeStatus" [value]="activated">{{ ('organizations.activeStatus.' + activated) | lowercase | translate }}</option>
+              </select>
+            </th>
+            <th></th>
+            <th><input type="datetime-local" class="form-control" id="createdDate" name="createdDate" [(ngModel)]="createdDate" (change)="loadFilter()"/></th>
+            <th><input type="text" class="form-control" id="lastModifiedBy" name="lastModifiedBy" [(ngModel)]="lastModifiedBy" (keyup)="loadFilter()" placeholder="{{ 'organizations.form.name.placeholder' | translate }}" /></th>
+            <th><input type="datetime-local" class="form-control" id="lastModifiedDate" name="lastModifiedDate" (change)="loadFilter()" [(ngModel)]="lastModifiedDate" /></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="organizations">
+          <tr *ngFor="let organization of organizations; trackBy: trackIdentity">           
+            <td>{{ organization.name }}</td>
+            <td>{{ ('organizations.type.type_organization.' + organization.type) | lowercase | translate }}</td>
+            <td>
+              <button
+                class="btn btn-danger btn-sm"
+                (click)="setActive(organization, true)"
+                *ngIf="!organization.activated"
+                jhiTranslate="userManagement.deactivated">
+                Desactivado
+              </button>
+              <button
+                class="btn btn-success btn-sm"
+                (click)="setActive(organization, false)"
+                *ngIf="organization.activated"
+                jhiTranslate="userManagement.activated">
+                Activado
+              </button>
+            </td>
+            <td>
+              [{{ organization.geolocation?.latitude }} , {{ organization.geolocation?.longitude }}]
+            </td>
+            <td>{{ organization.createdDate | date: 'dd/MM/yy HH:mm' }}</td>
+            <td>{{ organization.lastModifiedBy }}</td>
+            <td>{{ organization.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</td>
+            <td class="text-end">
+              
+              <div class="btn-group">
+                
+                <button type="submit" [routerLink]="['./', organization.id, 'view']" class="btn btn-info btn-sm">
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                </button>
+  
+                <button type="submit" [routerLink]="['./', organization.id, 'edit']" queryParamsHandling="merge" class="btn btn-primary btn-sm">
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                </button>
+  
+                <button
+                  type="button"
+                  (click)="deleteOrganization(organization)"
+                  class="btn btn-danger btn-sm"
+                  [disabled]="organization.id !== 1 ">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="organizations">
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+  
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [(page)]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="transition()"
+        ></ngb-pagination>
+      </div>
+    </div>
+  </div>
+  

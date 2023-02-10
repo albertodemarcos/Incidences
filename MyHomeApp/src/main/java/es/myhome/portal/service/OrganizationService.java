@@ -7,13 +7,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.myhome.portal.domain.app.Geolocation;
 import es.myhome.portal.domain.app.Organization;
+import es.myhome.portal.domain.app.OrganizationType;
 import es.myhome.portal.repository.OrganizationRepository;
 import es.myhome.portal.service.dto.OrganizationDTO;
+import es.myhome.portal.service.filters.FilterOrganization;
+import es.myhome.portal.specification.organization.CustomerSpecificationOrganizationWithName;
+import es.myhome.portal.specification.organization.CustomerSpecificationOrganizationWithType;
+
 
 
 /**
@@ -39,10 +44,8 @@ public class OrganizationService {
 		organization.setName(organizationDTO.getName());
 		organization.setDescription(organizationDTO.getDescription());
 		organization.setType(organizationDTO.getType());
-		Geolocation geolocation = new Geolocation();
-		geolocation.setLatitude(organizationDTO.getLatitude());
-		geolocation.setLongitude(organizationDTO.getLongitude());
-		organization.setGeolocation(geolocation);
+		organization.setActivated(organizationDTO.isActivated());
+		organization.setGeolocation(organizationDTO.getGeolocation());		
 		organizationRepository.save(organization);
 		log.debug("Created Information for Organization: {}", organization);
 		return organization;
@@ -68,13 +71,8 @@ public class OrganizationService {
 	        		organization.setName(organizationDTO.getName());
 	        		organization.setDescription(organizationDTO.getDescription());
 	        		organization.setType(organizationDTO.getType());
-	        		Geolocation geolocation = organization.getGeolocation();
-	        		if( geolocation == null || geolocation.getLatitude() == null || geolocation.getLongitude() == null ) {
-	        			geolocation = new Geolocation();
-	        		}
-	        		geolocation.setLatitude(organizationDTO.getLatitude());
-	        		geolocation.setLongitude(organizationDTO.getLongitude());
-	        		organization.setGeolocation(geolocation);
+	        		organization.setActivated(organizationDTO.isActivated());
+	        		organization.setGeolocation(organizationDTO.getGeolocation());
 	                log.debug("Changed Information for Organization: {}", organization);
 	                return organization;
 	            })
@@ -92,8 +90,16 @@ public class OrganizationService {
 
 
 	@Transactional(readOnly = true)
-    public Page<OrganizationDTO> getAllManagedOrganizations(Pageable pageable) {
-        return organizationRepository.findAll(pageable).map(OrganizationDTO::new);
+    public Page<OrganizationDTO> getAllManagedOrganizations(FilterOrganization filters, Pageable pageable) {//
+		
+		if( filters != null ) {
+			Specification<Organization> specifications = Specification.where(new CustomerSpecificationOrganizationWithName(filters.getName()))
+					.and(new CustomerSpecificationOrganizationWithType(filters.getType()));
+			
+			return organizationRepository.findAll(specifications, pageable).map(OrganizationDTO::new);
+		}
+		
+		return organizationRepository.findAll(pageable).map(OrganizationDTO::new);		
     }
 	
 }

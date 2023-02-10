@@ -13,6 +13,7 @@ import { LoginModule } from './login/login.module';
 import { UserRouteAccessService } from './core/auth/user-route-access.service';
 //OTHER
 import { Authority } from './config/authority.constants';
+import { OrganizationModule } from './admin/organization-management/organization.module';
 
 export const MAIN_ROUTER: Routes = [
   {
@@ -30,6 +31,10 @@ export const MAIN_ROUTER: Routes = [
   {
     path: 'login',
     loadChildren: () => LoginModule
+  },
+  {
+    path: 'organizations',
+    loadChildren: () => OrganizationModule
   },
   {
     path: '',

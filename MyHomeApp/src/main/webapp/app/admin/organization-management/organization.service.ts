@@ -15,12 +15,12 @@ export class OrganizationService {
 
   constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) {}
 
-  create(user: IOrganization): Observable<IOrganization> {
-    return this.http.post<IOrganization>(this.resourceUrl, user);
+  create(organization: IOrganization): Observable<IOrganization> {
+    return this.http.post<IOrganization>(this.resourceUrl, organization);
   }
 
-  update(user: IOrganization): Observable<IOrganization> {
-    return this.http.put<IOrganization>(this.resourceUrl, user);
+  update(organization: IOrganization): Observable<IOrganization> {
+    return this.http.put<IOrganization>(this.resourceUrl, organization);
   }
   find(idOrganizationStr: string): Observable<IOrganization> {
     return this.http.get<IOrganization>(`${this.resourceUrl}/${idOrganizationStr}`);
@@ -31,8 +31,8 @@ export class OrganizationService {
     return this.http.get<IOrganization[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
-  delete(login: string): Observable<{}> {
-    return this.http.delete(`${this.resourceUrl}/${login}`);
+  delete(id: string): Observable<{}> {
+    return this.http.delete(`${this.resourceUrl}/${id}`);
   }
 
   authorities(): Observable<string[]> {

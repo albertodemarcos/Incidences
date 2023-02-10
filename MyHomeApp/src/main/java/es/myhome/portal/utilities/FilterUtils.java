@@ -29,12 +29,9 @@ public class FilterUtils {
 	public static final List<String> ORGANIZATION_RESOURCE_ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
         Arrays.asList(
             "id",
-            "login",
-            "firstName",
-            "lastName",
-            "email",
+            "name",
+            "type",
             "activated",
-            "langKey",
             "createdBy",
             "createdDate",
             "lastModifiedBy",

@@ -1,5 +1,7 @@
 package es.myhome.portal.domain.app;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -11,18 +13,22 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 
+import es.myhome.portal.domain.users.AbstractAuditingEntity;
+
 @Entity
 @Table(name = "jhi_organization")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Organization {
+public class Organization extends AbstractAuditingEntity<Long> implements Serializable {
 	
-	
+	private static final long serialVersionUID = 8139503024269043634L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organization_sequence")
 	@SequenceGenerator(name = "organization_sequence", sequenceName="sequence_organization", allocationSize=1)
@@ -31,6 +37,10 @@ public class Organization {
 	@Size(max = 255)
 	@Column(name = "name", length = 255)
 	private String name;
+	
+    @NotNull
+    @Column(nullable = false)
+    private boolean activated = true;
 	
 	@Lob
 	@Type(type="org.hibernate.type.TextType")
@@ -57,6 +67,14 @@ public class Organization {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
 
 	public String getDescription() {
 		return description;

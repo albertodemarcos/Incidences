@@ -1,1 +1,47 @@
-<p>detail-organization works!</p>
+<div class="d-flex justify-content-center">
+    <div class="col-8">
+      <div *ngIf="organization">
+        <h2>
+          <span jhiTranslate="organizations.detail.title">Organizacion</span> [<strong>{{ organization.name }}</strong
+          >]
+        </h2>
+  
+        <dl class="row-md jh-entity-details">
+          
+          <dt><span jhiTranslate="organizations.detail.name">Nombre</span></dt>
+          <dd>
+            <span>{{ organization.name }}</span>
+            <span *ngIf="organization.activated" class="badge bg-success" jhiTranslate="organizations.detail.activated">Activado</span>
+            <span *ngIf="!organization.activated" class="badge bg-danger" jhiTranslate="organizations.detail.deactivated">Desactivado</span>
+          </dd>
+  
+          <dt><span jhiTranslate="organizations.detail.description">description</span></dt>
+          <dd>{{ organization.description }}</dd>
+  
+          <dt><span jhiTranslate="organizations.detail.type">type</span></dt>
+          <dd>{{ ('organizations.type.type_organization.' + organization.type) | lowercase | translate }}</dd>
+  
+          <dt><span jhiTranslate="organizations.detail.geolocation">Geolocalización</span></dt>
+          <dd>[{{ organization.geolocation?.latitude }} , {{ organization.geolocation?.longitude }}]</dd>
+  
+          <dt><span jhiTranslate="organizations.detail.createdBy">Creado por</span></dt>
+          <dd>{{ organization.createdBy }}</dd>
+  
+          <dt><span jhiTranslate="organizations.detail.createdDate">Fecha de creación</span></dt>
+          <dd>{{ organization.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
+  
+          <dt><span jhiTranslate="organizations.detail.lastModifiedBy">Modificado por</span></dt>
+          <dd>{{ organization.lastModifiedBy }}</dd>
+  
+          <dt><span jhiTranslate="organizations.detail.lastModifiedDate">Fecha de modificación</span></dt>
+          <dd>{{ organization.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>  
+
+        </dl>
+  
+        <button type="submit" routerLink="../../" class="btn btn-info">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
