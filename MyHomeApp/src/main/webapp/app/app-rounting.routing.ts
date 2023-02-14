@@ -8,12 +8,13 @@ import { AccountModule } from './account/account.module';
 import { AdminRoutingModule } from './admin/admin-routing.module';
 import { EntityRoutingModule } from './entities/entity-routing.module';
 import { LoginModule } from './login/login.module';
+import { OrganizationModule } from './admin/organization-management/organization.module';
+import { MapIncidencesModule } from './map/map-incidences.module';
 
 //SERVICES
 import { UserRouteAccessService } from './core/auth/user-route-access.service';
 //OTHER
 import { Authority } from './config/authority.constants';
-import { OrganizationModule } from './admin/organization-management/organization.module';
 
 export const MAIN_ROUTER: Routes = [
   {
@@ -35,6 +36,10 @@ export const MAIN_ROUTER: Routes = [
   {
     path: 'organizations',
     loadChildren: () => OrganizationModule
+  },
+  {
+    path: 'map',
+    loadChildren: () => MapIncidencesModule
   },
   {
     path: '',

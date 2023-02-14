@@ -9,6 +9,22 @@ export class StatusIncidenceComponent implements OnInit {
 
   constructor() { }
 
+  /**
+   * kanban
+   * https://ej2.syncfusion.com/angular/documentation/kanban/getting-started
+   * 
+   * https://js.devexpress.com/Demos/WidgetsGallery/Demo/Sortable/Kanban/Angular/Light/
+   * 
+   * https://www.htmlelements.com/angular/demos/kanban/overview/
+   * 
+   * https://medium.com/front-end-weekly/getting-started-with-angular-kanban-f2dea404a3df
+   * 
+   * https://www.creative-tim.com/learning-lab/bootstrap/kanban/argon-dashboard
+   * 
+   * https://codescandy.com/geeks-bootstrap-5/pages/dashboard/task-kanban.html
+   * 
+   */
+
   ngOnInit(): void {
   }
 
