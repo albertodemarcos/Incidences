@@ -9,7 +9,8 @@ import { AdminRoutingModule } from './admin/admin-routing.module';
 import { EntityRoutingModule } from './entities/entity-routing.module';
 import { LoginModule } from './login/login.module';
 import { OrganizationModule } from './admin/organization-management/organization.module';
-import { MapIncidencesModule } from './map/map-incidences.module';
+import { MapCityModule } from './map-city/map-city.module';
+import { IncidencesModule } from './incidences/incidences.module';
 
 //SERVICES
 import { UserRouteAccessService } from './core/auth/user-route-access.service';
@@ -38,8 +39,12 @@ export const MAIN_ROUTER: Routes = [
     loadChildren: () => OrganizationModule
   },
   {
+    path: 'incidences',
+    loadChildren: () => IncidencesModule
+  },
+  {
     path: 'map',
-    loadChildren: () => MapIncidencesModule
+    loadChildren: () => MapCityModule
   },
   {
     path: '',
