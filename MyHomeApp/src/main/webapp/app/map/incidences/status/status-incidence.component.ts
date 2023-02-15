@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatusIncidenceComponent implements OnInit {
 
+  toDo = ['incidencia1','incidencia2','incidencia3','incidencia4','incidencia5','incidencia6']
+
   constructor() { }
 
   /**
