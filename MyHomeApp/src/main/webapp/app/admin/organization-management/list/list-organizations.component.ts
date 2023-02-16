@@ -146,20 +146,6 @@ export class ListOrganizationsComponent implements OnInit {
       filters.set('lastModifiedBy', this.lastModifiedBy);
     }
 
-    /*
- name: string = '';
-  type: string = '';
-  activated: Boolean | undefined;
-  lastModifiedBy: string = '';
-  createdDate: Date | undefined;
-  lastModifiedDate: Date | undefined;
-    */
-   /* const result = [`${this.predicate},${this.ascending ? ASC : DESC}`];
-    if (this.predicate !== 'id') {
-      result.push('id');
-    }
-    return result;*/
-
     return filters;
   }
 

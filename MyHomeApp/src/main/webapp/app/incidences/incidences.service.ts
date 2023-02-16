@@ -11,7 +11,7 @@ import { IIncidence } from './incidence.model';
 })
 export class IncidencesService {
 
-  private resourceUrl = this.applicationConfigService.getEndpointFor('api/admin/users');
+  private resourceUrl = this.applicationConfigService.getEndpointFor('api/incidences/');
 
   constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) {}
 

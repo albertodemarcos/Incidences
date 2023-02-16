@@ -1,0 +1,117 @@
+{
+    "incidences": {
+        "title": "Incidencia",
+        "subtitle": "Localización",
+        "form": {
+          "button": "Crear incidencia",
+          "title-form-create": "Crear incidencia",
+          "title-form-edit": "Editar incidencia",
+          "title": {
+              "label": "Título",
+              "placeholder": "Ponga un título a la incidencia"
+          },
+          "description": {
+              "label": "Descripción",
+              "placeholder": "Describa la incidencia"
+          },        
+          "status": {
+              "label": "Estado",
+              "placeholder": "Seleccione el estado de la incidencia"
+          },  
+          "photos": {
+            "label": "Fotos",
+            "placeholder": "Subir fotos de la incidencia"
+          },      
+          "longitude": {
+              "label": "Longitud",
+              "placeholder": "Coordenada del plano"
+          } ,        
+          "latitude": {
+              "label": "Latitud",
+              "placeholder": "Coordenada del plano"
+          }           
+        },
+        "list": {
+          "title_list" : "Incidencias",
+          "title" : "Título",
+          "start_date": "Fecha inicio",
+          "end_date" : "Fecha resolución",
+          "status" : "Estado",
+          "organization" : "Organización",
+          "employee" : "Empleado",
+
+          "createLabel" : "Crear una nueva incidencia",
+          "view" : "Ver",
+          "geolocation" : "Geolocalzación",
+          "longitude": "Longitud",        
+          "latitude": "Latitud",
+          "actions" : "Acciones",
+          "placeholder_any": "Todos",
+          "volver_atras": "Volver atras"          
+        },
+        "messages": {
+          "validate": {
+            "name": {
+              "required": "El nombre es obligatorio.",
+              "minlength": "El nombre debe tener al menos 5 caracter.",
+              "maxlength": "El nombre no puede tener más de 50 caracteres.",
+              "pattern": "El nombre no es válido."
+            },
+            "description": {
+              "required": "La descripción es obligatoria.",
+              "minlength": "La descripción debe tener al menos 15 caracter.",
+              "maxlength": "La descripción no puede tener más de 254 caracteres.",
+              "pattern": "La descripción no es válida."
+            },
+            "status": {
+              "required": "El tipo de incidencia es obligatoria."              
+            },
+            "longitude": {
+              "required": "La longitud es obligatoria."
+            },   
+            "latitude": {
+              "required": "La latitud es obligatoria."
+            }         
+          },
+          "success": "<strong>¡Organización registrada!</strong>.",
+          "error": {
+            "fail": "<strong>¡La creación de la incidencia ha fallado!</strong> Por favor, inténtelo de nuevo más tarde."
+          }
+        },
+        "status": {
+          "status_incidence.pending" : "Pendiente",
+          "status_incidence.in_process" : "En proceso",
+          "status_incidence.resolved" : "Resuelto",
+          "status_incidence.canceled" : "Cancelada"
+        },
+        "activestatus": {
+          "null": null,
+          "true": "Si",
+          "false": "No"
+        },
+        "created": "Se creó una nueva incidencia {{ param }}",
+        "updated": "Se actualizó la incidencia {{ param }}",
+        "deleted": "Se borró la incidencia {{ param }}",
+        "delete": {
+          "question": "¿Seguro que quieres eliminarla incidencia {{ title }}?"
+        },
+        "detail": {
+          "title_view": "Incidencia",
+          "title" : "Título",
+          "start_date": "Fecha inicio",
+          "end_date" : "Fecha resolución",
+          "status" : "Estado",
+          "organization" : "Organización",
+          "employee" : "Empleado",
+          "description": "Descripción",
+          "geolocation": "Geolocalzación",
+          "activated": "Activado",
+          "deactivated": "Desactivado",
+          "createdBy": "Creado por",
+          "createdDate": "Fecha de creación",
+          "lastModifiedBy": "Modificado por",
+          "lastModifiedDate": "Fecha de modificación"
+        }
+      }
+
+}

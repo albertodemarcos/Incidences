@@ -68,9 +68,15 @@
               </a>
             </li>
             <li>
+              <a class="dropdown-item" routerLink="incidences" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.admin.incidencesManagement">Gestión de organizaciones</span>
+              </a>
+            </li>
+            <li>
               <a class="dropdown-item" routerLink="admin/organization-management" routerLinkActive="active" (click)="collapseNavbar()">
                 <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
-                <span jhiTranslate="global.menu.admin.organizationManagement">Gestión de organizaciones</span>
+                <span jhiTranslate="global.menu.admin.organizationManagement">Gestión de incidencias</span>
               </a>
             </li>
             <li>

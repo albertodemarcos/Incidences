@@ -1,1 +1,142 @@
-<p>create-incidence works!</p>
+<div class="d-flex justify-content-center">
+    <div class="col-8">
+      <form name="incidenceForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="incidenceForm">
+        <h2 id="myUserLabel">
+          <span *ngIf="!editForm" jhiTranslate="incidences.form.title-form-create"></span>
+          <span *ngIf="editForm" jhiTranslate="incidences.form.title-form-edit"></span>
+        </h2>
+  
+        <jhi-alert-error></jhi-alert-error>
+  
+        <div class="mb-3" [hidden]="!incidenceForm.value.id">
+          <input type="hidden" name="id" formControlName="id" />
+        </div>
+  
+        <div class="mb-3">
+          <label class="form-label" for="title" jhiTranslate="incidences.form.title.label">Título</label>
+          <input type="text" class="form-control" id="title" name="title" formControlName="title" data-cy="title" #title placeholder="{{ 'incidences.form.title.placeholder' | translate }}" />
+  
+          <div *ngIf="incidenceForm.get('title')!.invalid && (incidenceForm.get('title')!.dirty || incidenceForm.get('title')!.touched)">
+            <small class="form-text text-danger" *ngIf="incidenceForm.get('title')?.errors?.required" jhiTranslate="entity.validation.required">
+              Este campo es obligatorio.
+            </small>
+  
+            <small
+              class="form-text text-danger"
+              *ngIf="incidenceForm.get('title')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 50 }"
+            >
+              Este campo no puede superar más de 50 caracteres.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="incidenceForm.get('title')?.errors?.minlength" jhiTranslate="incidences.messages.validate.title.minlength">
+                Este campo no puede ser inferior a 5 caracteres.
+            </small>
+           
+          </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="description" jhiTranslate="incidences.form.description.label">Description</label>
+            <textarea type="text" class="form-control"  id="description" name="description" formControlName="description" data-cy="description" rows="4" maxlength="254" [ngStyle]="{'resize': ' none'}">              
+            </textarea> 
+    
+            <div *ngIf="incidenceForm.get('description')!.invalid && (incidenceForm.get('description')!.dirty || incidenceForm.get('description')!.touched)">
+              <small class="form-text text-danger" *ngIf="incidenceForm.get('description')?.errors?.required" jhiTranslate="entity.validation.required">
+                Este campo es obligatorio.
+              </small>
+    
+              <small
+                class="form-text text-danger"
+                *ngIf="incidenceForm.get('login')?.errors?.maxlength"
+                jhiTranslate="entity.validation.maxlength"
+                [translateValues]="{ max: 254 }"
+              >
+                Este campo no puede superar más de 254 caracteres.
+              </small>
+  
+              <small class="form-text text-danger" *ngIf="incidenceForm.get('description')?.errors?.minlength" jhiTranslate="incidences.messages.validate.description.minlength">
+                Este campo no puede ser inferior a 15 caracteres.
+              </small>
+             
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="status" jhiTranslate="incidences.form.status.label" >Estado</label>
+            <select class="form-control" id="status" name="status" formControlName="status" data-cy="status" >
+              <option *ngFor="let status of incidencesStatus" [value]="status">{{ ('incidences.status.status_incidence.' + status) | lowercase | translate }}</option>
+            </select>
+            <div *ngIf="incidenceForm.get('status')!.invalid && (incidenceForm.get('status')!.dirty || incidenceForm.get('status')!.touched)">
+              <small class="form-text text-danger" *ngIf="incidenceForm.get('status')?.errors?.required" jhiTranslate="incidences.messages.validate.status.required">
+                  Este campo es obligatorio.
+              </small>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="photos" jhiTranslate="incidences.form.photos.label" >Photos</label>
+            <div class="row" id="photos">
+              <div class="col-4">
+                <ngx-dropzone 
+                  (change)="onSelect($event)" 
+                  [multiple]="true" 
+                  accept="image/jpeg,image/jpg,image/png,image/gif"                 
+                  >
+                  <ngx-dropzone-label>
+                    <i class="fs-5 bi bi-camera-fill"></i> <span jhiTranslate="incidences.form.photos.placeholder">Subir foto/s de la incidencia</span>
+                  </ngx-dropzone-label>
+                    <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                    </ngx-dropzone-preview>
+                  </ngx-dropzone>
+              </div>              
+            </div>
+            
+            <div *ngIf="incidenceForm.get('photos')!.invalid && (incidenceForm.get('photos')!.dirty || incidenceForm.get('photos')!.touched)">
+              <small class="form-text text-danger" *ngIf="incidenceForm.get('photos')?.errors?.required" jhiTranslate="incidences.messages.validate.photos.required">
+                  Este campo es obligatorio.
+              </small>
+            </div>
+           
+
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="longitude" jhiTranslate="incidences.form.longitude.label">Longitud</label>
+            <input type="longitude" class="form-control" id="longitude" name="longitude" formControlName="longitude" data-cy="longitude" placeholder="{{ 'incidences.form.longitude.placeholder' | translate }}"/>
+            <div *ngIf="incidenceForm.get('longitude')!.invalid && (incidenceForm.get('longitude')!.dirty || incidenceForm.get('longitude')!.touched)">
+            <small class="form-text text-danger" *ngIf="incidenceForm.get('longitude')?.errors?.required" jhiTranslate="incidences.messages.validate.longitude.required">
+                La longitud es obligatoria.
+            </small>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-control-label" for="latitude" jhiTranslate="incidences.form.latitude.label">Latitud</label>
+            <input type="latitude" class="form-control" id="latitude" name="latitude" formControlName="latitude" data-cy="latitude" placeholder="{{ 'incidences.form.latitude.placeholder' | translate }}"/>
+            <div *ngIf="incidenceForm.get('latitude')!.invalid && (incidenceForm.get('latitude')!.dirty || incidenceForm.get('latitude')!.touched)">
+            <small class="form-text text-danger" *ngIf="incidenceForm.get('latitude')?.errors?.required" jhiTranslate="incidences.messages.validate.latitude.required">
+                La latitud es obligatoria.
+            </small>
+            </div>
+        </div>
+  
+        <hr/>
+        
+        <button type="button" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+  
+        <button type="submit" [disabled]="incidenceForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+
+      </form>
+    </div>
+  </div>
+  
+
+
+

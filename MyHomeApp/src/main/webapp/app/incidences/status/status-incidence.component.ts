@@ -9,6 +9,8 @@ export class StatusIncidenceComponent implements OnInit {
 
   toDo = ['incidencia1','incidencia2','incidencia3','incidencia4','incidencia5','incidencia6']
 
+  element: string = 'incidence';
+
   constructor() { }
 
   /**
@@ -24,6 +26,8 @@ export class StatusIncidenceComponent implements OnInit {
    * https://www.creative-tim.com/learning-lab/bootstrap/kanban/argon-dashboard
    * 
    * https://codescandy.com/geeks-bootstrap-5/pages/dashboard/task-kanban.html
+   * 
+   * https://ngchallenges.gitbook.io/example-angular/kanban/kanban/creando-el-kanban#componente-drag-and-drop
    * 
    */
 

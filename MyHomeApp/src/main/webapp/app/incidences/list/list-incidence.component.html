@@ -1,1 +1,121 @@
-<p>list-incidence works!</p>
+<div>
+    <h2>
+      <span id="incidence-management-page-heading" jhiTranslate="incidences.list.title" data-cy="incidenceManagementPageHeading">Organizaciones</span>
+  
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+          <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+          <span jhiTranslate="global.form.refreshListLabel">Refrescar lista</span>
+        </button>
+        <button class="btn btn-primary jh-create-entity" [routerLink]="['/incidences/create']">
+          <fa-icon icon="plus"></fa-icon> <span jhiTranslate="incidences.list.createLabel">Crear una nueva organización</span>
+        </button>
+      </div>
+    </h2>
+  
+    <jhi-alert-error></jhi-alert-error>
+  
+    <jhi-alert></jhi-alert>
+  
+    <div class="table-responsive" *ngIf="incidences">
+      <table class="table table-striped" aria-describedby="incidence-management-page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="transition()">            
+            <th scope="col" jhiSortBy="title"><span jhiTranslate="incidences.list.title">Título</span> <fa-icon icon="sort"></fa-icon></th>
+            <th scope="col" jhiSortBy="startDate">
+              <span jhiTranslate="incidences.list.start_date">Fecha inicio</span> <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="endDate">
+              <span jhiTranslate="incidences.list.end_date">Fecha resolución</span> <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="status"><span jhiTranslate="incidences.list.status">Estado</span> <fa-icon icon="sort"></fa-icon></th>
+            <th scope="col"><span jhiTranslate="incidences.list.geolocation">Geolocalización</span></th>
+            <th scope="col"><span jhiTranslate="incidences.list.organization">Organization</span></th>
+            <th scope="col"><span jhiTranslate="incidences.list.employee">Empleado</span></th>
+            <th scope="col" jhiSortBy="createdDate">
+              <span jhiTranslate="userManagement.createdDate">Fecha de creación</span> <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="lastModifiedBy">
+              <span jhiTranslate="userManagement.lastModifiedBy">Modificado por</span> <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="lastModifiedDate">
+              <span jhiTranslate="userManagement.lastModifiedDate">Fecha de modificación</span> <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col"></th>
+          </tr>
+          <tr>
+            <th><input type="text" class="form-control" id="title" name="title" [(ngModel)]="title" (keyup)="loadFilter()" placeholder="{{ 'incidences.form.title.placeholder' | translate }}" /></th>
+            <th><input type="datetime-local" class="form-control" id="startDate" name="startDate" [(ngModel)]="startDate" (change)="loadFilter()"/></th>
+            <th><input type="datetime-local" class="form-control" id="endDate" name="endDate" [(ngModel)]="endDate" (change)="loadFilter()"/></th>
+            <th>
+              <select class="form-control" id="status" name="status" [(ngModel)]="status" data-cy="status" (change)="loadFilter()" >
+                <option *ngFor="let status of incidencesStatus" [value]="status">{{ ('incidences.status.status_incidence.' + status) | lowercase | translate }}</option>
+              </select>
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th><input type="datetime-local" class="form-control" id="createdDate" name="createdDate" [(ngModel)]="createdDate" (change)="loadFilter()"/></th>
+            <th><input type="text" class="form-control" id="lastModifiedBy" name="lastModifiedBy" [(ngModel)]="lastModifiedBy" (keyup)="loadFilter()" placeholder="{{ 'incidences.form.name.placeholder' | translate }}" /></th>
+            <th><input type="datetime-local" class="form-control" id="lastModifiedDate" name="lastModifiedDate" (change)="loadFilter()" [(ngModel)]="lastModifiedDate" /></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="incidences">
+          <tr *ngFor="let incidence of incidences; trackBy: trackIdentity">           
+            <td>{{ incidence.title }}</td>
+            <td>{{ incidence.startDate | date: 'dd/MM/yy HH:mm' }}</td>
+            <td>{{ incidence.endDate | date: 'dd/MM/yy HH:mm' }}</td>
+            <td>{{ ('incidences.status.status_incidence.' + incidence.status) | lowercase | translate }}</td>
+            <td>
+              [{{ incidence.location?.latitude }} , {{ incidence.location?.longitude }}]
+            </td>
+            <td></td>
+            <td></td>
+            <td>{{ incidence.createdDate | date: 'dd/MM/yy HH:mm' }}</td>
+            <td>{{ incidence.lastModifiedBy }}</td>
+            <td>{{ incidence.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</td>
+            <td class="text-end">              
+              <div class="btn-group">                
+                <button type="submit" [routerLink]="['./', incidence.id, 'view']" class="btn btn-info btn-sm">
+                  <fa-icon icon="eye"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                </button>  
+                <button type="submit" [routerLink]="['./', incidence.id, 'edit']" queryParamsHandling="merge" class="btn btn-primary btn-sm">
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                </button>  
+                <button
+                  type="button"
+                  (click)="deleteIncidence(incidence)"
+                  class="btn btn-danger btn-sm"
+                  [disabled]="incidence.id !== 1 ">
+                  <fa-icon icon="times"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="incidences">
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+  
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [(page)]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="transition()"
+        ></ngb-pagination>
+      </div>
+    </div>
+  </div>
+  
