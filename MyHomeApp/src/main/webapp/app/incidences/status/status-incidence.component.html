@@ -1,27 +1,104 @@
 <h1>Kanban</h1>
-<div class="row">
-  <div class="col-12">
 
-    <div class="task-kanban-container">
+<div class="container">
 
+  <div class="row">
+    <div class="col">
       <div class="card bg-gray-300 shadow-none rounded-3 d-inline-block me-4 align-top mb-4 task-card">
-
         <div class="card-body p-3">
+          <div class="task-list">
+            <!--Head-->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h4 class="mb-0">{{statusType[0]}}</h4>
+                </div>
+                <div class="d-flex align-items-center">
+                  <!-- collapse -->
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePending" aria-expanded="false" aria-controls="collapsePending" (click)="setCollapse()">
+                    <fa-icon icon="chevron-up" *ngIf="!collapse"></fa-icon>
+                    <fa-icon icon="chevron-down" *ngIf="collapse"></fa-icon>
+                  </button>
+                </div>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </div>
 
+    <div class="col">
+      <div class="card bg-gray-300 shadow-none rounded-3 d-inline-block me-4 align-top mb-4 task-card">
+        <div class="card-body p-3">
+          <div class="task-list">
+            <!--Head-->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h4 class="mb-0">{{statusType[1]}}</h4>
+                </div>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card bg-gray-300 shadow-none rounded-3 d-inline-block me-4 align-top mb-4 task-card">
+        <div class="card-body p-3">
+          <div class="task-list">
+            <!--Head-->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h4 class="mb-0">{{statusType[2]}}</h4>
+                </div>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card bg-gray-300 shadow-none rounded-3 d-inline-block me-4 align-top mb-4 task-card">
+        <div class="card-body p-3">
+          <div class="task-list">
+            <!--Head-->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h4 class="mb-0">{{statusType[3]}}</h4>
+                </div>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="task-kanban-container accordion" id="accordionExample">
+
+        <div class="accordion-item card bg-gray-300 shadow-none rounded-3 d-inline-block me-4 align-top mb-4 task-card">
+    
+          <div class="card-body p-3">
+    
             <div class="task-list">
-
+    
                 <!--Head-->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div>
-                        <h4 class="mb-0">Pending</h4>
+                        <!-- <h4 class="mb-0"></h4> -->
+                        <h2 class="accordion-header" id="headingOne">
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            {{statusType[0]}}
+                          </button>
+                        </h2>
                     </div>
                 </div>
-
+    
                 <!--Body-->
-
-                <div class="task-kanban">
+    
+                <div class="task-kanban" id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div id="do">
-
+    
                       <!-- Elemento a repetir-->
                       <!--*ngFor="let element of toDo"-->
                       
@@ -56,7 +133,7 @@
                           </div>
                         </div>
                       </div>
-
+    
                       <div class="card border-in-progress" >
                         <!-- card body -->
                         <div class="card-body p-3">
@@ -87,7 +164,7 @@
                           </div>
                         </div>
                       </div>
-
+    
                       <div class="card border-resolved" >
                         <!-- card body -->
                         <div class="card-body p-3">
@@ -118,7 +195,7 @@
                           </div>
                         </div>
                       </div>
-
+    
                       <div class="card border-canceled" >
                         <!-- card body -->
                         <div class="card-body p-3">
@@ -152,7 +229,7 @@
                       
                     </div>
                 </div>
-
+    
                 <!-- Footer -->
                 <div class="mt-3">
                     <!-- button -->
@@ -164,30 +241,524 @@
                     </div>
                     </div>
                 </div>
-
+    
             </div>
-
-        </div>
-
-
+    
+          </div>
+    
       </div>
-
-      <!-- <div class="card bg-gray-300 shadow-none rounded-3 d-inline-block me-4 align-top mb-4 task-card">
-      </div> -->
-
-      <!-- <div class="card bg-gray-300 shadow-none rounded-3 d-inline-block me-4 align-top mb-4 task-card">
-      </div> -->
-
-       <!-- <div class="card bg-gray-300 shadow-none rounded-3 d-inline-block me-4 align-top mb-4 task-card">
-      </div> -->
-
+      </div>
     </div>
-
-
+    <div class="col">
+      <div class="task-kanban-container">
+        <div class="card bg-gray-300 shadow-none rounded-3 d-inline-block me-4 align-top mb-4 task-card">
+    
+          <div class="card-body p-3">
+    
+            <div class="task-list">
+    
+                <!--Head-->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h4 class="mb-0">{{statusType[1]}}</h4>
+                    </div>
+                </div>
+    
+                <!--Body-->
+    
+                <div class="task-kanban">
+                    <div id="do">
+    
+                      <!-- Elemento a repetir-->
+                      <!--*ngFor="let element of toDo"-->
+                      
+                      <!-- card -->
+                      <div class="card border-pending" >
+                        <!-- card body -->
+                        <div class="card-body p-3">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h6>titulo</h6>
+                            </div>
+                            <div><span class="badge bg-danger">Hight</span></div>
+                            <div><span class="badge bg-warning">Medium</span></div>
+                            <div><span class="badge bg-info">Slow</span></div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                            <!-- img -->
+                            <div class="d-flex align-items-center">
+                              <!-- <img [src]="'../../../../content/images/jhipster_family_member_2.svg'" alt="" class="avatar avatar-xs
+                                rounded-circle imgtooltip" data-template="one"> -->
+                              <!-- avatar -->
+                              <!-- text -->
+                              <div id="one" class="d-none">
+                                <h6 class="mb-0">{{element}}</h6>
+                              </div>
+                              <!-- text -->
+                              <div class="ms-2">
+                                <span class="fs-6"><i class="fe
+                                    fe-clock text-muted me-1"></i>{{element}}</span>
+                              </div>
+                            </div>                                  
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div class="card border-in-progress" >
+                        <!-- card body -->
+                        <div class="card-body p-3">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h6>titulo</h6>
+                            </div>
+                            <div><span class="badge bg-danger">Hight</span></div>
+                            <div><span class="badge bg-warning">Medium</span></div>
+                            <div><span class="badge bg-info">Slow</span></div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                            <!-- img -->
+                            <div class="d-flex align-items-center">
+                              <!-- <img [src]="'../../../../content/images/jhipster_family_member_2.svg'" alt="" class="avatar avatar-xs
+                                rounded-circle imgtooltip" data-template="one"> -->
+                              <!-- avatar -->
+                              <!-- text -->
+                              <div id="one" class="d-none">
+                                <h6 class="mb-0">{{element}}</h6>
+                              </div>
+                              <!-- text -->
+                              <div class="ms-2">
+                                <span class="fs-6"><i class="fe
+                                    fe-clock text-muted me-1"></i>{{element}}</span>
+                              </div>
+                            </div>                                  
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div class="card border-resolved" >
+                        <!-- card body -->
+                        <div class="card-body p-3">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h6>titulo</h6>
+                            </div>
+                            <div><span class="badge bg-danger">Hight</span></div>
+                            <div><span class="badge bg-warning">Medium</span></div>
+                            <div><span class="badge bg-info">Slow</span></div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                            <!-- img -->
+                            <div class="d-flex align-items-center">
+                              <!-- <img [src]="'../../../../content/images/jhipster_family_member_2.svg'" alt="" class="avatar avatar-xs
+                                rounded-circle imgtooltip" data-template="one"> -->
+                              <!-- avatar -->
+                              <!-- text -->
+                              <div id="one" class="d-none">
+                                <h6 class="mb-0">{{element}}</h6>
+                              </div>
+                              <!-- text -->
+                              <div class="ms-2">
+                                <span class="fs-6"><i class="fe
+                                    fe-clock text-muted me-1"></i>{{element}}</span>
+                              </div>
+                            </div>                                  
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div class="card border-canceled" >
+                        <!-- card body -->
+                        <div class="card-body p-3">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h6>titulo</h6>
+                            </div>
+                            <div><span class="badge bg-danger">Hight</span></div>
+                            <div><span class="badge bg-warning">Medium</span></div>
+                            <div><span class="badge bg-info">Slow</span></div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                            <!-- img -->
+                            <div class="d-flex align-items-center">
+                              <!-- <img [src]="'../../../../content/images/jhipster_family_member_2.svg'" alt="" class="avatar avatar-xs
+                                rounded-circle imgtooltip" data-template="one"> -->
+                              <!-- avatar -->
+                              <!-- text -->
+                              <div id="one" class="d-none">
+                                <h6 class="mb-0">{{element}}</h6>
+                              </div>
+                              <!-- text -->
+                              <div class="ms-2">
+                                <span class="fs-6"><i class="fe
+                                    fe-clock text-muted me-1"></i>{{element}}</span>
+                              </div>
+                            </div>                                  
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                </div>
+    
+                <!-- Footer -->
+                <div class="mt-3">
+                    <!-- button -->
+                    <div class="d-grid">
+                      <div class="d-grid">
+                        <button type="button" class="btn btn-light-secondary btn-sm rounded-3" data-bs-toggle="modal" data-bs-target="#taskModal">
+                          <i class="fe fe-plus-circle me-1"></i>Add Task
+                        </button>
+                    </div>
+                    </div>
+                </div>
+    
+            </div>
+    
+          </div>
+    
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="task-kanban-container">
+        <div class="card bg-gray-300 shadow-none rounded-3 d-inline-block me-4 align-top mb-4 task-card">
+    
+          <div class="card-body p-3">
+    
+            <div class="task-list">
+    
+                <!--Head-->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h4 class="mb-0">{{statusType[2]}}</h4>
+                    </div>
+                </div>
+    
+                <!--Body-->
+    
+                <div class="task-kanban">
+                    <div id="do">
+    
+                      <!-- Elemento a repetir-->
+                      <!--*ngFor="let element of toDo"-->
+                      
+                      <!-- card -->
+                      <div class="card border-pending" >
+                        <!-- card body -->
+                        <div class="card-body p-3">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h6>titulo</h6>
+                            </div>
+                            <div><span class="badge bg-danger">Hight</span></div>
+                            <div><span class="badge bg-warning">Medium</span></div>
+                            <div><span class="badge bg-info">Slow</span></div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                            <!-- img -->
+                            <div class="d-flex align-items-center">
+                              <!-- <img [src]="'../../../../content/images/jhipster_family_member_2.svg'" alt="" class="avatar avatar-xs
+                                rounded-circle imgtooltip" data-template="one"> -->
+                              <!-- avatar -->
+                              <!-- text -->
+                              <div id="one" class="d-none">
+                                <h6 class="mb-0">{{element}}</h6>
+                              </div>
+                              <!-- text -->
+                              <div class="ms-2">
+                                <span class="fs-6"><i class="fe
+                                    fe-clock text-muted me-1"></i>{{element}}</span>
+                              </div>
+                            </div>                                  
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div class="card border-in-progress" >
+                        <!-- card body -->
+                        <div class="card-body p-3">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h6>titulo</h6>
+                            </div>
+                            <div><span class="badge bg-danger">Hight</span></div>
+                            <div><span class="badge bg-warning">Medium</span></div>
+                            <div><span class="badge bg-info">Slow</span></div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                            <!-- img -->
+                            <div class="d-flex align-items-center">
+                              <!-- <img [src]="'../../../../content/images/jhipster_family_member_2.svg'" alt="" class="avatar avatar-xs
+                                rounded-circle imgtooltip" data-template="one"> -->
+                              <!-- avatar -->
+                              <!-- text -->
+                              <div id="one" class="d-none">
+                                <h6 class="mb-0">{{element}}</h6>
+                              </div>
+                              <!-- text -->
+                              <div class="ms-2">
+                                <span class="fs-6"><i class="fe
+                                    fe-clock text-muted me-1"></i>{{element}}</span>
+                              </div>
+                            </div>                                  
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div class="card border-resolved" >
+                        <!-- card body -->
+                        <div class="card-body p-3">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h6>titulo</h6>
+                            </div>
+                            <div><span class="badge bg-danger">Hight</span></div>
+                            <div><span class="badge bg-warning">Medium</span></div>
+                            <div><span class="badge bg-info">Slow</span></div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                            <!-- img -->
+                            <div class="d-flex align-items-center">
+                              <!-- <img [src]="'../../../../content/images/jhipster_family_member_2.svg'" alt="" class="avatar avatar-xs
+                                rounded-circle imgtooltip" data-template="one"> -->
+                              <!-- avatar -->
+                              <!-- text -->
+                              <div id="one" class="d-none">
+                                <h6 class="mb-0">{{element}}</h6>
+                              </div>
+                              <!-- text -->
+                              <div class="ms-2">
+                                <span class="fs-6"><i class="fe
+                                    fe-clock text-muted me-1"></i>{{element}}</span>
+                              </div>
+                            </div>                                  
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div class="card border-canceled" >
+                        <!-- card body -->
+                        <div class="card-body p-3">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h6>titulo</h6>
+                            </div>
+                            <div><span class="badge bg-danger">Hight</span></div>
+                            <div><span class="badge bg-warning">Medium</span></div>
+                            <div><span class="badge bg-info">Slow</span></div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                            <!-- img -->
+                            <div class="d-flex align-items-center">
+                              <!-- <img [src]="'../../../../content/images/jhipster_family_member_2.svg'" alt="" class="avatar avatar-xs
+                                rounded-circle imgtooltip" data-template="one"> -->
+                              <!-- avatar -->
+                              <!-- text -->
+                              <div id="one" class="d-none">
+                                <h6 class="mb-0">{{element}}</h6>
+                              </div>
+                              <!-- text -->
+                              <div class="ms-2">
+                                <span class="fs-6"><i class="fe
+                                    fe-clock text-muted me-1"></i>{{element}}</span>
+                              </div>
+                            </div>                                  
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                </div>
+    
+                <!-- Footer -->
+                <div class="mt-3">
+                    <!-- button -->
+                    <div class="d-grid">
+                      <div class="d-grid">
+                        <button type="button" class="btn btn-light-secondary btn-sm rounded-3" data-bs-toggle="modal" data-bs-target="#taskModal">
+                          <i class="fe fe-plus-circle me-1"></i>Add Task
+                        </button>
+                    </div>
+                    </div>
+                </div>
+    
+            </div>
+    
+          </div>
+    
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="task-kanban-container">
+        <div class="card bg-gray-300 shadow-none rounded-3 d-inline-block me-4 align-top mb-4 task-card">
+    
+          <div class="card-body p-3">
+    
+            <div class="task-list">
+    
+                <!--Head-->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h4 class="mb-0">{{statusType[3]}}</h4>
+                    </div>
+                </div>
+    
+                <!--Body-->
+    
+                <div class="task-kanban">
+                    <div id="do">
+    
+                      <!-- Elemento a repetir-->
+                      <!--*ngFor="let element of toDo"-->
+                      
+                      <!-- card -->
+                      <div class="card border-pending" >
+                        <!-- card body -->
+                        <div class="card-body p-3">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h6>titulo</h6>
+                            </div>
+                            <div><span class="badge bg-danger">Hight</span></div>
+                            <div><span class="badge bg-warning">Medium</span></div>
+                            <div><span class="badge bg-info">Slow</span></div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                            <!-- img -->
+                            <div class="d-flex align-items-center">
+                              <!-- <img [src]="'../../../../content/images/jhipster_family_member_2.svg'" alt="" class="avatar avatar-xs
+                                rounded-circle imgtooltip" data-template="one"> -->
+                              <!-- avatar -->
+                              <!-- text -->
+                              <div id="one" class="d-none">
+                                <h6 class="mb-0">{{element}}</h6>
+                              </div>
+                              <!-- text -->
+                              <div class="ms-2">
+                                <span class="fs-6"><i class="fe
+                                    fe-clock text-muted me-1"></i>{{element}}</span>
+                              </div>
+                            </div>                                  
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div class="card border-in-progress" >
+                        <!-- card body -->
+                        <div class="card-body p-3">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h6>titulo</h6>
+                            </div>
+                            <div><span class="badge bg-danger">Hight</span></div>
+                            <div><span class="badge bg-warning">Medium</span></div>
+                            <div><span class="badge bg-info">Slow</span></div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                            <!-- img -->
+                            <div class="d-flex align-items-center">
+                              <!-- <img [src]="'../../../../content/images/jhipster_family_member_2.svg'" alt="" class="avatar avatar-xs
+                                rounded-circle imgtooltip" data-template="one"> -->
+                              <!-- avatar -->
+                              <!-- text -->
+                              <div id="one" class="d-none">
+                                <h6 class="mb-0">{{element}}</h6>
+                              </div>
+                              <!-- text -->
+                              <div class="ms-2">
+                                <span class="fs-6"><i class="fe
+                                    fe-clock text-muted me-1"></i>{{element}}</span>
+                              </div>
+                            </div>                                  
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div class="card border-resolved" >
+                        <!-- card body -->
+                        <div class="card-body p-3">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h6>titulo</h6>
+                            </div>
+                            <div><span class="badge bg-danger">Hight</span></div>
+                            <div><span class="badge bg-warning">Medium</span></div>
+                            <div><span class="badge bg-info">Slow</span></div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                            <!-- img -->
+                            <div class="d-flex align-items-center">
+                              <!-- <img [src]="'../../../../content/images/jhipster_family_member_2.svg'" alt="" class="avatar avatar-xs
+                                rounded-circle imgtooltip" data-template="one"> -->
+                              <!-- avatar -->
+                              <!-- text -->
+                              <div id="one" class="d-none">
+                                <h6 class="mb-0">{{element}}</h6>
+                              </div>
+                              <!-- text -->
+                              <div class="ms-2">
+                                <span class="fs-6"><i class="fe
+                                    fe-clock text-muted me-1"></i>{{element}}</span>
+                              </div>
+                            </div>                                  
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div class="card border-canceled" >
+                        <!-- card body -->
+                        <div class="card-body p-3">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              <h6>titulo</h6>
+                            </div>
+                            <div><span class="badge bg-danger">Hight</span></div>
+                            <div><span class="badge bg-warning">Medium</span></div>
+                            <div><span class="badge bg-info">Slow</span></div>
+                          </div>
+                          <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                            <!-- img -->
+                            <div class="d-flex align-items-center">
+                              <!-- <img [src]="'../../../../content/images/jhipster_family_member_2.svg'" alt="" class="avatar avatar-xs
+                                rounded-circle imgtooltip" data-template="one"> -->
+                              <!-- avatar -->
+                              <!-- text -->
+                              <div id="one" class="d-none">
+                                <h6 class="mb-0">{{element}}</h6>
+                              </div>
+                              <!-- text -->
+                              <div class="ms-2">
+                                <span class="fs-6"><i class="fe
+                                    fe-clock text-muted me-1"></i>{{element}}</span>
+                              </div>
+                            </div>                                  
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                </div>
+    
+                <!-- Footer -->
+                <div class="mt-3">
+                    <!-- button -->
+                    <div class="d-grid">
+                      <div class="d-grid">
+                        <button type="button" class="btn btn-light-secondary btn-sm rounded-3" data-bs-toggle="modal" data-bs-target="#taskModal">
+                          <i class="fe fe-plus-circle me-1"></i>Add Task
+                        </button>
+                    </div>
+                    </div>
+                </div>
+    
+            </div>
+    
+          </div>
+    
+        </div>
+      </div>
+    </div>
   </div>
-
+  
 </div>
-
-<!-- <div class=""></div> -->
-
-<!-- <div></div> -->
