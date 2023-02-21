@@ -11,6 +11,8 @@ export class StatusIncidenceComponent implements OnInit {
 
   statusType: string[] = ['PENDING','IN_PROCESS','RESOLVED','CANCELED']; 
 
+  list: string[] = ['Camarma', 'Azuqueca', 'Alovera'];
+
   element: string = 'incidence';
 
   collapse: boolean = true;

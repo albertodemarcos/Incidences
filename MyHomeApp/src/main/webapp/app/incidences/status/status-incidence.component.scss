@@ -73,6 +73,28 @@
     border-left: solid 5px red;
 }
 
+/**
+* ICONS COLOR
+*/
+
+.icon-pending{
+    color: rgb(105, 172, 254);
+}
+
+.icon-in-progress{
+    color: rgb(255, 207, 17);
+}
+
+.icon-resolved {
+    color: rgb(102, 255, 71);
+}
+
+.icon-cancel{
+    color: rgb(255, 53, 18);
+}
+
+
+
 
 /*
 @charset "UTF-8";@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");.border {
