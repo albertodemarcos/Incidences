@@ -55,6 +55,10 @@ public class Incidence {
 	@Column(name = "status")
 	private IncidenceStatus status;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "priority")
+	private PriorityType priority;
+	
 	@Embedded
 	private Geolocation location;
 	
@@ -114,6 +118,14 @@ public class Incidence {
 
 	public void setStatus(IncidenceStatus status) {
 		this.status = status;
+	}
+
+	public PriorityType getPriority() {
+		return priority;
+	}
+
+	public void setPriority(PriorityType priority) {
+		this.priority = priority;
 	}
 
 	public Geolocation getLocation() {

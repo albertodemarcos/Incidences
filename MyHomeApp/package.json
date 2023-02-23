@@ -72,6 +72,7 @@
     "packaging": "jar"
   },
   "dependencies": {
+    "@angular/cdk": "^14.2.0",
     "@angular/common": "14.2.0",
     "@angular/compiler": "14.2.0",
     "@angular/core": "14.2.0",

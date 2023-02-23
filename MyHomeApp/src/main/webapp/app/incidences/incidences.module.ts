@@ -17,7 +17,7 @@ import { StatusIncidenceComponent } from './status/status-incidence.component';
     DeleteIncidenceComponent,
     DetailIncidenceComponent,
     ListIncidenceComponent,
-    StatusIncidenceComponent
+    StatusIncidenceComponent,
   ],
 })
 export class IncidencesModule { }

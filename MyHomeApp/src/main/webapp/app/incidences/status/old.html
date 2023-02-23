@@ -1,3 +1,194 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div><h1>Kanban</h1></div>
+  <div class="d-flex align-items-center">
+    <!-- <div class="dropdown mr-1"> -->
+      <!-- <button class="btn btn-secondary dropdown-toggle" type="button" ngbDropdownToggle  id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        Dropdown button
+      </button>
+      <ul class="dropdown-menu" ngbDropdownMenu id="collapseOne"  aria-labelledby="dropdownMenuButton1">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
+    </div> -->
+
+    <!-- <a class="nav-link dropdown-toggle"  href="" id="admin-menu" data-cy="adminMenu">
+      <span>
+        <fa-icon icon="users-cog"></fa-icon>
+        <span jhiTranslate="global.menu.admin.main">Administración</span>
+      </span>
+    </a> -->
+    <!-- <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+      <li>
+        <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
+          <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+          <span jhiTranslate="global.menu.admin.userManagement">Gestión de usuarios</span>
+        </a>
+      </li>
+      <li>
+        <a class="dropdown-item" routerLink="incidences" routerLinkActive="active" (click)="collapseNavbar()">
+          <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+          <span jhiTranslate="global.menu.admin.incidencesManagement">Gestión de organizaciones</span>
+        </a>
+      </li>
+    </ul> -->
+
+    <!-- <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+        Dropdown button
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
+    </div> -->
+  </div>
+</div>
+
+<div class="row">
+  <div class="col ">
+    <div class="card card-body rounded-1 align-top mb-1">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <fa-icon icon="table-list" class="icon-pending"></fa-icon> <span >{{statusType[0]}}</span><!--jhiTranslate=""-->
+        </div>
+        <div class="d-flex align-items-center">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col ">
+    <div class="card card-body rounded-1 align-top mb-1">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <fa-icon icon="spinner" class="icon-in-progress" ></fa-icon> <span >{{statusType[1]}}</span><!--jhiTranslate=""-->
+        </div>
+        <div class="d-flex align-items-center">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col ">
+    <div class="card card-body rounded-1 align-top mb-1">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <fa-icon icon="check" class="icon-resolved"></fa-icon> <span >{{statusType[2]}}</span><!--jhiTranslate=""-->
+        </div>
+        <div class="d-flex align-items-center">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row" *ngFor="let item of list">
+
+  <div class="col">
+    <div class="rounded-1 align-top mb-1">
+      
+      <div class="card-head">
+        {{item}}
+      </div>
+
+      <div class="card-body p-2">
+
+        <div class="row">
+          <div class="col">
+
+            <div class="card border-pending" >
+              <!-- card body -->
+              <div class="card-body ">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <h6>titulo</h6>
+                  </div>
+                  <div><span class="badge bg-danger">Hight</span></div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                  <!-- img -->
+                  <div class="d-flex align-items-center">
+                    <div id="one" class="d-none">
+                      <h6 class="mb-0">{{element}}</h6>
+                    </div>
+                    <!-- text -->
+                    <div class="ms-2">
+                      <span class="fs-6"><i class="fe
+                          fe-clock text-muted me-1"></i>{{element}}</span>
+                    </div>
+                  </div>                                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card border-in-progress" >
+              <!-- card body -->
+              <div class="card-body ">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <h6>titulo</h6>
+                  </div>
+                  <div><span class="badge bg-danger">Hight</span></div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                  <!-- img -->
+                  <div class="d-flex align-items-center">
+                    <div id="one" class="d-none">
+                      <h6 class="mb-0">{{element}}</h6>
+                    </div>
+                    <!-- text -->
+                    <div class="ms-2">
+                      <span class="fs-6"><i class="fe
+                          fe-clock text-muted me-1"></i>{{element}}</span>
+                    </div>
+                  </div>                                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card border-resolved" >
+              <!-- card body -->
+              <div class="card-body ">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <h6>titulo</h6>
+                  </div>
+                  <div><span class="badge bg-danger">Hight</span></div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center ps-4 mt-6">
+                  <!-- img -->
+                  <div class="d-flex align-items-center">
+                    <div id="one" class="d-none">
+                      <h6 class="mb-0">{{element}}</h6>
+                    </div>
+                    <!-- text -->
+                    <div class="ms-2">
+                      <span class="fs-6"><i class="fe
+                          fe-clock text-muted me-1"></i>{{element}}</span>
+                    </div>
+                  </div>                                  
+                </div>
+              </div>
+            </div>
+          </div>
+                    
+        </div>
+
+
+      </div>
+      
+    </div>
+
+  </div>
+
+</div>
+
+<!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 <div class="row">
   <div class="col">
     <div class="task-kanban-container accordion" id="accordionExample">
@@ -688,7 +879,6 @@
   </div>
 </div>
 
-</div>
 
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 

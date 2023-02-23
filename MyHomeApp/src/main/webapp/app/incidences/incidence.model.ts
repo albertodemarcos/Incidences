@@ -8,6 +8,7 @@ import { Geolocation } from "app/core/model/geolocation.model";
     startDate?: Date | null;
     endDate?: Date | null;
     status?: string | null;
+    priority?: string | null;
     location?: Geolocation | null;
     organization?: Organization | null;
     organizationId?: number | null;
@@ -27,6 +28,7 @@ import { Geolocation } from "app/core/model/geolocation.model";
       public startDate?: Date| null,
       public endDate?: Date| null,
       public status?: string| null,
+      public priority?: string | null,
       public location?: Geolocation| null,
       public organization?: Organization| null,
       public organizationId?: number| null,

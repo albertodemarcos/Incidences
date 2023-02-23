@@ -65,6 +65,10 @@
     border-left: solid 5px orange;
 }
 
+.border-pending-confirm{
+    border-left: solid 5px yellow;
+}
+
 .border-resolved{
     border-left: solid 5px green;
 }
@@ -83,6 +87,10 @@
 
 .icon-in-progress{
     color: rgb(255, 207, 17);
+}
+
+.icon-pending-confirm{
+    color: rgb(248, 255, 118);
 }
 
 .icon-resolved {

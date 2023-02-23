@@ -42,6 +42,7 @@ import {
   faTableList,
   faSpinner,
   faFlagCheckered,
+  faUserClock,
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -89,5 +90,6 @@ export const fontAwesomeIcons = [
   faTableList,
   faSpinner,
   faFlagCheckered,
+  faUserClock,
   // jhipster-needle-add-icon-import
 ];

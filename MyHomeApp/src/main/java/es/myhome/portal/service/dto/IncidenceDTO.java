@@ -7,6 +7,7 @@ import java.util.List;
 
 import es.myhome.portal.domain.app.Incidence;
 import es.myhome.portal.domain.app.IncidenceStatus;
+import es.myhome.portal.domain.app.PriorityType;
 
 public class IncidenceDTO implements Serializable {
 
@@ -21,6 +22,7 @@ public class IncidenceDTO implements Serializable {
 	private Date startDate;
 	private Date endDate;
 	private IncidenceStatus status;
+	private PriorityType priority;
 	private Long idOrganization;
 	private List<PhotoDTO> photos = new ArrayList<PhotoDTO>();
 	private Long idEmployee;
@@ -97,6 +99,14 @@ public class IncidenceDTO implements Serializable {
 
 	public void setStatus(IncidenceStatus status) {
 		this.status = status;
+	}
+
+	public PriorityType getPriority() {
+		return priority;
+	}
+
+	public void setPriority(PriorityType priority) {
+		this.priority = priority;
 	}
 
 	public Long getIdOrganization() {

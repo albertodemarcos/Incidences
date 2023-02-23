@@ -50,6 +50,7 @@ public class IncidenceService {
 		incidence.setStartDate(incidenceDTO.getStartDate());
 		incidence.setEndDate(incidenceDTO.getEndDate());
 		incidence.setStatus(incidenceDTO.getStatus());
+		incidence.setPriority(incidenceDTO.getPriority());
 		incidence.setLocation(getGeolocation(incidenceDTO));
 		
 		if(incidenceDTO.getIdOrganization() != null ) {
@@ -89,6 +90,7 @@ public class IncidenceService {
 	        		incidence.setStartDate(incidenceDTO.getStartDate());
 	        		incidence.setEndDate(incidenceDTO.getEndDate());
 	        		incidence.setStatus(incidenceDTO.getStatus());
+	        		incidence.setPriority(incidenceDTO.getPriority());
 	        		incidence.setLocation(getGeolocation(incidenceDTO));
 	                log.debug("Changed Information for Incidence: {}", incidence);
 	                return incidence;
