@@ -1,6 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { Geolocation } from 'app/core/model/geolocation.model';
+import { Incidence } from 'app/incidences/incidence.model';
+import { IncidencesService } from 'app/incidences/incidences.service';
+import { Observable, Observer } from 'rxjs';
+import { CreateIncidenceModalComponent } from './incidence/create-incidence-modal/create-incidence-modal.component';
+import { DetailIncidenceModalComponent } from './incidence/detail-incidence-modal/detail-incidence-modal.component';
 
 @Component({
   selector: 'jhi-map-city',
@@ -8,44 +13,166 @@ import { catchError, map, Observable, of } from 'rxjs';
   styleUrls: ['./map-city.component.scss']
 })
 export class MapCityComponent implements OnInit {
-  
 
-  apiLoaded: Observable<boolean>;
-  //map: google.maps.Map | undefined;
 
-  constructor(httpClient: HttpClient) {
-    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE', 'callback').pipe(map(() => true),catchError(() => of(false)),);
+  @ViewChild("incidencesMap",{static: false}) public map: any;
+   
+  //options: MapBaseLayer;
+
+  options: google.maps.MapOptions | undefined;
+  markers: any[] = [];
+
+  center = {lat: 40.4948212, lng: -3.3841854};
+  zoom = 15;
+  display?: google.maps.LatLngLiteral;
+
+  constructor(private modalService: NgbModal, private incidencesService: IncidencesService) {
+    
+    this.options = {
+      mapTypeId: 'hybrid',
+      zoomControl: true,
+      scrollwheel: false,
+      disableDoubleClickZoom: true,
+      maxZoom: 15,
+      minZoom: 2,
+    };
   }
 
   ngOnInit(): void {
-
-    this.apiLoaded.subscribe( {
-
-      next: (apiLoaded: boolean)=> {
-        console.info('Google maps is loaded');
+    
+    this.getUserLocation().subscribe({
+      next: (position) => {
+        this.initIncidencesMap(position);
       },
-      error: (error: any)=> {
-        console.error('Error! Don\'t load the google maps');
+      error: () => {
+        console.error('No se ha podido obtener la posicion del usuario');
       },
-      complete: ()=>{
-        console.debug("The google maps is loaded");
+      complete: ()=> {
+        console.info('initIncidencesMap: finalizado');
       }
     });
-    this.initMap();
+
+    /*let marker = {
+      position:{
+        lat: 40.4948212,
+        lng: -3.3841854
+      },
+      title: 'Punto',
+      clickable: true,      
+      idIncidence: 50000000,
+      options: {
+        
+      },
+    };
+    
+
+    this.markers.push(marker);*/
   }
 
-  private initMap(): void{
+  /**
+   * Public Methods
+   */
 
-    /*this.map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-      center: { lat: -34.397, lng: 150.644 },
-      zoom: 8,
-    });*/
-
-    /* Buscar forma de cargar mapa
-    "@googlemaps/google-maps-services-js": "^3.3.15",
-    "@googlemaps/js-api-loader": "^1.14.3",
-    */
+  onMapClick(event: google.maps.MapMouseEvent){
+    console.log('onMapClick: ' + event + " latLng: {lat : " + event.latLng?.lat() + ", lng : " + event.latLng?.lng());
+    let _options: NgbModalOptions = {
+      fullscreen: true
+    };
+    const _modalCreateIncidenceRef = this.modalService.open(CreateIncidenceModalComponent, _options);
+    let _location: Geolocation = new Geolocation(event.latLng?.lat(), event.latLng?.lng());
+    _modalCreateIncidenceRef.componentInstance.location = _location;
   }
+
+  onMarkerClick(event: google.maps.MapMouseEvent, idIncidence :any){
+    console.log('onMarkerClick: ' + event + "with id = "+idIncidence+" latLng: {lat : " + event.latLng?.lat() + ", lng : " + event.latLng?.lng());
+    let _options = {
+      fullscreen: true      
+    };
+    const _modalDetailIncidenceRef = this.modalService.open(DetailIncidenceModalComponent, _options);
+    let _location: Geolocation = new Geolocation(event.latLng?.lat(), event.latLng?.lng());
+    _modalDetailIncidenceRef.componentInstance.location = _location;
+    _modalDetailIncidenceRef.componentInstance.idIncidence = idIncidence;
+  }
+
+  private initIncidencesMap(position: any): void{
+    this.incidencesService.findAllByPosition(position).subscribe({
+      next: (incidences: Incidence[]) => {
+        if(!incidences || incidences.length == 0){
+          return;
+        }
+        for(let i = 0; i < incidences.length; i++){
+          let incidence = incidences[i];
+          let marker = this.createMarker(incidence);
+          this.markers.push(marker);
+        }
+      },
+      error: () => {
+
+      },
+      complete: ()=> {
+        console.info('initIncidencesMap: finalizado');
+      }
+    });
+  }
+
+  private getUserLocation(): Observable<any>{
+
+    return new Observable((observer: Observer<any>) => {
+
+      if (navigator.geolocation) {
+
+        navigator.geolocation.getCurrentPosition((_position) => {
+          let positionUser = {
+            latitude : _position.coords.latitude,
+            longitude : _position.coords.longitude
+          };
+          observer.next(positionUser);
+          observer.complete();
+        }, (error: any) => {
+
+          observer.error(error);
+        });
+      }
+      else {
+        observer.error(null);
+      }
+    });
+  }
+
+  /*private async getLocationUser(): Promise<any>{
+
+    return new Promise(function(resolve, reject) {
+      navigator.geolocation.getCurrentPosition(function(pos){
+        let lat = pos.coords.latitude
+        let lon = pos.coords.longitude
+        resolve({lat,lon});
+    });
+    
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position)=>{
+        const longitude = position.coords.longitude;
+        const latitude = position.coords.latitude;
+          //this.callApi(longitude, latitude);
+      });
+    }
+
+
+  }*/
+
+  private createMarker(incidence: Incidence): google.maps.Marker{
+    let json: any = {
+      position:{
+        lat: incidence.location?.latitude,
+        lng: incidence.location?.longitude
+      },
+      title: incidence.title,
+      draggable: true,
+      idIncidence: incidence.id
+    };
+    return new google.maps.Marker(json);
+  }
+
+
 
 }
 

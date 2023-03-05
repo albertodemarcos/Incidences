@@ -84,6 +84,11 @@
           "status_incidence.resolved" : "Resuelto",
           "status_incidence.canceled" : "Cancelada"
         },
+        "priority": {
+          "priority_incidence.low" : "Baja",
+          "priority_incidence.medium" : "Media",
+          "priority_incidence.high" : "Alta"
+        },
         "activestatus": {
           "null": null,
           "true": "Si",
@@ -101,6 +106,7 @@
           "start_date": "Fecha inicio",
           "end_date" : "Fecha resolución",
           "status" : "Estado",
+          "priority" : "Prioridad",
           "organization" : "Organización",
           "employee" : "Empleado",
           "description": "Descripción",

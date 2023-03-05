@@ -1,11 +1,11 @@
 export interface IGeolocation {
-    longitude?: number;
     latitude?: number;
+    longitude?: number;
 }
 
 export class Geolocation implements IGeolocation {
     constructor(
-        public longitude?: number,
         public latitude?: number,
+        public longitude?: number,
     ) {}
 }

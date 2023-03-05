@@ -18,7 +18,7 @@ export class IncidenceResolve implements Resolve<IIncidence | null> {
 
 export const mapCityRoute: Routes = [  
   {
-    path: 'map',
+    path: '',
     component: MapCityComponent,
     /*resolve: {
       user: IncidenceResolve,

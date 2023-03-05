@@ -1,6 +1,22 @@
 
 <h1>Map</h1>
-<ng-container *ngIf="apiLoaded | async" >
-<div id="map">
-</div>
-</ng-container>
+
+<google-map #incidencesMap
+    width="100%"
+    height="750px"
+    [center]="center"
+    [zoom]="zoom"
+    (mapClick)="onMapClick($event)">
+
+    <map-marker
+        *ngFor="let marker of markers"
+        [position]="marker.position"
+        [label]="marker.label"
+        [title]="marker.title"
+        [options]="marker.options"
+        (mapClick)="onMarkerClick($event, marker.idIncidence)"
+        #mapMarker>
+  </map-marker>
+
+</google-map>
+

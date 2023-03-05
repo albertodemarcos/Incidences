@@ -100,7 +100,7 @@ export class CreateIncidenceComponent implements OnInit {
 
   }
   save(): void {
-    console.log('CreateEditIncidenceComponent => createIncidence()');
+    console.log('CreateEditIncidenceComponent => save()');
   }
   
   previousState(): void{

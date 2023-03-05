@@ -11,6 +11,9 @@ import { IIncidence } from './incidence.model';
 })
 export class IncidencesService {
 
+  private static URL_ALL_INCIDENCES_USER: String = 'map/list';
+
+
   private resourceUrl = this.applicationConfigService.getEndpointFor('api/incidences/');
 
   constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) {}
@@ -34,6 +37,12 @@ export class IncidencesService {
 
   delete(login: string): Observable<{}> {
     return this.http.delete(`${this.resourceUrl}/${login}`);
+  }
+
+  findAllByPosition(position: any): Observable<IIncidence[]>{
+    let url = `${this.resourceUrl}/${IncidencesService.URL_ALL_INCIDENCES_USER}`;
+    url += `?latitude=${position?.latitude}&longitude=${position?.longitude}`;
+    return this.http.get<IIncidence[]>(url);
   }
 
 }
