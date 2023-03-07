@@ -6,6 +6,7 @@
           "button": "Crear incidencia",
           "title-form-create": "Crear incidencia",
           "title-form-edit": "Editar incidencia",
+          "create" : "Se ha creado la incidencia",
           "title": {
               "label": "Título",
               "placeholder": "Ponga un título a la incidencia"
@@ -29,6 +30,9 @@
           "latitude": {
               "label": "Latitud",
               "placeholder": "Coordenada del plano"
+          },
+          "errors" : {
+            "create" : "Se ha producido un error al crear la incidencia"
           }           
         },
         "list": {

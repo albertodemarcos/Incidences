@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { Geolocation } from 'app/core/model/geolocation.model';
-import { Incidence } from 'app/incidences/incidence.model';
+import { IIncidence, Incidence } from 'app/incidences/incidence.model';
 import { IncidencesService } from 'app/incidences/incidences.service';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subscription } from 'rxjs';
 import { CreateIncidenceModalComponent } from './incidence/create-incidence-modal/create-incidence-modal.component';
 import { DetailIncidenceModalComponent } from './incidence/detail-incidence-modal/detail-incidence-modal.component';
 
@@ -12,22 +12,27 @@ import { DetailIncidenceModalComponent } from './incidence/detail-incidence-moda
   templateUrl: './map-city.component.html',
   styleUrls: ['./map-city.component.scss']
 })
-export class MapCityComponent implements OnInit {
-
+export class MapCityComponent implements OnInit,  OnDestroy {
 
   @ViewChild("incidencesMap",{static: false}) public map: any;
-   
-  //options: MapBaseLayer;
 
   options: google.maps.MapOptions | undefined;
-  markers: any[] = [];
+  markers: any[]; 
 
-  center = {lat: 40.4948212, lng: -3.3841854};
-  zoom = 15;
+  center: any;
+  zoom: number;
   display?: google.maps.LatLngLiteral;
 
+  private createIncidenceSubscription: Subscription | undefined;
+  private updateIncidenceSubscription: Subscription | undefined;
+
   constructor(private modalService: NgbModal, private incidencesService: IncidencesService) {
-    
+    this.markers = [];
+    this.zoom = 15;
+    this.center = {
+      lat: 40.4948212,
+      lng: -3.3841854
+    };
     this.options = {
       mapTypeId: 'hybrid',
       zoomControl: true,
@@ -37,42 +42,54 @@ export class MapCityComponent implements OnInit {
       minZoom: 2,
     };
   }
+  
+  ngOnDestroy(): void {
+    if( this.createIncidenceSubscription != null ){
+      this.createIncidenceSubscription.unsubscribe();
+    }
+    if( this.updateIncidenceSubscription != null ){
+      this.updateIncidenceSubscription.unsubscribe();
+    }
+  }
 
   ngOnInit(): void {
-    
-    this.getUserLocation().subscribe({
-      next: (position) => {
-        this.initIncidencesMap(position);
+    console.debug('MapCityComponent.ngOnInit()');
+    this.initView();
+
+    this.createIncidenceSubscription = this.incidencesService.getCreateIncidenceSubject().subscribe({
+      next: (incidence: IIncidence) => {
+        if( incidence == null || !incidence.id ){
+          return;
+        }
+        let marker = this.createMarker(incidence);
+        this.markers.push(marker);
       },
-      error: () => {
-        console.error('No se ha podido obtener la posicion del usuario');
-      },
-      complete: ()=> {
-        console.info('initIncidencesMap: finalizado');
+      error: (err: any) => {
+        console.error('Se ha producido un error');
       }
     });
 
-    /*let marker = {
-      position:{
-        lat: 40.4948212,
-        lng: -3.3841854
+    this.updateIncidenceSubscription = this.incidencesService.getUpdateIncidenceSubject().subscribe({
+      next: (incidence: IIncidence) => {
+        if( incidence == null || !incidence.id ){
+          return;
+        }
+        this.updateMarkers(incidence);
       },
-      title: 'Punto',
-      clickable: true,      
-      idIncidence: 50000000,
-      options: {
-        
-      },
-    };
-    
-
-    this.markers.push(marker);*/
+      error: (err: any) => {
+        console.error('Se ha producido un error');
+      }
+    });
   }
 
   /**
-   * Public Methods
-   */
+  * Public Methods
+  */
 
+  /**
+   * 
+   * @param event 
+   */
   onMapClick(event: google.maps.MapMouseEvent){
     console.log('onMapClick: ' + event + " latLng: {lat : " + event.latLng?.lat() + ", lng : " + event.latLng?.lng());
     let _options: NgbModalOptions = {
@@ -83,6 +100,11 @@ export class MapCityComponent implements OnInit {
     _modalCreateIncidenceRef.componentInstance.location = _location;
   }
 
+  /**
+   * 
+   * @param event 
+   * @param idIncidence 
+   */
   onMarkerClick(event: google.maps.MapMouseEvent, idIncidence :any){
     console.log('onMarkerClick: ' + event + "with id = "+idIncidence+" latLng: {lat : " + event.latLng?.lat() + ", lng : " + event.latLng?.lng());
     let _options = {
@@ -94,6 +116,42 @@ export class MapCityComponent implements OnInit {
     _modalDetailIncidenceRef.componentInstance.idIncidence = idIncidence;
   }
 
+  onMarkerDrag(event: google.maps.MapMouseEvent,){
+
+  }
+
+  onMarkerDragStart(event: google.maps.MapMouseEvent,){
+
+  }
+
+  onMarkerDragEnd(event: google.maps.MapMouseEvent,){
+
+  }
+
+
+/**
+ * Private Methods
+ */
+
+  private initView(): void {
+
+    this.getUserLocation().subscribe({
+      next: (position) => {
+        this.initIncidencesMap(position);
+      },
+      error: () => {
+        console.error('No se ha podido obtener la posicion del usuario');
+      },
+      complete: ()=> {
+        console.info('initIncidencesMap: finalizado');
+      }
+    });
+  }
+
+  /**
+   * 
+   * @param position 
+   */
   private initIncidencesMap(position: any): void{
     this.incidencesService.findAllByPosition(position).subscribe({
       next: (incidences: Incidence[]) => {
@@ -106,8 +164,8 @@ export class MapCityComponent implements OnInit {
           this.markers.push(marker);
         }
       },
-      error: () => {
-
+      error: (err) => {
+        console.log('Se ha producido un error al cargar las incidencias: ' + JSON.stringify(err) );
       },
       complete: ()=> {
         console.info('initIncidencesMap: finalizado');
@@ -115,6 +173,10 @@ export class MapCityComponent implements OnInit {
     });
   }
 
+  /**
+   * 
+   * @returns 
+   */
   private getUserLocation(): Observable<any>{
 
     return new Observable((observer: Observer<any>) => {
@@ -129,7 +191,6 @@ export class MapCityComponent implements OnInit {
           observer.next(positionUser);
           observer.complete();
         }, (error: any) => {
-
           observer.error(error);
         });
       }
@@ -139,26 +200,24 @@ export class MapCityComponent implements OnInit {
     });
   }
 
-  /*private async getLocationUser(): Promise<any>{
-
-    return new Promise(function(resolve, reject) {
-      navigator.geolocation.getCurrentPosition(function(pos){
-        let lat = pos.coords.latitude
-        let lon = pos.coords.longitude
-        resolve({lat,lon});
-    });
-    
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position)=>{
-        const longitude = position.coords.longitude;
-        const latitude = position.coords.latitude;
-          //this.callApi(longitude, latitude);
-      });
+  /**
+   * 
+   * @param incidence 
+   */
+  private updateMarkers(incidence: Incidence): void{
+    if( !incidence || !incidence.id ){
+      return;
     }
+    this.markers.filter( m => {return m.idIncidence !== incidence.id } );
+    let marker = this.createMarker(incidence);
+    this.markers.push(marker);
+  }
 
-
-  }*/
-
+  /**
+   * 
+   * @param incidence 
+   * @returns 
+   */
   private createMarker(incidence: Incidence): google.maps.Marker{
     let json: any = {
       position:{
@@ -171,8 +230,6 @@ export class MapCityComponent implements OnInit {
     };
     return new google.maps.Marker(json);
   }
-
-
 
 }
 

@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IncidencesService } from 'app/incidences/incidences.service';
 import { Geolocation } from 'app/core/model/geolocation.model';
 import { Incidence } from 'app/incidences/incidence.model';
+import { Alert, AlertService } from 'app/core/util/alert.service';
+import { TranslateService } from '@ngx-translate/core';
+import { MapGeocoder, MapGeocoderResponse } from '@angular/google-maps';
 
 @Component({
   selector: 'jhi-create-incidence-modal',
@@ -13,12 +16,21 @@ import { Incidence } from 'app/incidences/incidence.model';
 })
 export class CreateIncidenceModalComponent implements OnInit {
 
+  /**
+   * https://www.tabnine.com/code/javascript/classes/googlemaps/GeocoderResult
+   */
+
   incidenceForm: FormGroup ;
   success: boolean = false;
   editForm: boolean = false;
   //isSaving: boolean = false;
   files: File[] = [];
   location: Geolocation | undefined;
+  alerts: Alert[] = [];
+
+  private alertError: Alert;
+  private alertSucces: Alert;
+  private geocoder: MapGeocoder;
 
   incidencesStatus:Array<string> = ['PENDING','IN_PROCESS','RESOLVED','CANCELED'];
 
@@ -26,8 +38,9 @@ export class CreateIncidenceModalComponent implements OnInit {
     private activeModal: NgbActiveModal,
     private formBuilder: FormBuilder,
     private incidencesService: IncidencesService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private translateService: TranslateService,
+    private activatedRoute: ActivatedRoute,
+    private ngZone: NgZone) {
       this.incidenceForm = this.formBuilder.group({
         id: [null],
         title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
@@ -35,11 +48,25 @@ export class CreateIncidenceModalComponent implements OnInit {
         //endDate: [new Date(), [Validators.required]],
         status: ['PENDING', [Validators.required]],
         photos: [null, [Validators.required]],
-        organizationId: [null, [Validators.required]],
+        // organizationId: [null, [Validators.required]],
         description: ['', ],
         longitude: [0, [Validators.required ]],
         latitude: [0, [Validators.required ]]
       });
+
+
+      this.alertError = { 
+        type: 'danger',
+        message: this.translateService.instant('incidences.form.errors.create'),
+      };
+
+      this.alertSucces = { 
+        type: 'success',
+        message: this.translateService.instant('incidences.form.create'),
+      };
+
+     this.geocoder = new MapGeocoder(ngZone);
+
   }
 
   ngOnInit(): void {
@@ -50,8 +77,12 @@ export class CreateIncidenceModalComponent implements OnInit {
       console.log('location: '  + JSON.stringify(this.location));      
       this.incidenceForm.controls['latitude'].setValue(this.location?.latitude);
       this.incidenceForm.controls['longitude'].setValue(this.location?.longitude);
+
+      this.getLocalidadFromLatLng();
     });
   }
+
+  
 
   ngOnDestroy(): void {
     this.editForm = false;
@@ -77,29 +108,65 @@ export class CreateIncidenceModalComponent implements OnInit {
   save(): void {
     console.log('CreateEditIncidenceComponent => createIncidence()');
     console.log('this.incidenceForm.value: ' + this.incidenceForm.value);
-    return;
-    /*this.incidencesService.create( this.incidenceForm.value).subscribe({
+    this.alerts = [];
+    this.incidencesService.create( this.incidenceForm.value).subscribe({
       next: (response: Incidence) => {
         if( response == null ) {
-          //let message = response.message != null && response.message.trim() ? response.message: this.translateService.instant('incidences.form.errors.error_persist');
-          //this.messageService.add({key: 'toast-modal', severity:'error', summary: 'Error', detail: message});
+          this.alerts.push(this.alertError);
           return;
         }
-       //this.coreService.setCreateIncidence(incidence);
+        this.alerts.push(this.alertSucces);
         setTimeout(()=>{
           this.dismiss();
-        }, 1000);
+        }, 3000);
       },
       error: (error: any) => {
         console.error("Error: "+JSON.stringify(error) );
-        //this.messageService.add({key: 'toast-modal', severity:'error', summary: 'Error', detail: this.translateService.instant('incidences.form.errors.persist') });
+        this.alerts.push(this.alertError);
       }
 
-    });*/
+    });
   }
   
   previousState(): void{
     window.history.back();
   }
 
+  closeAlert(alert: Alert) {
+		this.alerts.splice(this.alerts.indexOf(alert), 1);
+	}
+
+  private getLocalidadFromLatLng() {
+    
+    let request: google.maps.GeocoderRequest = this.getLatLng();
+
+    this.geocoder.geocode(request).subscribe({
+      next: (response: MapGeocoderResponse) => {
+        if( response == undefined ){
+
+          return;
+        }
+
+        let address = response.results[0];
+        
+        let city = address.address_components[address.address_components.length - 2].long_name || '';
+
+
+       },
+      error: (error: any) => { }
+    });
+  }
+
+
+  private getLatLng() {
+    let latLng = {
+      lat: this.location?.latitude ? this.location?.latitude : 0,
+      lng: this.location?.longitude ? this.location?.longitude : 0
+    };
+
+    let request: google.maps.GeocoderRequest = {
+      location: new google.maps.LatLng(latLng)
+    };
+    return request;
+  }
 }

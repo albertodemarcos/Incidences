@@ -15,6 +15,9 @@
         [title]="marker.title"
         [options]="marker.options"
         (mapClick)="onMarkerClick($event, marker.idIncidence)"
+        (mapDrag)="onMarkerDrag($event)"
+        (mapDragstart)="onMarkerDragStart($event)"
+        (mapDragend)="onMarkerDragEnd($event)"
         #mapMarker>
   </map-marker>
 

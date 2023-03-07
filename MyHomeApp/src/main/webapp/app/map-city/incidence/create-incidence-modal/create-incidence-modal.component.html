@@ -20,7 +20,11 @@
         <div class="col-8">
           <form name="incidenceForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="incidenceForm">
                  
-            <jhi-alert-error></jhi-alert-error>
+            <!-- <jhi-alert-error></jhi-alert-error> -->
+
+            <p *ngFor="let alert of alerts">
+              <ngb-alert [type]="alert.type" (closed)="closeAlert(alert)">{{ alert.message }}</ngb-alert>
+            </p>
       
             <div class="mb-3" [hidden]="!incidenceForm.value.id">
               <input type="hidden" name="id" formControlName="id" />
@@ -143,7 +147,7 @@
               <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
             </button>
       
-            <button type="submit" [disabled]="incidenceForm.invalid " class="btn btn-primary"><!--|| isSaving-->
+            <button type="submit" [disabled]="incidenceForm.invalid" class="btn btn-primary"><!--|| isSaving-->
               <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
             </button>
     
