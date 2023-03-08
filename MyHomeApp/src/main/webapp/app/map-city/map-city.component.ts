@@ -1,20 +1,23 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { Geolocation } from 'app/core/model/geolocation.model';
 import { IIncidence, Incidence } from 'app/incidences/incidence.model';
 import { IncidencesService } from 'app/incidences/incidences.service';
 import { Observable, Observer, Subscription } from 'rxjs';
+import { GoogleMarkerIncidence, IGoogleMarkerIncidence } from './google-marker-incidence.model';
 import { CreateIncidenceModalComponent } from './incidence/create-incidence-modal/create-incidence-modal.component';
 import { DetailIncidenceModalComponent } from './incidence/detail-incidence-modal/detail-incidence-modal.component';
+import { MapCityService } from './map-city.service';
+import { PositionMap } from './position-map.model';
 
 @Component({
   selector: 'jhi-map-city',
   templateUrl: './map-city.component.html',
   styleUrls: ['./map-city.component.scss']
 })
-export class MapCityComponent implements OnInit,  OnDestroy {
+export class MapCityComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild("incidencesMap",{static: false}) public map: any;
+  @ViewChild("incidencesMap",{static: false}) public map: google.maps.Map | undefined;
 
   options: google.maps.MapOptions | undefined;
   markers: any[]; 
@@ -26,7 +29,7 @@ export class MapCityComponent implements OnInit,  OnDestroy {
   private createIncidenceSubscription: Subscription | undefined;
   private updateIncidenceSubscription: Subscription | undefined;
 
-  constructor(private modalService: NgbModal, private incidencesService: IncidencesService) {
+  constructor(private modalService: NgbModal, private mapCityService: MapCityService) {
     this.markers = [];
     this.zoom = 15;
     this.center = {
@@ -42,6 +45,11 @@ export class MapCityComponent implements OnInit,  OnDestroy {
       minZoom: 2,
     };
   }
+  ngAfterViewInit(): void {
+    setTimeout(()=>{
+      this.initIncidencesMap();
+    }, 1000);
+  }
   
   ngOnDestroy(): void {
     if( this.createIncidenceSubscription != null ){
@@ -56,7 +64,7 @@ export class MapCityComponent implements OnInit,  OnDestroy {
     console.debug('MapCityComponent.ngOnInit()');
     this.initView();
 
-    this.createIncidenceSubscription = this.incidencesService.getCreateIncidenceSubject().subscribe({
+    this.createIncidenceSubscription = this.mapCityService.getCreateIncidenceSubject().subscribe({
       next: (incidence: IIncidence) => {
         if( incidence == null || !incidence.id ){
           return;
@@ -69,7 +77,7 @@ export class MapCityComponent implements OnInit,  OnDestroy {
       }
     });
 
-    this.updateIncidenceSubscription = this.incidencesService.getUpdateIncidenceSubject().subscribe({
+    this.updateIncidenceSubscription = this.mapCityService.getUpdateIncidenceSubject().subscribe({
       next: (incidence: IIncidence) => {
         if( incidence == null || !incidence.id ){
           return;
@@ -116,19 +124,6 @@ export class MapCityComponent implements OnInit,  OnDestroy {
     _modalDetailIncidenceRef.componentInstance.idIncidence = idIncidence;
   }
 
-  onMarkerDrag(event: google.maps.MapMouseEvent,){
-
-  }
-
-  onMarkerDragStart(event: google.maps.MapMouseEvent,){
-
-  }
-
-  onMarkerDragEnd(event: google.maps.MapMouseEvent,){
-
-  }
-
-
 /**
  * Private Methods
  */
@@ -137,7 +132,10 @@ export class MapCityComponent implements OnInit,  OnDestroy {
 
     this.getUserLocation().subscribe({
       next: (position) => {
-        this.initIncidencesMap(position);
+        this.center = {
+          lat: position.latitude,
+          lng:  position.longitude
+        };
       },
       error: () => {
         console.error('No se ha podido obtener la posicion del usuario');
@@ -152,14 +150,27 @@ export class MapCityComponent implements OnInit,  OnDestroy {
    * 
    * @param position 
    */
-  private initIncidencesMap(position: any): void{
-    this.incidencesService.findAllByPosition(position).subscribe({
-      next: (incidences: Incidence[]) => {
-        if(!incidences || incidences.length == 0){
+  private initIncidencesMap(): void{
+
+    if( this.map == null || this.map == undefined){
+      return;
+    }
+
+    let positionMap = this.getPositionMap();
+
+    google.maps.event.addListener( this.map, 'bounds_changed', () => {
+      return this.getPositionMap();
+    });
+
+    console.log('positionMap: ' + JSON.stringify(positionMap) );
+    
+    this.mapCityService.findAllByPosition(positionMap).subscribe({
+      next: (makersIncidence: IGoogleMarkerIncidence[]) => {
+        if(!makersIncidence || makersIncidence.length == 0){
           return;
         }
-        for(let i = 0; i < incidences.length; i++){
-          let incidence = incidences[i];
+        for(let i = 0; i < makersIncidence.length; i++){
+          let incidence = makersIncidence[i];
           let marker = this.createMarker(incidence);
           this.markers.push(marker);
         }
@@ -171,6 +182,22 @@ export class MapCityComponent implements OnInit,  OnDestroy {
         console.info('initIncidencesMap: finalizado');
       }
     });
+  }
+
+  /**
+   * 
+   * @returns 
+   */
+  private getPositionMap(): PositionMap | null{
+    if( this.map == null || this.map == undefined){
+      return null;
+    }
+    return new PositionMap(
+      this.map.getBounds()?.getNorthEast().lat(),
+      this.map.getBounds()?.getNorthEast().lng(),
+      this.map.getBounds()?.getSouthWest().lat(),
+      this.map.getBounds()?.getSouthWest().lng()
+    );
   }
 
   /**
@@ -209,6 +236,7 @@ export class MapCityComponent implements OnInit,  OnDestroy {
       return;
     }
     this.markers.filter( m => {return m.idIncidence !== incidence.id } );
+    ///let markerIncidence: GoogleMarkerIncidence = new GoogleMarkerIncidence(incidence.id, incidence.title, incidence.location);
     let marker = this.createMarker(incidence);
     this.markers.push(marker);
   }
@@ -218,7 +246,7 @@ export class MapCityComponent implements OnInit,  OnDestroy {
    * @param incidence 
    * @returns 
    */
-  private createMarker(incidence: Incidence): google.maps.Marker{
+  private createMarker(incidence: GoogleMarkerIncidence): google.maps.Marker{
     let json: any = {
       position:{
         lat: incidence.location?.latitude,
