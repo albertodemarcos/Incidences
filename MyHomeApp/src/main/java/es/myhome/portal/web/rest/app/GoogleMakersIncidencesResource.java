@@ -5,24 +5,15 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import es.myhome.portal.repository.IncidenceRepository;
-import es.myhome.portal.service.IncidenceService;
+import es.myhome.portal.service.GoogleMakersIncidencesService;
 import es.myhome.portal.service.dto.GoogleMarkerIncidenceDTO;
-import es.myhome.portal.service.dto.IncidenceDTO;
 import es.myhome.portal.service.filters.FilterGoogleMarkerIncidence;
-import es.myhome.portal.utilities.FilterUtils;
-import tech.jhipster.web.util.PaginationUtil;
 
 @RestController
 @RequestMapping("/api")
@@ -33,14 +24,11 @@ private final Logger log = LoggerFactory.getLogger(OrganizationResource.class);
 	@Value("${jhipster.clientApp.name}")
     private String applicationName;
 	
-	private final IncidenceService incidenceService;
+	private final GoogleMakersIncidencesService googleMakersIncidencesService;
 	
-	private final IncidenceRepository incidenceRepository;
-
-	public GoogleMakersIncidencesResource(IncidenceService incidenceService, IncidenceRepository incidenceRepository) {
+	public GoogleMakersIncidencesResource(GoogleMakersIncidencesService googleMakersIncidencesService) {
 		super();
-		this.incidenceService = incidenceService;
-		this.incidenceRepository = incidenceRepository;
+		this.googleMakersIncidencesService = googleMakersIncidencesService;
 	}
 	
 	/**
@@ -54,20 +42,25 @@ private final Logger log = LoggerFactory.getLogger(OrganizationResource.class);
     	
     	log.debug("REST request to get all Incidence");
         
-    	/*if (!onlyContainsAllowedProperties(null)) {
+    	if (!onlyContainsAllowedProperties(filters)) {
             return ResponseEntity.badRequest().build();
-        }*/
-        //final Page<IncidenceDTO> page = incidenceService.getAllManagedIncidences(pageable);
+        }
         
-        List<GoogleMarkerIncidenceDTO> markers = null;
+        List<GoogleMarkerIncidenceDTO> markers = this.googleMakersIncidencesService.getIncidencesMarkersByLocation(filters);
         
-       // HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), incidenceMarkers);
-        
-        return new ResponseEntity<>(markers, /*headers,*/ HttpStatus.OK);
+        return new ResponseEntity<>(markers, HttpStatus.OK);
     }
     
-    /*private boolean onlyContainsAllowedProperties(Pageable pageable) {
-        return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(FilterUtils.INCIDENCE_RESOURCE_ALLOWED_ORDERED_PROPERTIES::contains);
-    }*/
+    private boolean onlyContainsAllowedProperties(FilterGoogleMarkerIncidence filters) {
+        
+    	boolean isValid = false;
+    	
+    	if( filters.getaNord() != null && filters.getaEst() != null && filters.getaSud() != null && filters.getaOvest() != null ) {
+    		
+    		isValid = true;
+    	}
+    	
+    	return isValid;
+    }
 	
 }
