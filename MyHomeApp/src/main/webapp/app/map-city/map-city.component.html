@@ -6,17 +6,21 @@
     height="750px"
     [center]="center"
     [zoom]="zoom"
-    (mapClick)="onMapClick($event)">
-
-    <map-marker
-        *ngFor="let marker of markers"
-        [position]="marker.position"
-        [label]="marker.label"
-        [title]="marker.title"
-        [options]="marker.options"
-        (mapClick)="onMarkerClick($event, marker.idIncidence)"                
-        #mapMarker>
-  </map-marker>
+    (mapClick)="onMapClick($event)"
+    (zoomChanged)="onZoomChanged()"
+    (mapDragend)="onMapDragend()"
+    (boundsChanged)="onBoundsChanged()">
+    <!-- <map-marker-clusterer *ngIf="markers!=null&&markers.length>0" > -->
+      <map-marker
+          *ngFor="let marker of markers"
+          [position]="marker.position"
+          [label]="marker.label"
+          [title]="marker.title"
+          [options]="marker.options"
+          (mapClick)="onMarkerClick($event, marker.idIncidence)"                
+          #mapMarker>
+      </map-marker>
+    <!-- </map-marker-clusterer> -->
 
 </google-map>
 

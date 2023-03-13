@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { Geolocation } from 'app/core/model/geolocation.model';
 import { IIncidence, Incidence } from 'app/incidences/incidence.model';
@@ -17,19 +17,24 @@ import { PositionMap } from './position-map.model';
 })
 export class MapCityComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  public static MARKER_CLUSTERER_IMAGE_PATH = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m';
+
   @ViewChild("incidencesMap",{static: false}) public map: google.maps.Map | undefined;
 
-  options: google.maps.MapOptions | undefined;
-  markers: any[]; 
+  // @ViewChild("incidencesMap",{static: false}) public mapHtml: ElementRef | undefined;
 
+  options: google.maps.MapOptions | undefined;
+  markers: any[];
+  // map: google.maps.Map | undefined;
   center: any;
   zoom: number;
   display?: google.maps.LatLngLiteral;
+  markerClustererImagePath: any = MapCityComponent.MARKER_CLUSTERER_IMAGE_PATH;;
 
   private createIncidenceSubscription: Subscription | undefined;
   private updateIncidenceSubscription: Subscription | undefined;
 
-  constructor(private modalService: NgbModal, private mapCityService: MapCityService) {
+  constructor(private modalService: NgbModal, private mapCityService: MapCityService, public ngZone: NgZone) {
     this.markers = [];
     this.zoom = 15;
     this.center = {
@@ -44,11 +49,12 @@ export class MapCityComponent implements OnInit, AfterViewInit, OnDestroy {
       maxZoom: 15,
       minZoom: 2,
     };
+    
   }
   ngAfterViewInit(): void {
     setTimeout(()=>{
       this.initIncidencesMap();
-    }, 1000);
+    }, 2000);
   }
   
   ngOnDestroy(): void {
@@ -124,6 +130,20 @@ export class MapCityComponent implements OnInit, AfterViewInit, OnDestroy {
     _modalDetailIncidenceRef.componentInstance.idIncidence = idIncidence;
   }
 
+  onZoomChanged(): void{
+    console.log('onZoomChanged');
+    this.viewMarkersOnMap();
+  }
+
+  onMapDragend(): void {
+    console.log('onMapDragend');
+    this.viewMarkersOnMap();
+  }
+  onBoundsChanged(): void{
+    console.log('onBoundsChanged');
+    this.viewMarkersOnMap();
+  }
+
 /**
  * Private Methods
  */
@@ -156,32 +176,10 @@ export class MapCityComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
+    this.viewMarkersOnMap();
+
     let positionMap = this.getPositionMap();
-
-    google.maps.event.addListener( this.map, 'bounds_changed', () => {
-      return this.getPositionMap();
-    });
-
-    console.log('positionMap: ' + JSON.stringify(positionMap) );
-    
-    this.mapCityService.findAllByPosition(positionMap).subscribe({
-      next: (makersIncidence: IGoogleMarkerIncidence[]) => {
-        if(!makersIncidence || makersIncidence.length == 0){
-          return;
-        }
-        for(let i = 0; i < makersIncidence.length; i++){
-          let incidence = makersIncidence[i];
-          let marker = this.createMarker(incidence);
-          this.markers.push(marker);
-        }
-      },
-      error: (err) => {
-        console.log('Se ha producido un error al cargar las incidencias: ' + JSON.stringify(err) );
-      },
-      complete: ()=> {
-        console.info('initIncidencesMap: finalizado');
-      }
-    });
+    console.log('positionMap: ' + JSON.stringify( positionMap ) );
   }
 
   /**
@@ -258,6 +256,46 @@ export class MapCityComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     return new google.maps.Marker(json);
   }
+
+  private viewMarkersOnMap() {
+
+    let positionMap = this.getPositionMap();
+    
+    this.mapCityService.findAllByPosition(positionMap).subscribe({
+      next: (makersIncidence: IGoogleMarkerIncidence[]) => {
+        this.markers = [];
+        if (!makersIncidence || makersIncidence.length == 0) {
+          return;
+        }
+        for (let i = 0; i < makersIncidence.length; i++) {
+          let incidence = makersIncidence[i];
+          let marker = this.createMarker(incidence);
+          this.markers.push(marker);
+        }
+      },
+      error: (err) => {
+        this.markers = [];
+        console.log('Se ha producido un error al cargar las incidencias: ' + JSON.stringify(err));
+      },
+      complete: () => {
+        console.info('initIncidencesMap: finalizado');
+        setTimeout(()=>{
+          this.clusterization(this.markers, this.map);
+        }, 3000);
+      }
+    });
+  }
+
+  private clusterization(markers: any, map: any): void {
+
+    /*let options: MarkerClustererOptions = {
+      map: this.map,
+      markers: this.markers,
+    };
+
+    new MarkerClusterer({  });*/
+  }
+
 
 }
 
