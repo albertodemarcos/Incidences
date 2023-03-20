@@ -12,7 +12,7 @@ import { Geolocation } from "app/core/model/geolocation.model";
     location?: Geolocation | null;
     organization?: Organization | null;
     organizationId?: number | null;
-    photos?: string[] | null;
+    /*photos?: string[] | null;*/
     employeeId?: number | null;
     createdBy?: string;
     createdDate?: Date;
@@ -32,7 +32,7 @@ import { Geolocation } from "app/core/model/geolocation.model";
       public location?: Geolocation| null,
       public organization?: Organization| null,
       public organizationId?: number| null,
-      public photos?: string[]| null,
+      /*public photos?: string[]| null,*/
       public employeeId?: number| null,
       public createdBy?: string,
       public createdDate?: Date,

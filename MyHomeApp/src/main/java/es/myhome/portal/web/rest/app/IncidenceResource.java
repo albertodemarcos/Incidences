@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
@@ -16,16 +18,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.myhome.portal.config.Constants;
 import es.myhome.portal.domain.app.Incidence;
@@ -57,30 +68,41 @@ public class IncidenceResource {
 		this.incidenceRepository = incidenceRepository;
 	}
 	
+	@InitBinder("incidence")
+	public void initBinder(WebDataBinder binder, HttpServletRequest request) {
+		String json = request.getParameter("incidence"); request.getParameter("photos[0]");
+		log.info("Tenemos: {}",json );
+	}
+	
 	/**
      * {@code POST  /incidences}  : Creates a new incidence.
      * <p>
      * The incidence not needs to be admin on creation.
+     * 
+     * e//,
+    		//@RequestParam(name = "photos", required = false) Part[] photos
+    		//@RequestPart(name = "photos") List<MultipartFile> photos
      *
      * @param incidenceDTO the incidence to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new incidence, or with status {@code 400 (Bad Request)} if the title is already in use.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      * @throws BadRequestAlertException {@code 400 (Bad Request)} if the title is already in incidence.
      */
-    @PostMapping("/incidences")
-    public ResponseEntity<Incidence> createIncidence(@Valid @RequestBody IncidenceDTO incidenceDTO) throws URISyntaxException {
-        log.debug("REST request to save Incidence : {}", incidenceDTO);
+    @PostMapping(path = "/incidences/create", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE } )
+    public ResponseEntity<Incidence> createIncidence(@ModelAttribute(name = "incidence") IncidenceDTO incidence	) throws URISyntaxException { //
+    	log.debug("REST request to save Incidence : {}", incidence.toString());
         Incidence newIncidence = null;
-        if (incidenceDTO.getId() != null) {
+        if (incidence.getId() != null) {
  			throw new BadRequestAlertException("A new incidence cannot already have an ID", "incidenceManagement", "idexists");
-        } else if (incidenceRepository.findOneByTitle(incidenceDTO.getTitle().toLowerCase()).isPresent()) { // Lowercase the incidence title before comparing with database
+        } else if (incidenceRepository.findOneByTitle(incidence.getTitle().toLowerCase()).isPresent()) { // Lowercase the incidence title before comparing with database
         	throw new NameOrganizationAlreadyUsedException();
         }  
-        newIncidence = incidenceService.createIncidence(incidenceDTO);
+        newIncidence = incidenceService.createIncidence(incidence);
         return ResponseEntity
-                .created(new URI("/api/incidences/" + newIncidence.getId() ))
-                .headers(HeaderUtil.createAlert(applicationName, "incidenceService.created", newIncidence.getId().toString() ))
-                .body(newIncidence);
+        		.created(new URI("/api/incidences/" + newIncidence.getId() ))
+        		.headers(HeaderUtil.createAlert(applicationName, "incidenceService.created", newIncidence.getId().toString() ))
+        		.body(newIncidence);
+        //return ResponseEntity.ok(null);
     }
 
     /**

@@ -15,10 +15,14 @@
               "label": "Descripción",
               "placeholder": "Describa la incidencia"
           },        
-          "status": {
-              "label": "Estado",
-              "placeholder": "Seleccione el estado de la incidencia"
+          "priority": {
+              "label": "Prioridad",
+              "placeholder": "Seleccione la prioridad de la incidencia"
           },  
+          "status": {
+            "label": "Estado",
+            "placeholder": "Seleccione el estado de la incidencia"
+        }, 
           "photos": {
             "label": "Fotos",
             "placeholder": "Subir fotos de la incidencia"
@@ -61,6 +65,12 @@
               "maxlength": "El nombre no puede tener más de 50 caracteres.",
               "pattern": "El nombre no es válido."
             },
+            "title": {
+              "required": "El nombre es obligatorio.",
+              "minlength": "El nombre debe tener al menos 5 caracter.",
+              "maxlength": "El nombre no puede tener más de 50 caracteres.",
+              "pattern": "El nombre no es válido."
+            },
             "description": {
               "required": "La descripción es obligatoria.",
               "minlength": "La descripción debe tener al menos 15 caracter.",
@@ -68,7 +78,10 @@
               "pattern": "La descripción no es válida."
             },
             "status": {
-              "required": "El tipo de incidencia es obligatoria."              
+              "required": "El estado de incidencia es obligatoria."              
+            },
+            "priority": {
+              "required": "La prioridad de la incidencia es obligatoria."              
             },
             "longitude": {
               "required": "La longitud es obligatoria."

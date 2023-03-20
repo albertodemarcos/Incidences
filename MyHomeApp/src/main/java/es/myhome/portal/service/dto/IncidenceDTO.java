@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import es.myhome.portal.domain.app.Incidence;
 import es.myhome.portal.domain.app.IncidenceStatus;
 import es.myhome.portal.domain.app.PriorityType;
@@ -24,7 +26,8 @@ public class IncidenceDTO implements Serializable {
 	private IncidenceStatus status;
 	private PriorityType priority;
 	private Long idOrganization;
-	private List<PhotoDTO> photos = new ArrayList<PhotoDTO>();
+	private List<MultipartFile> photos = new ArrayList<MultipartFile>();
+	private List<PhotoDTO> photosDTO = new ArrayList<PhotoDTO>();
 	private Long idEmployee;
 	private Double longitude;
 	private Double latitude;
@@ -116,13 +119,21 @@ public class IncidenceDTO implements Serializable {
 	public void setIdOrganization(Long idOrganization) {
 		this.idOrganization = idOrganization;
 	}
-
-	public List<PhotoDTO> getPhotos() {
+	
+	public List<MultipartFile> getPhotos() {
 		return photos;
 	}
 
-	public void setPhotos(List<PhotoDTO> photos) {
+	public void setPhotos(List<MultipartFile> photos) {
 		this.photos = photos;
+	}
+
+	public List<PhotoDTO> getPhotosDTO() {
+		return photosDTO;
+	}
+
+	public void setPhotosDTO(List<PhotoDTO> photosDTO) {
+		this.photosDTO = photosDTO;
 	}
 
 	public Long getIdEmployee() {

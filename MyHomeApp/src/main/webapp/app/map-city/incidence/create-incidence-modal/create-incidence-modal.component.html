@@ -92,6 +92,18 @@
                   </small>
                 </div>
             </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="priority" jhiTranslate="incidences.form.priority.label" >Estado</label>
+              <select class="form-control" id="priority" name="priority" formControlName="priority" data-cy="priority" >
+                <option *ngFor="let priority of prioritiesStatus" [value]="priority">{{ ('incidences.priority.priority_incidence.' + priority) | lowercase | translate }}</option>
+              </select>
+              <div *ngIf="incidenceForm.get('priority')!.invalid && (incidenceForm.get('priority')!.dirty || incidenceForm.get('priority')!.touched)">
+                <small class="form-text text-danger" *ngIf="incidenceForm.get('priority')?.errors?.required" jhiTranslate="incidences.messages.validate.priority.required">
+                    Este campo es obligatorio.
+                </small>
+              </div>
+            </div>
     
             <div class="mb-3">
                 <label class="form-label" for="photos" jhiTranslate="incidences.form.photos.label" >Photos</label>
@@ -112,11 +124,11 @@
                   </div>              
                 </div>
                 
-                <div *ngIf="incidenceForm.get('photos')!.invalid && (incidenceForm.get('photos')!.dirty || incidenceForm.get('photos')!.touched)">
+                <!-- <div *ngIf="incidenceForm.get('photos')!.invalid && (incidenceForm.get('photos')!.dirty || incidenceForm.get('photos')!.touched)">
                   <small class="form-text text-danger" *ngIf="incidenceForm.get('photos')?.errors?.required" jhiTranslate="incidences.messages.validate.photos.required">
                       Este campo es obligatorio.
                   </small>
-                </div>
+                </div> -->
                
     
             </div>

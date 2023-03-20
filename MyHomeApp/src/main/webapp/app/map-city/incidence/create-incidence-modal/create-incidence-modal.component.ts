@@ -27,12 +27,14 @@ export class CreateIncidenceModalComponent implements OnInit {
   files: File[] = [];
   location: Geolocation | undefined;
   alerts: Alert[] = [];
+  photos: any[] = [];
 
   private alertError: Alert;
   private alertSucces: Alert;
   private geocoder: MapGeocoder;
 
   incidencesStatus:Array<string> = ['PENDING','IN_PROCESS','RESOLVED','CANCELED'];
+  prioritiesStatus:Array<string> = ['LOW','MEDIUM','HIGH'];
 
   constructor(  
     private activeModal: NgbActiveModal,
@@ -46,8 +48,9 @@ export class CreateIncidenceModalComponent implements OnInit {
         title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
         //startDate: [new Date(), [Validators.required]],
         //endDate: [new Date(), [Validators.required]],
-        status: ['PENDING', [Validators.required]],
-        photos: [null, [Validators.required]],
+        status: [{value: 'PENDING', disabled: true}, [Validators.required]],
+        priority: ['LOW', [Validators.required] ],
+        //photos: [ null , [Validators.required]],
         // organizationId: [null, [Validators.required]],
         description: ['', ],
         longitude: [0, [Validators.required ]],
@@ -95,13 +98,15 @@ export class CreateIncidenceModalComponent implements OnInit {
   onSelect(event: any) {
     console.log('onSelect: ' + event);
     this.files.push(...event.addedFiles);
-    this.incidenceForm.controls['photos'].setValue(this.files);
+    this.photos = this.createPhotosFromFiles();
+    //this.incidenceForm.controls['photos'].setValue(this.photos);
   }
   
   onRemove(event: any) {
     console.log('onRemove: ' + event);
     this.files.splice(this.files.indexOf(event), 1);
-    this.incidenceForm.controls['photos'].setValue(this.files);
+    this.photos = this.createPhotosFromFiles();
+    //this.incidenceForm.controls['photos'].setValue(this.photos);
   }
 
 
@@ -109,7 +114,7 @@ export class CreateIncidenceModalComponent implements OnInit {
     console.log('CreateEditIncidenceComponent => createIncidence()');
     console.log('this.incidenceForm.value: ' + this.incidenceForm.value);
     this.alerts = [];
-    this.incidencesService.create( this.incidenceForm.value).subscribe({
+    this.incidencesService.create( this.incidenceForm.value, this.files).subscribe({
       next: (response: Incidence) => {
         if( response == null ) {
           this.alerts.push(this.alertError);
@@ -135,6 +140,20 @@ export class CreateIncidenceModalComponent implements OnInit {
   closeAlert(alert: Alert) {
 		this.alerts.splice(this.alerts.indexOf(alert), 1);
 	}
+
+  private createPhotosFromFiles() {
+    let photos = [];
+    for (let i = 0; i < this.files.length; i++) {
+      let file = this.files[i];
+      let photo = {
+        id: null,
+        name: '' + file.name,
+        file: file
+      };
+      photos.push(photo);
+    }
+    return photos;
+  }
 
   private getLocalidadFromLatLng() {
     

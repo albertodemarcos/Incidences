@@ -36,7 +36,7 @@ export class StatusIncidenceComponent implements OnInit {
     incidence1.id = 1;
     incidence1.title = 'incidencia 1';
     incidence1.startDate = new Date();
-    incidence1.photos = [];
+    //incidence1.photos = [];
     incidence1.status = 'PENDING';
     incidence1.priority = 'HIGH';
 
@@ -45,7 +45,7 @@ export class StatusIncidenceComponent implements OnInit {
     incidence2.id = 2;
     incidence2.title = 'incidencia 2';
     incidence2.startDate = new Date();
-    incidence2.photos = [];
+    //incidence2.photos = [];
     incidence2.status = 'IN_PROCESS';
     incidence2.priority = 'MEDIUM';
 
@@ -54,7 +54,7 @@ export class StatusIncidenceComponent implements OnInit {
     incidence3.id = 3;
     incidence3.title = 'incidencia 3';
     incidence3.startDate = new Date();
-    incidence3.photos = [];
+    //incidence3.photos = [];
     incidence3.status = 'PENDING_CONFIRM';
     incidence3.priority = 'SLOW';
 
@@ -63,7 +63,7 @@ export class StatusIncidenceComponent implements OnInit {
     incidence4.id = 4;
     incidence4.title = 'incidencia 4';
     incidence4.startDate = new Date();
-    incidence4.photos = [];
+    //incidence4.photos = [];
     incidence4.status = 'RESOLVED';
     incidence4.priority = 'SLOW';
 

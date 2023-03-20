@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
@@ -16,19 +16,21 @@ export class IncidencesService {
   private createIncidence$ = new Subject<IIncidence>(  );
   private updateIncidence$ = new Subject<IIncidence>();
 
-  private resourceUrl = this.applicationConfigService.getEndpointFor('api/incidences/');
+  private resourceUrl = this.applicationConfigService.getEndpointFor('/api/incidences');
 
   constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) {}
 
-  create(user: IIncidence): Observable<IIncidence> {
-    return this.http.post<IIncidence>(this.resourceUrl, user).pipe(
+  create(incidence: IIncidence, photos: File[]): Observable<IIncidence> {
+    let url = `${this.resourceUrl}/create`;
+    let options = this.getHeadersFile();
+    let formData: FormData = this.createIncidence(incidence, photos);
+    return this.http.post<IIncidence>(url, formData, options ).pipe(
       map((userSave: IIncidence ) => {
         this.createIncidence$.next(userSave);
         return userSave;
       })      
     );
   }
-
   update(user: IIncidence): Observable<IIncidence> {
     return this.http.put<IIncidence>(this.resourceUrl, user).pipe(
       map((userSave: IIncidence ) => {
@@ -65,4 +67,23 @@ export class IncidencesService {
     return this.updateIncidence$.asObservable();
   }
 
+  private createIncidence(incidence: IIncidence, photos: File[]) {
+    let formData: FormData = new FormData();
+    formData.append('incidence', JSON.stringify(incidence));
+    for (let i = 0; i < photos.length; i++) {
+      let photo = photos[0];
+      formData.append('photos', photo, photo.name);
+    }
+    return formData;
+  }
+
+  private getHeadersFile() {
+    let headers = new HttpHeaders();
+
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+
+    let options = { headers: headers };
+    return options;
+  }
 }

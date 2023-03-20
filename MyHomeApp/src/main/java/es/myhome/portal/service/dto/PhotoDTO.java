@@ -2,6 +2,8 @@ package es.myhome.portal.service.dto;
 
 import java.io.Serializable;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import es.myhome.portal.domain.app.Photo;
 
 public class PhotoDTO implements Serializable {
@@ -13,6 +15,7 @@ public class PhotoDTO implements Serializable {
 
 	private Long id;
 	private String name;
+	private MultipartFile photo;
 	private Long idIncidence;
 
 	public PhotoDTO() {
@@ -40,6 +43,14 @@ public class PhotoDTO implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public MultipartFile getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(MultipartFile photo) {
+		this.photo = photo;
 	}
 
 	public Long getIdIncidence() {
