@@ -7,11 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import es.myhome.portal.domain.app.Incidence;
 import es.myhome.portal.domain.app.Photo;
+import es.myhome.portal.domain.app.PhotoType;
 import es.myhome.portal.repository.IncidenceRepository;
 import es.myhome.portal.repository.PhotoRepository;
+import es.myhome.portal.service.cloud.CloudStorageS3Service;
 import es.myhome.portal.service.dto.PhotoDTO;
 
 /**
@@ -23,14 +26,48 @@ public class PhotoService {
 	
 	private final Logger log = LoggerFactory.getLogger(PhotoService.class);
 	
+	public final String PATH_BUCKET = "/incidences/photos/";
+	private final String BUCKET_NAME = "myhomeapp";
+	
 	private final IncidenceRepository incidenceRepository;
 	
 	private final PhotoRepository photoRepository;
+	
+	private final CloudStorageS3Service cloudStorageS3Service;
 
-	public PhotoService(PhotoRepository photoRepository, IncidenceRepository incidenceRepository) {
+	public PhotoService(PhotoRepository photoRepository, IncidenceRepository incidenceRepository, CloudStorageS3Service cloudStorageS3Service) {
 		super();
 		this.photoRepository = photoRepository;
 		this.incidenceRepository = incidenceRepository;
+		this.cloudStorageS3Service = cloudStorageS3Service;
+	}
+	
+	public Photo createPhoto(Incidence incidence, MultipartFile file) {
+		
+		Photo photo = new Photo();
+		
+		try {
+			
+			PhotoType type = this.getTypeOfNameFile(file);
+			String imageUrl = this.getImagenUrl(incidence.getId(), file);
+			
+			photo.setName(file.getName());
+			photo.setType(type);
+			photo.setSize( file.getSize() );
+			photo.setImageUrl( imageUrl );
+			photo.setIncidence(incidence);
+			
+			this.cloudStorageS3Service.uploadFileFromIncidence(BUCKET_NAME, imageUrl, file);
+			
+		}catch(Exception e) {
+			
+			log.error("Error! The imagen is null or is wrong and not persist");
+			log.error("Error: {}", e.getLocalizedMessage() );
+			log.error(e.getMessage(), e);
+			return null;
+		}
+		
+		return photo;
 	}
 	
 	public Photo createPhoto(PhotoDTO photoDTO) throws URISyntaxException {
@@ -79,4 +116,34 @@ public class PhotoService {
 		log.debug("Deleted Photo: {}", idPhoto);
 	}
 
+	private PhotoType getTypeOfNameFile(MultipartFile file) {
+		
+		try {
+		
+			String[] nameFile = file.getName().split(".");
+			
+			String extension = nameFile[1].toUpperCase();
+			
+			PhotoType type = PhotoType.valueOf(extension);
+			
+			return type;
+			
+		} catch(Exception e) {
+			log.error("Error! The imagen don't type and return null");
+			log.error("Error: {}", e.getLocalizedMessage() );
+			log.error(e.getMessage(), e);
+		}
+		return null;
+	}
+	
+	public String getImagenUrl(Long idIncidence, MultipartFile file) throws Exception {
+		
+		log.info("getImagenUrl(idIncidence={}, fileName={}, fileSize={})", idIncidence, file.getName(), file.getSize() );
+		
+		String imageUrl = this.PATH_BUCKET + idIncidence.toString() + "_" + file.getName();
+		
+		log.info("getImagenUrl() -> return imageUrl={}", imageUrl);
+		
+		return imageUrl;
+	}
 }

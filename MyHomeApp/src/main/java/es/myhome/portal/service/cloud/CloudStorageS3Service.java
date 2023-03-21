@@ -68,6 +68,13 @@ public class CloudStorageS3Service implements ICloudStorageS3 {
         return cloudStorageS3RepositoryImpl.uploadFile(bucketName, filePath + fileName, fileObj);
 	}
 	
+	@Override
+	public String uploadFileFromIncidence(String bucketName, String filePath, MultipartFile file) {
+		// TODO Auto-generated method stub
+		File fileObj = convertMultiPartFileToFile(file);
+        return cloudStorageS3RepositoryImpl.uploadFile(bucketName, filePath, fileObj);
+	}
+	
 	private static String getAsString(InputStream is) throws IOException {
 		if (is == null) {
 			return "";
@@ -94,5 +101,7 @@ public class CloudStorageS3Service implements ICloudStorageS3 {
 		}
 		return convertedFile;
 	}
+
+
 
 }

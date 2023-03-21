@@ -3,16 +3,19 @@ package es.myhome.portal.service;
 import java.net.URISyntaxException;
 import java.util.Optional;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import es.myhome.portal.domain.app.Geolocation;
 import es.myhome.portal.domain.app.Incidence;
 import es.myhome.portal.domain.app.Organization;
+import es.myhome.portal.domain.app.Photo;
 import es.myhome.portal.domain.users.Employee;
 import es.myhome.portal.repository.EmployeeRepository;
 import es.myhome.portal.repository.IncidenceRepository;
@@ -34,16 +37,20 @@ public class IncidenceService {
 	
 	private final EmployeeRepository employeeRepository;
 	
-	public IncidenceService(IncidenceRepository incidenceRepository, OrganizationRepository organizationRepository, EmployeeRepository employeeRepository) {
+	private final PhotoService photoService;
+	
+	public IncidenceService(IncidenceRepository incidenceRepository, OrganizationRepository organizationRepository, EmployeeRepository employeeRepository, PhotoService photoService) {
 		super();
 		this.incidenceRepository = incidenceRepository;
 		this.organizationRepository = organizationRepository;
 		this.employeeRepository = employeeRepository;
+		this.photoService = photoService;
 	}
 
-
 	public Incidence createIncidence(IncidenceDTO incidenceDTO) throws URISyntaxException {
+		
 		Incidence incidence = new Incidence();
+		
 		incidence.setId(incidenceDTO.getId());
 		incidence.setTitle(incidenceDTO.getTitle());
 		incidence.setDescription(incidenceDTO.getDescription());
@@ -51,7 +58,9 @@ public class IncidenceService {
 		incidence.setEndDate(incidenceDTO.getEndDate());
 		incidence.setStatus(incidenceDTO.getStatus());
 		incidence.setPriority(incidenceDTO.getPriority());
-		incidence.setLocation(getGeolocation(incidenceDTO));
+		
+		Geolocation geolocation = getGeolocation(incidenceDTO);
+		incidence.setLocation(geolocation);
 		
 		if(incidenceDTO.getIdOrganization() != null ) {
 			Organization organization = organizationRepository.findById(incidenceDTO.getIdOrganization()).orElse(null);
@@ -64,7 +73,17 @@ public class IncidenceService {
 		}
 		
 		incidenceRepository.save(incidence);
-		log.debug("Created Information for Incidence: {}", incidence);
+		log.info("Created Information for Incidence: {}", incidence);
+		
+		if( CollectionUtils.isNotEmpty( incidenceDTO.getPhotos() ) ) {
+			for( MultipartFile file : incidenceDTO.getPhotos() ) {
+				Photo photo = photoService.createPhoto(incidence, file);
+				incidence.getPhotos().add(photo);
+			}
+		}
+		
+		incidenceRepository.save(incidence);
+		log.debug("Persist Incidence id={} with Photos", incidence.getId() );
 		return incidence;
 	}
 	
@@ -116,4 +135,5 @@ public class IncidenceService {
 		Geolocation location = new Geolocation( incidenceDTO.getLongitude(), incidenceDTO.getLatitude() );
 		return location;
 	}
+	
 }

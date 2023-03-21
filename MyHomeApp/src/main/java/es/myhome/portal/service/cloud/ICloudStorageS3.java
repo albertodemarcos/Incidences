@@ -22,5 +22,5 @@ public interface ICloudStorageS3 {
 
     String uploadFile(String bucketName, String filePath, MultipartFile file);
     
-    
+    String uploadFileFromIncidence(String bucketName, String filePath, MultipartFile file);
 }

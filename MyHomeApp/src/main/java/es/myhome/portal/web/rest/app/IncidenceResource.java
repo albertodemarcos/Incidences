@@ -102,7 +102,6 @@ public class IncidenceResource {
         		.created(new URI("/api/incidences/" + newIncidence.getId() ))
         		.headers(HeaderUtil.createAlert(applicationName, "incidenceService.created", newIncidence.getId().toString() ))
         		.body(newIncidence);
-        //return ResponseEntity.ok(null);
     }
 
     /**
