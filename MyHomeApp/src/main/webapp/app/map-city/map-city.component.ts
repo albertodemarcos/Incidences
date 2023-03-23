@@ -107,7 +107,7 @@ export class MapCityComponent implements OnInit, AfterViewInit, OnDestroy {
   onMapClick(event: google.maps.MapMouseEvent){
     console.log('onMapClick: ' + event + " latLng: {lat : " + event.latLng?.lat() + ", lng : " + event.latLng?.lng());
     let _options: NgbModalOptions = {
-      fullscreen: true
+      fullscreen: false
     };
     const _modalCreateIncidenceRef = this.modalService.open(CreateIncidenceModalComponent, _options);
     let _location: Geolocation = new Geolocation(event.latLng?.lat(), event.latLng?.lng());

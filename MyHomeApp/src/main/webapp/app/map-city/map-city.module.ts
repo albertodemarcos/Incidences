@@ -7,6 +7,7 @@ import { CreateIncidenceModalComponent } from './incidence/create-incidence-moda
 import { UpdateIncidenceModalComponent } from './incidence/update-incidence-modal/update-incidence-modal.component';
 import { DetailIncidenceModalComponent } from './incidence/detail-incidence-modal/detail-incidence-modal.component';
 import { MapCityService } from './map-city.service';
+import { OrganizationService } from 'app/admin/organization-management/organization.service';
 
 
 
@@ -18,6 +19,6 @@ import { MapCityService } from './map-city.service';
     UpdateIncidenceModalComponent,
     DetailIncidenceModalComponent
   ],
-  providers: [MapCityService]
+  providers: [MapCityService, OrganizationService]
 })
 export class MapCityModule { }

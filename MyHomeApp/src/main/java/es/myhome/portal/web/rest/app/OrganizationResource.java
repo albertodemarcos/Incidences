@@ -140,6 +140,19 @@ public class OrganizationResource {
         log.debug("REST request to get Organization : {}", idOrganizationStr);
         return ResponseUtil.wrapOrNotFound(organizationService.getOrganizationByIdOrganization(parseIdOrganization(idOrganizationStr)).map(OrganizationDTO::new));
     }
+    
+    /**
+     * {@code GET /admin/organizations/:idOrganizationStr} : get the "id" organization.
+     *
+     * @param login the login of the user to find.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the "idOrganization" organization, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/organizations/find/{nameOrganization}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.USER + "\")")
+    public ResponseEntity<OrganizationDTO> getFindOrganizationByName(@PathVariable String nameOrganization) throws IllegalArgumentException, Exception {
+        log.debug("REST request to find Organization by name : {}", nameOrganization);
+        return ResponseUtil.wrapOrNotFound(organizationService.getOrganizationByNameOrganization(nameOrganization).map(OrganizationDTO::new));
+    }
 
     /**
      * {@code DELETE /admin/organizations/:idOrganizationStr} : delete the "id" Organization.

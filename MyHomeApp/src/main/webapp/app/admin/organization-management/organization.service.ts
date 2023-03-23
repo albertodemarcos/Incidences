@@ -26,6 +26,10 @@ export class OrganizationService {
     return this.http.get<IOrganization>(`${this.resourceUrl}/${idOrganizationStr}`);
   }
 
+  findByName(name: string): Observable<IOrganization> {
+    return this.http.get<IOrganization>(`${this.resourceUrl}/find/${name}`);
+  }
+
   query(req?: Pagination): Observable<HttpResponse<IOrganization[]>> {
     const options = createRequestOption(req);
     return this.http.get<IOrganization[]>(this.resourceUrl, { params: options, observe: 'response' });

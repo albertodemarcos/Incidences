@@ -108,7 +108,7 @@
             <div class="mb-3">
                 <label class="form-label" for="photos" jhiTranslate="incidences.form.photos.label" >Photos</label>
                 <div class="row" id="photos">
-                  <div class="col-4">
+                  <div class="col-12">
                     <ngx-dropzone 
                       (change)="onSelect($event)" 
                       [multiple]="true" 
@@ -124,11 +124,11 @@
                   </div>              
                 </div>
                 
-                <!-- <div *ngIf="incidenceForm.get('photos')!.invalid && (incidenceForm.get('photos')!.dirty || incidenceForm.get('photos')!.touched)">
+                <div *ngIf="incidenceForm.get('photos')?.invalid && (incidenceForm.get('photos')?.dirty || incidenceForm.get('photos')?.touched)">
                   <small class="form-text text-danger" *ngIf="incidenceForm.get('photos')?.errors?.required" jhiTranslate="incidences.messages.validate.photos.required">
                       Este campo es obligatorio.
                   </small>
-                </div> -->
+                </div>
                
     
             </div>

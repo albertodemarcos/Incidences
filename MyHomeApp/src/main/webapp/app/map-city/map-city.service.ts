@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
@@ -20,8 +20,11 @@ export class MapCityService {
 
   constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) {}
 
-  create(user: IIncidence): Observable<IIncidence> {
-    return this.http.post<IIncidence>(this.resourceUrl, user).pipe(
+  create(incidence: IIncidence, photos: File[]): Observable<IIncidence> {
+    let url = `${this.resourceUrl}/create`;
+    let options = this.getHeadersFile();
+    let formData: FormData = this.createIncidence(incidence, photos);
+    return this.http.post<IIncidence>(url, formData, options ).pipe(
       map((userSave: IIncidence ) => {
         this.createIncidence$.next(userSave);
         return userSave;
@@ -56,11 +59,36 @@ export class MapCityService {
     return this.http.get<IGoogleMarkerIncidence[]>(url);
   }
 
+
+  /**
+   * Observables
+   */
+
   getCreateIncidenceSubject(): Observable<IIncidence> {
     return this.createIncidence$.asObservable();
   }
 
   getUpdateIncidenceSubject(): Observable<IIncidence> {
     return this.updateIncidence$.asObservable();
+  }
+
+  private createIncidence(incidence: IIncidence, photos: File[]) {
+    let formData: FormData = new FormData();
+    formData.append('incidence', JSON.stringify(incidence));
+    for (let i = 0; i < photos.length; i++) {
+      let photo = photos[0];
+      formData.append('photos', photo, photo.name);
+    }
+    return formData;
+  }
+
+  private getHeadersFile() {
+    let headers = new HttpHeaders();
+
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+
+    let options = { headers: headers };
+    return options;
   }
 }

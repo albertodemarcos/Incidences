@@ -55,6 +55,11 @@ public class OrganizationService {
 	public Optional<Organization> getOrganizationByIdOrganization(Long idOrganization) {
 	    return organizationRepository.findById(idOrganization);
 	}
+	
+	@Transactional(readOnly = true)
+	public Optional<Organization> getOrganizationByNameOrganization(String nameOrganization) {
+	    return organizationRepository.findOneByName(nameOrganization);
+	}
 
 	/**
      * Update all information for a specific organization, and return the modified organization.

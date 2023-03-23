@@ -2,12 +2,14 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { IncidencesService } from 'app/incidences/incidences.service';
 import { Geolocation } from 'app/core/model/geolocation.model';
 import { Incidence } from 'app/incidences/incidence.model';
-import { Alert, AlertService } from 'app/core/util/alert.service';
+import { Alert } from 'app/core/util/alert.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MapGeocoder, MapGeocoderResponse } from '@angular/google-maps';
+import { MapCityService } from 'app/map-city/map-city.service';
+import { OrganizationService } from 'app/admin/organization-management/organization.service';
+import { IOrganization } from 'app/admin/organization-management/organization.model';
 
 @Component({
   selector: 'jhi-create-incidence-modal',
@@ -39,19 +41,17 @@ export class CreateIncidenceModalComponent implements OnInit {
   constructor(  
     private activeModal: NgbActiveModal,
     private formBuilder: FormBuilder,
-    private incidencesService: IncidencesService,
+    private mapCityService: MapCityService,
+    private organizationService: OrganizationService,
     private translateService: TranslateService,
     private activatedRoute: ActivatedRoute,
     private ngZone: NgZone) {
       this.incidenceForm = this.formBuilder.group({
         id: [null],
         title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
-        //startDate: [new Date(), [Validators.required]],
-        //endDate: [new Date(), [Validators.required]],
         status: [{value: 'PENDING', disabled: true}, [Validators.required]],
         priority: ['LOW', [Validators.required] ],
-        //photos: [ null , [Validators.required]],
-        // organizationId: [null, [Validators.required]],
+        organizationId: [null],
         description: ['', ],
         longitude: [0, [Validators.required ]],
         latitude: [0, [Validators.required ]]
@@ -99,14 +99,12 @@ export class CreateIncidenceModalComponent implements OnInit {
     console.log('onSelect: ' + event);
     this.files.push(...event.addedFiles);
     this.photos = this.createPhotosFromFiles();
-    //this.incidenceForm.controls['photos'].setValue(this.photos);
   }
   
   onRemove(event: any) {
     console.log('onRemove: ' + event);
     this.files.splice(this.files.indexOf(event), 1);
     this.photos = this.createPhotosFromFiles();
-    //this.incidenceForm.controls['photos'].setValue(this.photos);
   }
 
 
@@ -114,7 +112,7 @@ export class CreateIncidenceModalComponent implements OnInit {
     console.log('CreateEditIncidenceComponent => createIncidence()');
     console.log('this.incidenceForm.value: ' + this.incidenceForm.value);
     this.alerts = [];
-    this.incidencesService.create( this.incidenceForm.value, this.files).subscribe({
+    this.mapCityService.create( this.incidenceForm.value, this.files).subscribe({
       next: (response: Incidence) => {
         if( response == null ) {
           this.alerts.push(this.alertError);
@@ -155,27 +153,39 @@ export class CreateIncidenceModalComponent implements OnInit {
     return photos;
   }
 
-  private getLocalidadFromLatLng() {
-    
+  private getLocalidadFromLatLng() {    
     let request: google.maps.GeocoderRequest = this.getLatLng();
-
     this.geocoder.geocode(request).subscribe({
       next: (response: MapGeocoderResponse) => {
-        if( response == undefined ){
-
+        let city = this.getCityOfAdress(response);
+        if( city == null ){
           return;
         }
-
-        let address = response.results[0];
-        
-        let city = address.address_components[address.address_components.length - 2].long_name || '';
-
-
+        console.log('city: ' + city);
+        this.getCityAndPopulatedForm(city);
        },
-      error: (error: any) => { }
+      error: (error: any) => { 
+        console.error('Error(getLocalidadFromLatLng): ' + error);
+      }
     });
   }
 
+
+  private getCityAndPopulatedForm(city: string) {
+    this.organizationService.findByName(city).subscribe({
+      next: (organization: IOrganization) => {
+        if (!organization) {
+          return;
+        }
+        console.log('organization: ' + organization);
+        this.incidenceForm.controls['organizationId'].setValue(organization.id);
+      },
+      error: (err: any) => {
+        console.log('No se ha encontrado la organizacion en la aplicacion');
+        console.error(err);
+      }
+    });
+  }
 
   private getLatLng() {
     let latLng = {
@@ -187,5 +197,22 @@ export class CreateIncidenceModalComponent implements OnInit {
       location: new google.maps.LatLng(latLng)
     };
     return request;
+  }
+
+  private getCityOfAdress(response: MapGeocoderResponse){    
+    if( response == undefined ){
+      return null;
+    }
+    let address = response.results[0];    
+    let cityArray = address.address_components[2];
+    if( cityArray == null 
+      || cityArray.types == null 
+      || !cityArray.types.length 
+      || cityArray.types.length == 0 
+      || !cityArray.types[0] 
+      || cityArray.types[0] !== 'locality' ){
+      return null;
+    }
+    return cityArray.long_name;
   }
 }
