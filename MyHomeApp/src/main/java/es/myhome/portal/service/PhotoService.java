@@ -26,7 +26,7 @@ public class PhotoService {
 	
 	private final Logger log = LoggerFactory.getLogger(PhotoService.class);
 	
-	public final String PATH_BUCKET = "/incidences/photos/";
+	public final String PATH_BUCKET = "incidences/photos/";
 	private final String BUCKET_NAME = "myhomeapp";
 	
 	private final IncidenceRepository incidenceRepository;
@@ -119,8 +119,8 @@ public class PhotoService {
 	private PhotoType getTypeOfNameFile(MultipartFile file) {
 		
 		try {
-		
-			String[] nameFile = file.getName().split(".");
+			String originalFilename = file.getOriginalFilename().replace(".",";");
+			String[] nameFile = originalFilename.split(";");
 			
 			String extension = nameFile[1].toUpperCase();
 			

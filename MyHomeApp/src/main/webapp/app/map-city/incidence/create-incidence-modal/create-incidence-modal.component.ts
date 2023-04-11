@@ -49,14 +49,13 @@ export class CreateIncidenceModalComponent implements OnInit {
       this.incidenceForm = this.formBuilder.group({
         id: [null],
         title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
-        status: [{value: 'PENDING', disabled: true}, [Validators.required]],
+        status: ['PENDING', [Validators.required]],//{value: 'PENDING', disabled: true}
         priority: ['LOW', [Validators.required] ],
-        organizationId: [null],
+        idOrganization: [null],
         description: ['', ],
         longitude: [0, [Validators.required ]],
         latitude: [0, [Validators.required ]]
       });
-
 
       this.alertError = { 
         type: 'danger',
@@ -178,7 +177,7 @@ export class CreateIncidenceModalComponent implements OnInit {
           return;
         }
         console.log('organization: ' + organization);
-        this.incidenceForm.controls['organizationId'].setValue(organization.id);
+        this.incidenceForm.controls['idOrganization'].setValue(organization.id);
       },
       error: (err: any) => {
         console.log('No se ha encontrado la organizacion en la aplicacion');

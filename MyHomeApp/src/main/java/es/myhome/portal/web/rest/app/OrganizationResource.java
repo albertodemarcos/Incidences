@@ -39,6 +39,7 @@ import es.myhome.portal.service.filters.FilterOrganization;
 import es.myhome.portal.utilities.FilterUtils;
 import es.myhome.portal.web.rest.errors.BadRequestAlertException;
 import es.myhome.portal.web.rest.errors.LoginAlreadyUsedException;
+import es.myhome.portal.web.rest.errors.NameOrganizationAlreadyUsedException;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;

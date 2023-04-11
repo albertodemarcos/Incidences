@@ -2,6 +2,7 @@ package es.myhome.portal.domain.app;
 
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -62,11 +63,11 @@ public class Incidence {
 	@Embedded
 	private Geolocation location;
 	
-	@ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(optional = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Organization organization;
 	
 	@OneToMany(mappedBy="incidence", cascade = CascadeType.ALL, fetch = FetchType.LAZY )
-	private List<Photo> photos;
+	private List<Photo> photos = new ArrayList<Photo>();
 	
 	@ManyToOne(optional = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Employee employee;

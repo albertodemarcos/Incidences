@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
@@ -30,13 +29,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.myhome.portal.config.Constants;
 import es.myhome.portal.domain.app.Incidence;
@@ -45,6 +39,7 @@ import es.myhome.portal.service.IncidenceService;
 import es.myhome.portal.service.dto.IncidenceDTO;
 import es.myhome.portal.utilities.FilterUtils;
 import es.myhome.portal.web.rest.errors.BadRequestAlertException;
+import es.myhome.portal.web.rest.errors.NameOrganizationAlreadyUsedException;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
@@ -53,7 +48,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api")
 public class IncidenceResource {
 
-	private final Logger log = LoggerFactory.getLogger(OrganizationResource.class);
+	private final Logger log = LoggerFactory.getLogger(IncidenceResource.class);
 	
 	@Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -70,7 +65,8 @@ public class IncidenceResource {
 	
 	@InitBinder("incidence")
 	public void initBinder(WebDataBinder binder, HttpServletRequest request) {
-		String json = request.getParameter("incidence"); request.getParameter("photos[0]");
+		String json = request.getParameter("incidence");
+		request.getParameter("photos");
 		log.info("Tenemos: {}",json );
 	}
 	

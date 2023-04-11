@@ -83,14 +83,17 @@
     
             <div class="mb-3">
                 <label class="form-label" for="status" jhiTranslate="incidences.form.status.label" >Estado</label>
-                <select class="form-control" id="status" name="status" formControlName="status" data-cy="status" >
+                <div id="status">
+                  <span class="badge bg-warning text-dark" jhiTranslate="incidences.status.status_incidence.pending">Pending</span>
+                </div>
+                <!-- <select class="form-control" id="status" name="status" formControlName="status" data-cy="status" >
                   <option *ngFor="let status of incidencesStatus" [value]="status">{{ ('incidences.status.status_incidence.' + status) | lowercase | translate }}</option>
                 </select>
                 <div *ngIf="incidenceForm.get('status')!.invalid && (incidenceForm.get('status')!.dirty || incidenceForm.get('status')!.touched)">
                   <small class="form-text text-danger" *ngIf="incidenceForm.get('status')?.errors?.required" jhiTranslate="incidences.messages.validate.status.required">
                       Este campo es obligatorio.
                   </small>
-                </div>
+                </div> -->
             </div>
 
             <div class="mb-3">

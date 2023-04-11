@@ -1,7 +1,4 @@
-package es.myhome.portal.web.rest.app;
-
-import es.myhome.portal.web.rest.errors.BadRequestAlertException;
-import es.myhome.portal.web.rest.errors.ErrorConstants;
+package es.myhome.portal.web.rest.errors;
 
 @SuppressWarnings("java:S110") // Inheritance tree of classes should not be too deep
 public class NameOrganizationAlreadyUsedException extends BadRequestAlertException {

@@ -16,7 +16,9 @@ export class MapCityService {
   private createIncidence$ = new Subject<IIncidence>(  );
   private updateIncidence$ = new Subject<IIncidence>();
 
-  private resourceUrl = this.applicationConfigService.getEndpointFor('api/markers');
+  private resourceUrl = this.applicationConfigService.getEndpointFor('api/incidences');
+  private resourceUrlMarkers = this.applicationConfigService.getEndpointFor('api/markers');
+
 
   constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) {}
 
@@ -55,7 +57,7 @@ export class MapCityService {
   }
 
   findAllByPosition(position: PositionMap | null): Observable<IGoogleMarkerIncidence[]>{
-    let url = `${this.resourceUrl}?aNord=${position?.aNord}&aEst=${position?.aEst}&aSud=${position?.aSud}&aOvest=${position?.aOvest}`;
+    let url = `${this.resourceUrlMarkers}?aNord=${position?.aNord}&aEst=${position?.aEst}&aSud=${position?.aSud}&aOvest=${position?.aOvest}`;
     return this.http.get<IGoogleMarkerIncidence[]>(url);
   }
 
@@ -72,9 +74,20 @@ export class MapCityService {
     return this.updateIncidence$.asObservable();
   }
 
-  private createIncidence(incidence: IIncidence, photos: File[]) {
+  private createIncidence(incidence: any, photos: File[]) {
+
+    console.log('createIncidence');
+
     let formData: FormData = new FormData();
-    formData.append('incidence', JSON.stringify(incidence));
+
+    formData.append('title', incidence.title || '' );
+    formData.append('description', incidence.description || '' );
+    formData.append('idOrganization', incidence.idOrganization || '' );
+    formData.append('status', incidence.status || '' );
+    formData.append('priority', incidence.priority || '' );
+    formData.append('longitude', JSON.stringify(incidence.longitude) || '' );
+    formData.append('latitude', JSON.stringify(incidence.latitude) || '' );
+
     for (let i = 0; i < photos.length; i++) {
       let photo = photos[0];
       formData.append('photos', photo, photo.name);
