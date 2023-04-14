@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Incidence } from 'app/incidences/incidence.model';
+import { IncidenceDTO } from 'app/incidences/incidenceDTO.model';
 import { IncidencesService } from 'app/incidences/incidences.service';
+import { MapCityService } from 'app/map-city/map-city.service';
 
 @Component({
   selector: 'jhi-detail-incidence-modal',
@@ -12,13 +14,13 @@ import { IncidencesService } from 'app/incidences/incidences.service';
 export class DetailIncidenceModalComponent implements OnInit {
 
   location: Geolocation | undefined;
-  incidence: Incidence | null = null;
+  incidence: IncidenceDTO | null = null;
   idIncidence: string = '';
 
   constructor(
     private activeModal: NgbActiveModal,
     private activatedRoute: ActivatedRoute,
-    private incidencesService: IncidencesService,
+    private mapCityService: MapCityService,
     private router: Router) 
   {
 
@@ -36,8 +38,8 @@ export class DetailIncidenceModalComponent implements OnInit {
 
   private getViewModel():void {
 
-    this.incidencesService.find(this.idIncidence).subscribe({
-      next: (incidenceDto: Incidence) => {
+    this.mapCityService.find(this.idIncidence).subscribe({
+      next: (incidenceDto: IncidenceDTO) => {
         console.log('Data: ' + JSON.stringify(incidenceDto));
         
         if( !incidenceDto || incidenceDto == null || incidenceDto == undefined ){
@@ -53,6 +55,5 @@ export class DetailIncidenceModalComponent implements OnInit {
     });
 
   }
-
 
 }

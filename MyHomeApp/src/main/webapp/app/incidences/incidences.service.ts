@@ -5,6 +5,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { Pagination } from 'app/core/request/request.model';
 import { map, Observable, Subject } from 'rxjs';
 import { IIncidence } from './incidence.model';
+import { IIncidenceDTO } from './incidenceDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,7 @@ export class IncidencesService {
   }
 
   find(login: string): Observable<IIncidence> {
-    return this.http.get<IIncidence>(`${this.resourceUrl}/${login}`);
+    return this.http.get<IIncidenceDTO>(`${this.resourceUrl}/${login}`);
   }
 
   query(req?: Pagination): Observable<HttpResponse<IIncidence[]>> {
