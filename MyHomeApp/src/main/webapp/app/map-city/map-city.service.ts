@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { Pagination } from 'app/core/request/request.model';
+import { IIncidenceDTO } from 'app/incidences/incidenceDTO.model';
 import { map, Observable, Subject } from 'rxjs';
 import { IIncidence } from '../incidences/incidence.model';
 import { IGoogleMarkerIncidence } from './google-marker-incidence.model';
@@ -44,7 +45,7 @@ export class MapCityService {
   }
 
   find(login: string): Observable<IIncidence> {
-    return this.http.get<IIncidence>(`${this.resourceUrl}/${login}`);
+    return this.http.get<IIncidenceDTO>(`${this.resourceUrl}/${login}`);
   }
 
   query(req?: Pagination): Observable<HttpResponse<IIncidence[]>> {
@@ -87,6 +88,7 @@ export class MapCityService {
     formData.append('priority', incidence.priority || '' );
     formData.append('longitude', JSON.stringify(incidence.longitude) || '' );
     formData.append('latitude', JSON.stringify(incidence.latitude) || '' );
+    //formData.append('startDate', this.getDateStrNow() );
 
     for (let i = 0; i < photos.length; i++) {
       let photo = photos[0];
@@ -104,4 +106,11 @@ export class MapCityService {
     let options = { headers: headers };
     return options;
   }
+
+  /*private getDateStrNow(): string{
+
+    let dateNow = new Date().getMilliseconds().toString();//.toISOString();
+
+    return dateNow;
+  }*/
 }

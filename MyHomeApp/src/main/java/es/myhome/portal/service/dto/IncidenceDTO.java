@@ -43,7 +43,8 @@ public class IncidenceDTO implements Serializable {
 		this.description = incidence.getDescription();
 		this.startDate = incidence.getStartDate();
 		this.endDate = incidence.getEndDate();
-		this.status = incidence.getStatus();		
+		this.status = incidence.getStatus();
+		this.priority = incidence.getPriority(); 
 		this.idOrganization = incidence.getOrganization() != null ? incidence.getOrganization().getId() : null;
 		this.idEmployee = incidence.getEmployee() != null ? incidence.getEmployee().getId() : null;
 		if( incidence.getLocation() != null ) {

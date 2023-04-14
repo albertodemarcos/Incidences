@@ -122,7 +122,7 @@ export class MapCityComponent implements OnInit, AfterViewInit, OnDestroy {
   onMarkerClick(event: google.maps.MapMouseEvent, idIncidence :any){
     console.log('onMarkerClick: ' + event + "with id = "+idIncidence+" latLng: {lat : " + event.latLng?.lat() + ", lng : " + event.latLng?.lng());
     let _options = {
-      fullscreen: true      
+      fullscreen: false      
     };
     const _modalDetailIncidenceRef = this.modalService.open(DetailIncidenceModalComponent, _options);
     let _location: Geolocation = new Geolocation(event.latLng?.lat(), event.latLng?.lng());

@@ -169,7 +169,6 @@ export class CreateIncidenceModalComponent implements OnInit {
     });
   }
 
-
   private getCityAndPopulatedForm(city: string) {
     this.organizationService.findByName(city).subscribe({
       next: (organization: IOrganization) => {

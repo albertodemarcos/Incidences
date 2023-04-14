@@ -54,8 +54,7 @@ public class IncidenceService {
 		incidence.setId(incidenceDTO.getId());
 		incidence.setTitle(incidenceDTO.getTitle());
 		incidence.setDescription(incidenceDTO.getDescription());
-		incidence.setStartDate(incidenceDTO.getStartDate());
-		incidence.setEndDate(incidenceDTO.getEndDate());
+		incidence.setStartDate(incidenceDTO.getStartDate());		
 		incidence.setStatus(incidenceDTO.getStatus());
 		incidence.setPriority(incidenceDTO.getPriority());
 		

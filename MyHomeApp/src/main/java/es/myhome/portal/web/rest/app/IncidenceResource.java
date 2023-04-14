@@ -65,9 +65,11 @@ public class IncidenceResource {
 	
 	@InitBinder("incidence")
 	public void initBinder(WebDataBinder binder, HttpServletRequest request) {
-		String json = request.getParameter("incidence");
+		log.info("Tenemos: title={}, description={}, idOrganization={}, status={}, priority={}, longitude={}, latitude: {}, startDate={}",
+			request.getParameter("title"), request.getParameter("description"), request.getParameter("idOrganization"),
+			request.getParameter("status"),	request.getParameter("priority"), request.getParameter("longitude"),
+			request.getParameter("latitude"), request.getParameter("startDate"));
 		request.getParameter("photos");
-		log.info("Tenemos: {}",json );
 	}
 	
 	/**

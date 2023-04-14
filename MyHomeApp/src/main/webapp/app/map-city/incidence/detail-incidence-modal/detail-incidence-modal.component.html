@@ -28,10 +28,10 @@
         <dd>{{ ('incidences.status.status_incidence.' + incidence.status) | lowercase | translate }}</dd>
 
         <dt><span jhiTranslate="incidences.detail.priority">priority</span></dt>
-        <dd>{{ ('incidences.priority.priority_incidence.' + incidence.status) | lowercase | translate }}</dd>
+        <dd>{{ ('incidences.priority.priority_incidence.' + incidence.priority) | lowercase | translate }}</dd>
 
         <dt><span jhiTranslate="incidences.detail.geolocation">Geolocalización</span></dt>
-        <dd>[{{ incidence.location?.latitude }} , {{ incidence.location?.longitude }}]</dd>
+        <dd>[{{ incidence.latitude }} , {{ incidence.longitude }}]</dd>
 
         <dt><span jhiTranslate="incidences.detail.createdBy">Creado por</span></dt>
         <dd>{{ incidence.createdBy }}</dd>
