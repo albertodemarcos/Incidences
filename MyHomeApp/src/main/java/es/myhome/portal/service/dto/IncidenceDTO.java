@@ -51,9 +51,6 @@ public class IncidenceDTO implements Serializable {
 			this.longitude = incidence.getLocation().getLongitude();
 			this.latitude = incidence.getLocation().getLatitude();			
 		}
-		//if( incidence.getPhotos() != null && incidence.getPhotos().size() > 0 ) {
-		//	incidence.getPhotos().stream().map(p -> p).map(PhotoDTO::new);			
-		//}
 	}
 
 

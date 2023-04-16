@@ -146,7 +146,8 @@ public class IncidenceResource {
     @GetMapping("/incidences/{idIncidenceStr}")
     public ResponseEntity<IncidenceDTO> getIncidence(@PathVariable @Pattern(regexp = Constants.ENTITIES_ID_REGEX) String idIncidenceStr) throws IllegalArgumentException, Exception {
         log.debug("REST request to get Incidence : {}", idIncidenceStr);
-        return ResponseUtil.wrapOrNotFound(incidenceService.getIncidenceByIdIncidence(parseIdIncidence(idIncidenceStr)).map(IncidenceDTO::new));
+        //return ResponseUtil.wrapOrNotFound(incidenceService.getIncidenceByIdIncidence(parseIdIncidence(idIncidenceStr)).map(IncidenceDTO::new));
+        return ResponseUtil.wrapOrNotFound(incidenceService.getIncidenceDTOByIdIncidence(this.parseIdIncidence(idIncidenceStr)));
     }
 
     /**

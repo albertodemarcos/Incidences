@@ -186,6 +186,15 @@ ui bootstrap tweaks
   padding-left: 0px;
 }
 
+.modal-header{
+  background-color: #3459E6;
+  border-color: #3459E6;
+}
+
+.modal-content{
+  border: none;
+}
+
 /* ==========================================================================
 angular-cli removes postcss-rtl processed inline css, processed rules must be added here instead
 ========================================================================== */

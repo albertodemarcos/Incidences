@@ -3,8 +3,8 @@
         <span jhiTranslate="incidences.detail.title_view">Incidencia</span> [<strong>{{ incidence.title }}</strong>]
     </h4>
   
-    <button aria-label="Close" data-dismiss="modal" class="btn-close" type="button" (click)="dismiss()">
-      <span aria-hidden="true">&times;</span>
+    <button aria-label="Close" data-dismiss="modal" class="btn btn-close" type="button" (click)="dismiss()">
+      <!-- <span aria-hidden="true">&times;</span> -->
     </button>
 </div>
   
@@ -33,7 +33,7 @@
         <dt><span jhiTranslate="incidences.detail.geolocation">Geolocalización</span></dt>
         <dd>[{{ incidence.latitude }} , {{ incidence.longitude }}]</dd>
 
-        <dt><span jhiTranslate="incidences.detail.createdBy">Creado por</span></dt>
+        <!--<dt><span jhiTranslate="incidences.detail.createdBy">Creado por</span></dt>
         <dd>{{ incidence.createdBy }}</dd>
 
         <dt><span jhiTranslate="incidences.detail.createdDate">Fecha de creación</span></dt>
@@ -43,7 +43,7 @@
         <dd>{{ incidence.lastModifiedBy }}</dd>
 
         <dt><span jhiTranslate="incidences.detail.lastModifiedDate">Fecha de modificación</span></dt>
-        <dd>{{ incidence.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>  
+        <dd>{{ incidence.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>  -->
 
     </dl>
 </div>  

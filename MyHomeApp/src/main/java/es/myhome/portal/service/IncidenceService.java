@@ -17,10 +17,12 @@ import es.myhome.portal.domain.app.Incidence;
 import es.myhome.portal.domain.app.Organization;
 import es.myhome.portal.domain.app.Photo;
 import es.myhome.portal.domain.users.Employee;
+import es.myhome.portal.domain.users.User;
 import es.myhome.portal.repository.EmployeeRepository;
 import es.myhome.portal.repository.IncidenceRepository;
 import es.myhome.portal.repository.OrganizationRepository;
 import es.myhome.portal.service.dto.IncidenceDTO;
+import es.myhome.portal.service.dto.PhotoDTO;
 
 /**
  * Service class for managing incidences.
@@ -39,12 +41,16 @@ public class IncidenceService {
 	
 	private final PhotoService photoService;
 	
-	public IncidenceService(IncidenceRepository incidenceRepository, OrganizationRepository organizationRepository, EmployeeRepository employeeRepository, PhotoService photoService) {
+	private final UserService userService;
+	
+	public IncidenceService(IncidenceRepository incidenceRepository, OrganizationRepository organizationRepository,
+			EmployeeRepository employeeRepository, PhotoService photoService, UserService userService) {
 		super();
 		this.incidenceRepository = incidenceRepository;
 		this.organizationRepository = organizationRepository;
 		this.employeeRepository = employeeRepository;
 		this.photoService = photoService;
+		this.userService = userService;
 	}
 
 	public Incidence createIncidence(IncidenceDTO incidenceDTO) throws URISyntaxException {
@@ -126,6 +132,47 @@ public class IncidenceService {
     public Page<IncidenceDTO> getAllManagedIncidences(Pageable pageable) {
         return  incidenceRepository.findAll(pageable).map(IncidenceDTO::new);
     }
+	
+	@Transactional(readOnly = true)
+	public Optional<IncidenceDTO> getIncidenceDTOByIdIncidence(Long idIncidence) {
+	    
+		log.debug("getIncidenceByIdIncidence(idIncidence)");
+		
+		Optional<Incidence> incidenceOpt = incidenceRepository.findById(idIncidence);
+		
+		if( incidenceOpt.isEmpty() ) {
+			
+			log.warn("The user o incidence is null and return incidence for user not employee");
+			
+			return null;
+		}
+
+		Optional<User> user = userService.getUserWithAuthorities();
+		
+		if( onlyContainsEmployeeUser(incidenceOpt, user) ) {
+			
+			return incidenceOpt.map(IncidenceDTO::new);
+		}
+		
+		IncidenceDTO incidenceDTO = new IncidenceDTO( incidenceOpt.orElse(null) );
+		
+		for(Photo photo: incidenceOpt.orElse(null).getPhotos()) {
+			
+			PhotoDTO photoDTO = new PhotoDTO(photo);
+			
+			incidenceDTO.getPhotosDTO().add(photoDTO);
+		}
+	    
+		return Optional.of(incidenceDTO); 
+	}
+
+	private boolean onlyContainsEmployeeUser(Optional<Incidence> incidenceOpt, Optional<User> user) {
+		log.debug("onlyContainsEmployeeUser");
+		if( user.isEmpty() || CollectionUtils.isEmpty(incidenceOpt.orElse(null).getPhotos()) ) {
+			return false;
+		}
+		return user.orElse(null).getAuthorities().stream().filter( a -> a.getName().contains("ROLE_EMPLOYEE")  ).count() > 0;
+	}
 	
 	private Geolocation getGeolocation(IncidenceDTO incidenceDTO) {
 		if( incidenceDTO == null || incidenceDTO.getLongitude() == null || incidenceDTO.getLatitude() == null ) {
