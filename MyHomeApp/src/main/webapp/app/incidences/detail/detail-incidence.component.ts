@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Incidence } from '../incidence.model';
+import { IncidenceDTO } from '../incidenceDTO.model';
 import { IncidencesService } from '../incidences.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { IncidencesService } from '../incidences.service';
 })
 export class DetailIncidenceComponent implements OnInit {
 
-  incidence: Incidence | null = null;
+  incidenceDTO: IncidenceDTO | null = null;
   idIncidence: string = '';
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -40,14 +41,14 @@ export class DetailIncidenceComponent implements OnInit {
   private getViewModel():void {
 
     this.incidencesService.find(this.idIncidence).subscribe({
-      next: (incidenceDto: Incidence) => {
+      next: (incidenceDto: IncidenceDTO) => {
         console.log('Data: ' + JSON.stringify(incidenceDto));
         
         if( !incidenceDto || incidenceDto == null || incidenceDto == undefined ){
           console.error('Error! No data: ');
           return;
         }
-        this.incidence = incidenceDto;
+        this.incidenceDTO = incidenceDto;
       },
       error: (err: any) => {
         console.error('Error! Don\'t call server');

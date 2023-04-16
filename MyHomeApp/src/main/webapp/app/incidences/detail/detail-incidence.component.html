@@ -1,41 +1,44 @@
 <div class="d-flex justify-content-center">
     <div class="col-8">
-      <div *ngIf="incidence">
+      <div *ngIf="incidenceDTO">
         <h2>
-          <span jhiTranslate="incidences.detail.title_view">Incidencia</span> [<strong>{{ incidence.title }}</strong>]
+          <span jhiTranslate="incidences.detail.title_view">Incidencia</span> [<strong>{{ incidenceDTO.title }}</strong>]
         </h2>
   
         <dl class="row-md jh-entity-details">
           
           <dt><span jhiTranslate="incidences.detail.title">Título</span></dt>
-          <dd>{{ incidence.title }}</dd>
+          <dd>{{ incidenceDTO.title }}</dd>
   
           <dt><span jhiTranslate="incidences.detail.description">description</span></dt>
-          <dd>{{ incidence.description }}</dd>
+          <dd>{{ incidenceDTO.description }}</dd>
 
           <dt><span jhiTranslate="incidences.detail.start_date">Fecha inicio</span></dt>
-          <dd>{{ incidence.startDate | date: 'dd/MM/yy HH:mm' }}</dd>
+          <dd>{{ incidenceDTO.startDate | date: 'dd/MM/yy HH:mm' }}</dd>
 
           <dt><span jhiTranslate="incidences.detail.end_date">Fecha resolución</span></dt>
-          <dd>{{ incidence.endDate | date: 'dd/MM/yy HH:mm' }}</dd>
+          <dd>{{ incidenceDTO.endDate | date: 'dd/MM/yy HH:mm' }}</dd>
   
-          <dt><span jhiTranslate="incidences.detail.type">type</span></dt>
-          <dd>{{ (''incidences.status.status_incidence.' + incidence.status) | lowercase | translate }}</dd>
+          <dt><span jhiTranslate="incidences.detail.status">Estado</span></dt>
+          <dd>{{ ('incidences.status.status_incidence.' + incidenceDTO.status) | lowercase | translate }}</dd>
+
+          <dt><span jhiTranslate="incidences.detail.priority">priority</span></dt>
+          <dd>{{ ('incidences.priority.priority_incidence.' + incidenceDTO.priority) | lowercase | translate }}</dd>
   
           <dt><span jhiTranslate="incidences.detail.geolocation">Geolocalización</span></dt>
-          <dd>[{{ incidence.location?.latitude }} , {{ incidence.location?.longitude }}]</dd>
+          <dd>[{{ incidenceDTO.latitude }} , {{ incidenceDTO.longitude }}]</dd>
   
           <dt><span jhiTranslate="incidences.detail.createdBy">Creado por</span></dt>
-          <dd>{{ incidence.createdBy }}</dd>
+          <dd>{{ incidenceDTO.createdBy }}</dd>
   
           <dt><span jhiTranslate="incidences.detail.createdDate">Fecha de creación</span></dt>
-          <dd>{{ incidence.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
+          <dd>{{ incidenceDTO.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
   
           <dt><span jhiTranslate="incidences.detail.lastModifiedBy">Modificado por</span></dt>
-          <dd>{{ incidence.lastModifiedBy }}</dd>
+          <dd>{{ incidenceDTO.lastModifiedBy }}</dd>
   
           <dt><span jhiTranslate="incidences.detail.lastModifiedDate">Fecha de modificación</span></dt>
-          <dd>{{ incidence.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>  
+          <dd>{{ incidenceDTO.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>  
 
         </dl>
   

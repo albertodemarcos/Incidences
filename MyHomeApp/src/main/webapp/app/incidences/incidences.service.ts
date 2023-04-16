@@ -41,8 +41,8 @@ export class IncidencesService {
     );
   }
 
-  find(login: string): Observable<IIncidence> {
-    return this.http.get<IIncidenceDTO>(`${this.resourceUrl}/${login}`);
+  find(idIncidenceStr: string): Observable<IIncidence> {
+    return this.http.get<IIncidenceDTO>(`${this.resourceUrl}/${idIncidenceStr}`);
   }
 
   query(req?: Pagination): Observable<HttpResponse<IIncidence[]>> {
