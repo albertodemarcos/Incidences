@@ -26,19 +26,9 @@
           <dd>{{ ('incidences.priority.priority_incidence.' + incidenceDTO.priority) | lowercase | translate }}</dd>
   
           <dt><span jhiTranslate="incidences.detail.geolocation">Geolocalización</span></dt>
-          <dd>[{{ incidenceDTO.latitude }} , {{ incidenceDTO.longitude }}]</dd>
+          <dd><br/>{{ incidenceDTO.latitude }}<br/>{{ incidenceDTO.longitude }}</dd>
   
-          <dt><span jhiTranslate="incidences.detail.createdBy">Creado por</span></dt>
-          <dd>{{ incidenceDTO.createdBy }}</dd>
-  
-          <dt><span jhiTranslate="incidences.detail.createdDate">Fecha de creación</span></dt>
-          <dd>{{ incidenceDTO.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
-  
-          <dt><span jhiTranslate="incidences.detail.lastModifiedBy">Modificado por</span></dt>
-          <dd>{{ incidenceDTO.lastModifiedBy }}</dd>
-  
-          <dt><span jhiTranslate="incidences.detail.lastModifiedDate">Fecha de modificación</span></dt>
-          <dd>{{ incidenceDTO.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>  
+          
 
         </dl>
   

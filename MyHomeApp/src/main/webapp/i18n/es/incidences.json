@@ -47,13 +47,13 @@
           "status" : "Estado",
           "organization" : "Organización",
           "employee" : "Empleado",
-
           "createLabel" : "Crear una nueva incidencia",
           "view" : "Ver",
           "geolocation" : "Geolocalzación",
           "longitude": "Longitud",        
           "latitude": "Latitud",
           "actions" : "Acciones",
+          "name": "Nombre organización",
           "placeholder_any": "Todos",
           "volver_atras": "Volver atras"          
         },
@@ -128,6 +128,8 @@
           "employee" : "Empleado",
           "description": "Descripción",
           "geolocation": "Geolocalzación",
+          "latitude" : "Latitud",
+          "longitude" : "Longitud",
           "activated": "Activado",
           "deactivated": "Desactivado",
           "createdBy": "Creado por",

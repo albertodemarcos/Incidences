@@ -2,7 +2,11 @@ package es.myhome.portal.utilities;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+
+import es.myhome.portal.domain.app.IncidenceStatus;
+import es.myhome.portal.domain.app.PriorityType;
 
 public class FilterUtils {
 
@@ -41,7 +45,12 @@ public class FilterUtils {
 	
 	public static final List<String> INCIDENCE_RESOURCE_ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
         Arrays.asList(
-            "id"
+            "id",
+    		"title",
+    		"startDate",
+    		"endDate",
+    		"status",
+    		"priority"
         )
     );
 	

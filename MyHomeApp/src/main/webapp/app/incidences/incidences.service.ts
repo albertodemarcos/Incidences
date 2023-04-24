@@ -6,6 +6,7 @@ import { Pagination } from 'app/core/request/request.model';
 import { map, Observable, Subject } from 'rxjs';
 import { IIncidence } from './incidence.model';
 import { IIncidenceDTO } from './incidenceDTO.model';
+import { IIncidenceListDTO } from './incidenceListDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,22 +33,22 @@ export class IncidencesService {
       })      
     );
   }
-  update(user: IIncidence): Observable<IIncidence> {
-    return this.http.put<IIncidence>(this.resourceUrl, user).pipe(
-      map((userSave: IIncidence ) => {
-        this.updateIncidence$.next(userSave);
-        return userSave;
+  update(incidence: IIncidenceDTO): Observable<IIncidenceDTO> {
+    return this.http.put<IIncidenceDTO>(this.resourceUrl, incidence).pipe(
+      map((incidenceSave: IIncidenceDTO ) => {
+        this.updateIncidence$.next(incidenceSave);
+        return incidenceSave;
       })      
     );
   }
 
-  find(idIncidenceStr: string): Observable<IIncidence> {
+  find(idIncidenceStr: string): Observable<IIncidenceDTO> {
     return this.http.get<IIncidenceDTO>(`${this.resourceUrl}/${idIncidenceStr}`);
   }
 
-  query(req?: Pagination): Observable<HttpResponse<IIncidence[]>> {
+  query(req?: Pagination): Observable<HttpResponse<IIncidenceListDTO[]>> {
     const options = createRequestOption(req);
-    return this.http.get<IIncidence[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http.get<IIncidenceListDTO[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
   delete(login: string): Observable<{}> {

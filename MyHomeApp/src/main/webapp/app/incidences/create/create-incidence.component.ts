@@ -3,6 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Incidence } from '../incidence.model';
 import { IncidencesService } from '../incidences.service';
+import { IncidenceDTO } from '../incidenceDTO.model';
+import { Alert } from 'app/core/util/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'jhi-create-incidence',
@@ -16,26 +19,39 @@ export class CreateIncidenceComponent implements OnInit {
   editForm: boolean = false;
   isSaving: boolean = false;
   files: File[] = [];
+  alerts: Alert[] = [];
+  
+  private alertError: Alert;
+  private alertSucces: Alert;
 
   incidencesStatus:Array<string> = ['PENDING','IN_PROCESS','RESOLVED','CANCELED'];
+  prioritiesStatus:Array<string> = ['LOW','MEDIUM','HIGH'];
 
-  constructor(  
-    private formBuilder: FormBuilder,
-    private incidencesService: IncidencesService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) {
+  constructor(private formBuilder: FormBuilder, private incidencesService: IncidencesService,
+    private router: Router, private translateService: TranslateService, private activatedRoute: ActivatedRoute) {
+    
       this.incidenceForm = this.formBuilder.group({
-        id: [null],
-        title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
-        //startDate: [new Date(), [Validators.required]],
-        //endDate: [new Date(), [Validators.required]],
-        status: ['PENDING', [Validators.required]],
-        photos: [null, [Validators.required]],
-        organizationId: [null, [Validators.required]],
-        description: ['', ],
-        longitude: [0, [Validators.required ]],
-        latitude: [0, [Validators.required ]]
-      });
+      id: [null],
+      title: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
+      //startDate: [new Date(), [Validators.required]],
+      //endDate: [new Date(), [Validators.required]],
+      status: ['PENDING', [Validators.required]],
+      priority: ['LOW', [Validators.required] ],
+      organizationId: [null, [Validators.required]],
+      description: ['', ],
+      longitude: [0, [Validators.required ]],
+      latitude: [0, [Validators.required ]]
+    });
+
+    this.alertError = { 
+      type: 'danger',
+      message: this.translateService.instant('incidences.form.errors.create'),
+    };
+
+    this.alertSucces = { 
+      type: 'success',
+      message: this.translateService.instant('incidences.form.create'),
+    };
   }
 
   ngOnInit(): void {
@@ -69,7 +85,7 @@ export class CreateIncidenceComponent implements OnInit {
   private getCreateEditViewModel():void {
 
     this.incidencesService.find(this.incidenceId).subscribe({
-      next: (incidenceDto: Incidence) => {
+      next: (incidenceDto: IncidenceDTO) => {
         console.log('Data: ' + JSON.stringify(incidenceDto));
         
         if( !incidenceDto || incidenceDto == null || incidenceDto == undefined ){
@@ -85,11 +101,11 @@ export class CreateIncidenceComponent implements OnInit {
           //startDate: [new Date(), [Validators.required]],
           //endDate: [new Date(), [Validators.required]],
           status: [incidenceDto.status, [Validators.required]],
-          photos: [null, [Validators.required]],
-          organizationId: [null, [Validators.required]],
+          priority: [incidenceDto.priority, [Validators.required] ],
+          organizationId: [null/*, [Validators.required]*/],
           description: [incidenceDto.description, [Validators.required, Validators.minLength(15), Validators.maxLength(255)] ],
-          longitude: [(incidenceDto.location?.longitude), [Validators.required ]],
-          latitude: [(incidenceDto.location?.latitude), [Validators.required ]]
+          longitude: [(incidenceDto.longitude), [Validators.required ]],
+          latitude: [(incidenceDto.latitude), [Validators.required ]]
         });
       },
       error: (err: any) => {
@@ -100,7 +116,24 @@ export class CreateIncidenceComponent implements OnInit {
 
   }
   save(): void {
-    console.log('CreateEditIncidenceComponent => save()');
+    console.log('CreateEditIncidenceComponent => createIncidence()');
+    console.log('this.incidenceForm.value: ' + this.incidenceForm.value);
+    this.alerts = [];
+    this.incidencesService.update( this.incidenceForm.value).subscribe({
+      next: (response: Incidence) => {
+        if( response == null ) {
+          this.alerts.push(this.alertError);
+          return;
+        }
+        this.alerts.push(this.alertSucces);
+        this.router.navigateByUrl('/incidences');
+      },
+      error: (error: any) => {
+        console.error("Error: "+JSON.stringify(error) );
+        this.alerts.push(this.alertError);
+      }
+
+    });
   }
   
   previousState(): void{

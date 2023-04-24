@@ -7,9 +7,9 @@
           <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
           <span jhiTranslate="global.form.refreshListLabel">Refrescar lista</span>
         </button>
-        <button class="btn btn-primary jh-create-entity" [routerLink]="['/incidences/create']">
+        <!-- <button class="btn btn-primary jh-create-entity" [routerLink]="['/incidences/create']">
           <fa-icon icon="plus"></fa-icon> <span jhiTranslate="incidences.list.createLabel">Crear una nueva organización</span>
-        </button>
+        </button> -->
         <button class="btn btn-info jh-create-entity" [routerLink]="['/incidences/status']">
           <i class="bi bi-bar-chart"></i> Kanban's status
         </button>
@@ -35,32 +35,22 @@
             <th scope="col"><span jhiTranslate="incidences.list.geolocation">Geolocalización</span></th>
             <th scope="col"><span jhiTranslate="incidences.list.organization">Organization</span></th>
             <th scope="col"><span jhiTranslate="incidences.list.employee">Empleado</span></th>
-            <th scope="col" jhiSortBy="createdDate">
-              <span jhiTranslate="userManagement.createdDate">Fecha de creación</span> <fa-icon icon="sort"></fa-icon>
-            </th>
-            <th scope="col" jhiSortBy="lastModifiedBy">
-              <span jhiTranslate="userManagement.lastModifiedBy">Modificado por</span> <fa-icon icon="sort"></fa-icon>
-            </th>
-            <th scope="col" jhiSortBy="lastModifiedDate">
-              <span jhiTranslate="userManagement.lastModifiedDate">Fecha de modificación</span> <fa-icon icon="sort"></fa-icon>
-            </th>
-            <th scope="col"></th>
+            <th class="text-center" scope="col"><span jhiTranslate="incidences.list.actions">Acciones</span></th>
           </tr>
           <tr>
-            <th><input type="text" class="form-control" id="title" name="title" [(ngModel)]="title" (keyup)="loadFilter()" placeholder="{{ 'incidences.form.title.placeholder' | translate }}" /></th>
+            <th><input type="text" class="form-control" id="title" name="title" [(ngModel)]="title" (keyup)="loadFilter()" placeholder="{{ 'incidences.list.title' | translate }}" /></th>
             <th><input type="datetime-local" class="form-control" id="startDate" name="startDate" [(ngModel)]="startDate" (change)="loadFilter()"/></th>
             <th><input type="datetime-local" class="form-control" id="endDate" name="endDate" [(ngModel)]="endDate" (change)="loadFilter()"/></th>
             <th>
               <select class="form-control" id="status" name="status" [(ngModel)]="status" data-cy="status" (change)="loadFilter()" >
-                <option *ngFor="let status of incidencesStatus" [value]="status">{{ ('incidences.status.status_incidence.' + status) | lowercase | translate }}</option>
+                <option [value]="''">{{ 'any' | translate }}</option>
+                <option *ngFor="let status of incidencesStatus" [value]="status">{{ ('incidences.status.status_incidence.' + status | lowercase) | translate }}</option>
               </select>
             </th>
             <th></th>
+            <!-- <th><input type="text" class="form-control" id="nameOrganization" name="nameOrganization" [(ngModel)]="nameOrganization" (keyup)="loadFilter()" placeholder="{{ 'incidences.list.name' | translate }}" /></th> -->
             <th></th>
             <th></th>
-            <th><input type="datetime-local" class="form-control" id="createdDate" name="createdDate" [(ngModel)]="createdDate" (change)="loadFilter()"/></th>
-            <th><input type="text" class="form-control" id="lastModifiedBy" name="lastModifiedBy" [(ngModel)]="lastModifiedBy" (keyup)="loadFilter()" placeholder="{{ 'incidences.form.name.placeholder' | translate }}" /></th>
-            <th><input type="datetime-local" class="form-control" id="lastModifiedDate" name="lastModifiedDate" (change)="loadFilter()" [(ngModel)]="lastModifiedDate" /></th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -73,28 +63,26 @@
             <td>
               [{{ incidence.location?.latitude }} , {{ incidence.location?.longitude }}]
             </td>
+            <td>{{ incidence.nameOrganization }}</td>
             <td></td>
-            <td></td>
-            <td>{{ incidence.createdDate | date: 'dd/MM/yy HH:mm' }}</td>
-            <td>{{ incidence.lastModifiedBy }}</td>
-            <td>{{ incidence.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</td>
             <td class="text-end">              
               <div class="btn-group">                
-                <button type="submit" [routerLink]="['./', incidence.id, 'view']" class="btn btn-info btn-sm">
+                <button type="submit" [routerLink]="['./', incidence.id, 'view']" title="{{'entity.action.view' | translate}}" class="btn btn-info">
                   <fa-icon icon="eye"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                  <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span> -->
                 </button>  
-                <button type="submit" [routerLink]="['./', incidence.id, 'edit']" queryParamsHandling="merge" class="btn btn-primary btn-sm">
+                <button type="submit" [routerLink]="['./', incidence.id, 'edit']" title="{{'entity.action.edit' | translate}}" queryParamsHandling="merge" class="btn btn-primary">
                   <fa-icon icon="pencil-alt"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                  <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span> -->
                 </button>  
                 <button
                   type="button"
                   (click)="deleteIncidence(incidence)"
-                  class="btn btn-danger btn-sm"
+                  title="{{'entity.action.delete' | translate}}"
+                  class="btn btn-danger"
                   [disabled]="incidence.id !== 1 ">
-                  <fa-icon icon="times"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                  <fa-icon icon="times"> </fa-icon>
+                  <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span> -->
                 </button>
               </div>
             </td>

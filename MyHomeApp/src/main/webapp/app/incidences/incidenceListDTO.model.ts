@@ -1,7 +1,7 @@
 import { Organization } from "app/admin/organization-management/organization.model";
 import { Geolocation } from "app/core/model/geolocation.model";
 
-  export interface IIncidence {
+  export interface IIncidenceListDTO {
     id?: number;
     title?: string | null;
     description?: string | null;
@@ -19,7 +19,7 @@ import { Geolocation } from "app/core/model/geolocation.model";
     lastModifiedDate?: Date;
   }
   
-  export class Incidence implements IIncidence {
+  export class IncidenceListDTO implements IIncidenceListDTO {
     constructor(
       public id?: number,
       public title?: string| null,
@@ -29,8 +29,7 @@ import { Geolocation } from "app/core/model/geolocation.model";
       public status?: string| null,
       public priority?: string | null,
       public location?: Geolocation| null,
-      public organization?: Organization| null,
-      public organizationId?: number| null,
+      public nameOrganization?: string | null,
       public employeeId?: number| null,
       public createdBy?: string,
       public createdDate?: Date,

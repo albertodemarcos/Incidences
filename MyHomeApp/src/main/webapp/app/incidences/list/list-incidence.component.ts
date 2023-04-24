@@ -6,8 +6,9 @@ import { ASC, DESC, SORT } from 'app/config/navigation.constants';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { combineLatest } from 'rxjs';
 import { DeleteIncidenceComponent } from '../delete/delete-incidence.component';
-import { IIncidence, Incidence } from '../incidence.model';
+import { Incidence } from '../incidence.model';
 import { IncidencesService } from '../incidences.service';
+import { IncidenceListDTO } from '../incidenceListDTO.model';
 
 @Component({
   selector: 'jhi-list-incidence',
@@ -15,7 +16,7 @@ import { IncidencesService } from '../incidences.service';
 })
 export class ListIncidenceComponent implements OnInit {
 
-  incidences: Incidence[] | null = null;
+  incidences: IncidenceListDTO[] | null = null;
   isLoading = false;
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
@@ -29,8 +30,7 @@ export class ListIncidenceComponent implements OnInit {
   startDate: Date | undefined;
   endDate: Date | undefined;
   status: string = '';
-
-
+  nameOrganization: string = '';
 
   activated: Boolean | undefined;
   lastModifiedBy: string = '';
@@ -82,7 +82,7 @@ export class ListIncidenceComponent implements OnInit {
         filter: filters
       })
       .subscribe({
-        next: (res: HttpResponse<Incidence[]>) => {
+        next: (res: HttpResponse<IncidenceListDTO[]>) => {
           this.isLoading = false;
           this.onSuccess(res.body, res.headers);
         },
@@ -131,26 +131,47 @@ export class ListIncidenceComponent implements OnInit {
 
       filters.set('status', this.status);
 
-    }else if( this.createdDate != null ){
+    }else if( this.startDate != null ){
 
-      //filters.push(this.createdDate);
+      filters.set('startDate', this.getDateFormat(this.startDate) );
 
-    }else if( this.lastModifiedDate != null ){
+    }else if( this.endDate != null ){
 
-      //filters.push(this.name);
+      filters.set('endDate', this.getDateFormat(this.endDate) );
+   
+    }else if( this.nameOrganization != null ){
 
-    }else if( this.lastModifiedBy != null  && this.lastModifiedBy.trim() !== '' ){
-
-      filters.set('lastModifiedBy', this.lastModifiedBy);
+      filters.set('nameOrganization', this.nameOrganization );
     }
 
     return filters;
   }
 
-  private onSuccess(incidences: Incidence[] | null, headers: HttpHeaders): void {
+  private onSuccess(incidences: IncidenceListDTO[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.incidences = incidences;
   }
 
+  /**
+   * Method yyyy-MM-dd HH:mm
+   * @param date 
+   * @returns 
+   */
+  private getDateFormat(date: any): string{
+
+    if( date == null ){
+      return '';
+    }
+
+    return date.replace('T', ' ');
+    /*let day = (date.getDate() < 10 ? '0' : '') +date.getDate();
+    let month = (date.getMonth() < 10 ? '0' : '')+(date.getMonth() + 1);
+    let year = date.getFullYear();
+
+    let hour = date.getHours();
+    let min = date.getMinutes();
+
+    return `${year}-${month}-${day} ${hour}:${min}`;*/
+  }
 
 }

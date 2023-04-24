@@ -37,6 +37,8 @@ import es.myhome.portal.domain.app.Incidence;
 import es.myhome.portal.repository.IncidenceRepository;
 import es.myhome.portal.service.IncidenceService;
 import es.myhome.portal.service.dto.IncidenceDTO;
+import es.myhome.portal.service.dto.IncidenceListDTO;
+import es.myhome.portal.service.filters.FilterIncidence;
 import es.myhome.portal.utilities.FilterUtils;
 import es.myhome.portal.web.rest.errors.BadRequestAlertException;
 import es.myhome.portal.web.rest.errors.NameOrganizationAlreadyUsedException;
@@ -127,12 +129,12 @@ public class IncidenceResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all incidences.
      */
     @GetMapping("/incidences")
-    public ResponseEntity<List<IncidenceDTO>> getIncidences(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {        
+    public ResponseEntity<List<IncidenceListDTO>> getIncidences(FilterIncidence filters, Pageable pageable) {        
     	log.debug("REST request to get all Incidence");
         if (!onlyContainsAllowedProperties(pageable)) {
             return ResponseEntity.badRequest().build();
         }
-        final Page<IncidenceDTO> page = incidenceService.getAllManagedIncidences(pageable);
+        final Page<IncidenceListDTO> page = incidenceService.getAllManagedIncidences(filters, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -147,7 +149,7 @@ public class IncidenceResource {
     public ResponseEntity<IncidenceDTO> getIncidence(@PathVariable @Pattern(regexp = Constants.ENTITIES_ID_REGEX) String idIncidenceStr) throws IllegalArgumentException, Exception {
         log.debug("REST request to get Incidence : {}", idIncidenceStr);
         //return ResponseUtil.wrapOrNotFound(incidenceService.getIncidenceByIdIncidence(parseIdIncidence(idIncidenceStr)).map(IncidenceDTO::new));
-        return ResponseUtil.wrapOrNotFound(incidenceService.getIncidenceDTOByIdIncidence(this.parseIdIncidence(idIncidenceStr)));
+        return ResponseUtil.wrapOrNotFound(incidenceService.getIncidenceDTOById(this.parseIdIncidence(idIncidenceStr)));
     }
 
     /**

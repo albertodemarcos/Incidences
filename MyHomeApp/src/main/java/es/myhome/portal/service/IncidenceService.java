@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,14 @@ import es.myhome.portal.repository.EmployeeRepository;
 import es.myhome.portal.repository.IncidenceRepository;
 import es.myhome.portal.repository.OrganizationRepository;
 import es.myhome.portal.service.dto.IncidenceDTO;
+import es.myhome.portal.service.dto.IncidenceListDTO;
 import es.myhome.portal.service.dto.PhotoDTO;
+import es.myhome.portal.service.filters.FilterIncidence;
+import es.myhome.portal.specification.incidence.CustomerSpecificationIncidenceWithDate;
+import es.myhome.portal.specification.incidence.CustomerSpecificationIncidenceWithNameOrganization;
+import es.myhome.portal.specification.incidence.CustomerSpecificationIncidenceWithPriority;
+import es.myhome.portal.specification.incidence.CustomerSpecificationIncidenceWithStatus;
+import es.myhome.portal.specification.incidence.CustomerSpecificationIncidenceWithTitle;
 
 /**
  * Service class for managing incidences.
@@ -42,6 +50,9 @@ public class IncidenceService {
 	private final PhotoService photoService;
 	
 	private final UserService userService;
+	
+	private final String FIELD_START_DATE = "startDate";
+	private final String FIELD_END_DATE = "endDate";
 	
 	public IncidenceService(IncidenceRepository incidenceRepository, OrganizationRepository organizationRepository,
 			EmployeeRepository employeeRepository, PhotoService photoService, UserService userService) {
@@ -111,8 +122,8 @@ public class IncidenceService {
 	            .map(incidence -> {
 	        		incidence.setTitle(incidenceDTO.getTitle());
 	        		incidence.setDescription(incidenceDTO.getDescription());
-	        		incidence.setStartDate(incidenceDTO.getStartDate());
-	        		incidence.setEndDate(incidenceDTO.getEndDate());
+	        		//incidence.setStartDate(incidenceDTO.getStartDate());
+	        		//incidence.setEndDate(incidenceDTO.getEndDate());
 	        		incidence.setStatus(incidenceDTO.getStatus());
 	        		incidence.setPriority(incidenceDTO.getPriority());
 	        		incidence.setLocation(getGeolocation(incidenceDTO));
@@ -129,20 +140,33 @@ public class IncidenceService {
 
 
 	@Transactional(readOnly = true)
-    public Page<IncidenceDTO> getAllManagedIncidences(Pageable pageable) {
-        return  incidenceRepository.findAll(pageable).map(IncidenceDTO::new);
+    public Page<IncidenceListDTO> getAllManagedIncidences(FilterIncidence filters, Pageable pageable) {
+		
+		log.debug("getIncidenceByIdIncidence(idIncidence)");
+		
+		if( filters != null ) {
+			Specification<Incidence> specifications = Specification.where(new CustomerSpecificationIncidenceWithTitle(filters.getTitle()))
+					.and(new CustomerSpecificationIncidenceWithStatus(filters.getStatus()))
+					.and(new CustomerSpecificationIncidenceWithPriority(filters.getPriority()))
+					.and(new CustomerSpecificationIncidenceWithDate(filters.getStartDate(), FIELD_START_DATE ))
+					.and(new CustomerSpecificationIncidenceWithDate(filters.getEndDate(), FIELD_END_DATE));
+			
+			return incidenceRepository.findAll(specifications, pageable).map(IncidenceListDTO::new);
+		}
+		
+        return incidenceRepository.findAll(pageable).map(IncidenceListDTO::new);
     }
 	
 	@Transactional(readOnly = true)
-	public Optional<IncidenceDTO> getIncidenceDTOByIdIncidence(Long idIncidence) {
+	public Optional<IncidenceDTO> getIncidenceDTOById(Long idIncidence) {
 	    
-		log.debug("getIncidenceByIdIncidence(idIncidence)");
+		log.debug("getIncidenceByIdIncidence(idIncidence={})",idIncidence);
 		
 		Optional<Incidence> incidenceOpt = incidenceRepository.findById(idIncidence);
 		
 		if( incidenceOpt.isEmpty() ) {
 			
-			log.warn("The user o incidence is null and return incidence for user not employee");
+			log.error("The incidence with id={} is null", idIncidence);
 			
 			return null;
 		}

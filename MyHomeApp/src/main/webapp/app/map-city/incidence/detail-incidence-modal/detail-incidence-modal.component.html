@@ -21,8 +21,10 @@
         <dt><span jhiTranslate="incidences.detail.start_date">Fecha inicio</span></dt>
         <dd>{{ incidence.startDate | date: 'dd/MM/yy HH:mm' }}</dd>
 
-        <dt><span jhiTranslate="incidences.detail.end_date">Fecha resolución</span></dt>
-        <dd>{{ incidence.endDate | date: 'dd/MM/yy HH:mm' }}</dd>
+        <ng-container *ngIf="incidence.endDate" >
+          <dt><span jhiTranslate="incidences.detail.end_date">Fecha resolución</span></dt>
+          <dd>{{ incidence.endDate | date: 'dd/MM/yy HH:mm' }}</dd>
+        </ng-container>
 
         <dt><span jhiTranslate="incidences.detail.status">status</span></dt>
         <dd>{{ ('incidences.status.status_incidence.' + incidence.status) | lowercase | translate }}</dd>
@@ -31,8 +33,7 @@
         <dd>{{ ('incidences.priority.priority_incidence.' + incidence.priority) | lowercase | translate }}</dd>
 
         <dt><span jhiTranslate="incidences.detail.geolocation">Geolocalización</span></dt>
-        <dd>[{{ incidence.latitude }} , {{ incidence.longitude }}]</dd>
-
+        <dd><br/>{{ incidence.latitude }}<br/>{{ incidence.longitude }}</dd>
         <!--<dt><span jhiTranslate="incidences.detail.createdBy">Creado por</span></dt>
         <dd>{{ incidence.createdBy }}</dd>
 
