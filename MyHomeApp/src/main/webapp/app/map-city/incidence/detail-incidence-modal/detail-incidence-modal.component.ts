@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Incidence } from 'app/incidences/incidence.model';
-import { IncidenceDTO } from 'app/incidences/incidenceDTO.model';
-import { IncidencesService } from 'app/incidences/incidences.service';
+import { IncidenceDTO } from 'app/core/model/incidenceDTO.model';
 import { MapCityService } from 'app/map-city/map-city.service';
 
 @Component({
@@ -17,11 +15,7 @@ export class DetailIncidenceModalComponent implements OnInit {
   incidence: IncidenceDTO | null = null;
   idIncidence: string = '';
 
-  constructor(
-    private activeModal: NgbActiveModal,
-    private activatedRoute: ActivatedRoute,
-    private mapCityService: MapCityService,
-    private router: Router) 
+  constructor(private activeModal: NgbActiveModal, private mapCityService: MapCityService ) 
   {
 
   }

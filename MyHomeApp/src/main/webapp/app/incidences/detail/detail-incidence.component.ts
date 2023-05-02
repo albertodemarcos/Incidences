@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Incidence } from '../incidence.model';
-import { IncidenceDTO } from '../incidenceDTO.model';
 import { IncidencesService } from '../incidences.service';
+import { PhotosService } from '../photos.service';
+import { IncidenceDTO } from '../../core/model/incidenceDTO.model';
 
 @Component({
   selector: 'jhi-detail-incidence',
@@ -11,10 +11,12 @@ import { IncidencesService } from '../incidences.service';
 export class DetailIncidenceComponent implements OnInit {
 
   incidenceDTO: IncidenceDTO | null = null;
+  files: any = [];
   idIncidence: string = '';
 
   constructor(private activatedRoute: ActivatedRoute,
     private incidencesService: IncidencesService,
+    private photosService: PhotosService,
     private router: Router) 
   {
 
@@ -38,6 +40,13 @@ export class DetailIncidenceComponent implements OnInit {
     });   
   }
 
+  public getPhotoFormServe(photo: any): any{
+    if( photo == null || photo.id == null ){
+      return '';
+    }
+    return '';
+  }
+
   private getViewModel():void {
 
     this.incidencesService.find(this.idIncidence).subscribe({
@@ -48,7 +57,26 @@ export class DetailIncidenceComponent implements OnInit {
           console.error('Error! No data: ');
           return;
         }
+        
         this.incidenceDTO = incidenceDto;
+        let photos = incidenceDto.photosDTO ? incidenceDto.photosDTO : [];
+
+        for(let i =0; i < photos.length; i++ )
+        {
+
+          let photo: any = photos[i];
+
+          this.photosService.find(photo?.bucket, photo?.imagenUrl).subscribe({
+            next: (file: any) => {
+              console.log('file: ' + file);
+            },
+            error: (err: any) => {
+              //'/api/getS3File?bucketName='+photo.bucket+'&fileName='+photo.imagenUrl;
+            }
+          });
+        }
+
+        //console.log('this.photos'+this.photos);
       },
       error: (err: any) => {
         console.error('Error! Don\'t call server');

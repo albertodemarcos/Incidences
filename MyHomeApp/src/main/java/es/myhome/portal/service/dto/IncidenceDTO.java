@@ -27,7 +27,7 @@ public class IncidenceDTO implements Serializable {
 	private PriorityType priority;
 	private Long idOrganization;
 	private List<MultipartFile> photos = new ArrayList<MultipartFile>();
-	private List<PhotoDTO> photosDTO = new ArrayList<PhotoDTO>();
+	private List<PhotoDetailDTO> photosDTO = new ArrayList<PhotoDetailDTO>();
 	private Long idEmployee;
 	private Double longitude;
 	private Double latitude;
@@ -126,11 +126,11 @@ public class IncidenceDTO implements Serializable {
 		this.photos = photos;
 	}
 
-	public List<PhotoDTO> getPhotosDTO() {
+	public List<PhotoDetailDTO> getPhotosDTO() {
 		return photosDTO;
 	}
 
-	public void setPhotosDTO(List<PhotoDTO> photosDTO) {
+	public void setPhotosDTO(List<PhotoDetailDTO> photosDTO) {
 		this.photosDTO = photosDTO;
 	}
 

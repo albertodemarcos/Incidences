@@ -6,9 +6,9 @@ import { ASC, DESC, SORT } from 'app/config/navigation.constants';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { combineLatest } from 'rxjs';
 import { DeleteIncidenceComponent } from '../delete/delete-incidence.component';
-import { Incidence } from '../incidence.model';
+import { Incidence } from '../../core/model/incidence.model';
 import { IncidencesService } from '../incidences.service';
-import { IncidenceListDTO } from '../incidenceListDTO.model';
+import { IncidenceListDTO } from '../../core/model/incidenceListDTO.model';
 
 @Component({
   selector: 'jhi-list-incidence',

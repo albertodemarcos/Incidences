@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import es.myhome.portal.domain.app.Incidence;
 import es.myhome.portal.domain.app.Organization;
 import es.myhome.portal.service.dto.GoogleMarkerIncidenceDTO;
+import es.myhome.portal.service.dto.IncidenceKanbanDTO;
 
 @Repository
 public interface IncidenceRepository extends JpaRepository<Incidence, Long>, JpaSpecificationExecutor<Incidence>{
@@ -32,5 +33,6 @@ public interface IncidenceRepository extends JpaRepository<Incidence, Long>, Jpa
 			 @Param("aSud") Double aSud,   		//lat
 			 @Param("aOvest") Double aOvest ); 	//lng
 	 
-	 
+	@Query(" select new es.myhome.portal.service.dto.IncidenceKanbanDTO(i) from Incidence i where i.status <> 'CANCELED' " )
+	public List<IncidenceKanbanDTO> findAllIncidences();
 }

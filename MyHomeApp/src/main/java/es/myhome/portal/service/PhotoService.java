@@ -116,34 +116,37 @@ public class PhotoService {
 		log.debug("Deleted Photo: {}", idPhoto);
 	}
 
-	private PhotoType getTypeOfNameFile(MultipartFile file) {
-		
+	private PhotoType getTypeOfNameFile(MultipartFile file) {		
+		PhotoType type = null;
 		try {
-			String originalFilename = file.getOriginalFilename().replace(".",";");
-			String[] nameFile = originalFilename.split(";");
-			
-			String extension = nameFile[1].toUpperCase();
-			
-			PhotoType type = PhotoType.valueOf(extension);
-			
-			return type;
-			
+			String extension = getExtensionFile(file);			
+			type = PhotoType.valueOf(extension.toUpperCase());			
 		} catch(Exception e) {
 			log.error("Error! The imagen don't type and return null");
 			log.error("Error: {}", e.getLocalizedMessage() );
 			log.error(e.getMessage(), e);
 		}
-		return null;
+		return type;
+	}
+
+	private String getExtensionFile(MultipartFile file) throws Exception {		
+		String originalFilename = file.getOriginalFilename().replace(".",";");		
+		String[] nameFile = originalFilename.split(";");		
+		return nameFile[1];
 	}
 	
 	public String getImagenUrl(Long idIncidence, MultipartFile file) throws Exception {
-		
 		log.info("getImagenUrl(idIncidence={}, fileName={}, fileSize={})", idIncidence, file.getName(), file.getSize() );
-		
-		String imageUrl = this.PATH_BUCKET + idIncidence.toString() + "_" + file.getName();
-		
-		log.info("getImagenUrl() -> return imageUrl={}", imageUrl);
-		
+		String imageUrl = null;
+		try {
+			String extension = getExtensionFile(file);
+			imageUrl = this.PATH_BUCKET + idIncidence.toString() + "_" + file.getName()+"."+extension;
+			log.info("getImagenUrl() -> return imageUrl={}", imageUrl);
+		}catch(Exception e) {
+			log.error("Error! The imagen don't type and return null");
+			log.error("Error: {}", e.getLocalizedMessage() );
+			log.error(e.getMessage(), e);
+		}
 		return imageUrl;
 	}
 }

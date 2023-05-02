@@ -29,6 +29,15 @@ public class CloudStorageS3Service implements ICloudStorageS3 {
 
         this.cloudStorageS3RepositoryImpl = cloudStorageS3RepositoryImpl;
     }
+    
+	@Override
+	public InputStream getS3File(String bucketName, String fileName) throws IOException {
+		// TODO Auto-generated method stub
+		
+		InputStream input = cloudStorageS3RepositoryImpl.getObject(bucketName, fileName);
+		
+		 return null;
+	}
 
 	@Override
 	public String getS3FileContent(String bucketName, String fileName) throws IOException {

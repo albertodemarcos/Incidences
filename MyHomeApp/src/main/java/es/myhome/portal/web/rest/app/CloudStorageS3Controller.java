@@ -1,6 +1,9 @@
 package es.myhome.portal.web.rest.app;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,21 +15,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import es.myhome.portal.domain.cloud.Asset;
 import es.myhome.portal.service.cloud.CloudStorageS3Service;
 
 @RestController
-@RequestMapping(value = "/cloudStorage")
+@RequestMapping(value = "/api")
 public class CloudStorageS3Controller {
 	
 	private final CloudStorageS3Service cloudStorageS3Service;
 
     public CloudStorageS3Controller(CloudStorageS3Service cloudStorageS3Service) {
         this.cloudStorageS3Service = cloudStorageS3Service;
+    }
+    
+    @GetMapping("/getS3File")
+    public ResponseEntity<?> getS3File(@RequestParam(value = "bucketName") String bucketName, @RequestParam(value = "fileName") String fileName) throws IOException {
+        return new ResponseEntity<>(cloudStorageS3Service.getS3File(bucketName, fileName), HttpStatus.OK);
     }
 
     @GetMapping("/getS3FileContent")

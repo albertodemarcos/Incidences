@@ -2,12 +2,12 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { Pagination } from 'app/core/request/request.model';
-import { IIncidenceDTO } from 'app/incidences/incidenceDTO.model';
+import { Pagination } from '../core/request/request.model';
 import { map, Observable, Subject } from 'rxjs';
-import { IIncidence } from '../incidences/incidence.model';
+import { IIncidence } from '../core/model/incidence.model';
 import { IGoogleMarkerIncidence } from './google-marker-incidence.model';
 import { PositionMap } from './position-map.model';
+import { IIncidenceDTO } from 'app/core/model/incidenceDTO.model';
 
 @Injectable({
   providedIn: 'root'

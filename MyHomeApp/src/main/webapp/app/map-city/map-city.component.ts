@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { Geolocation } from 'app/core/model/geolocation.model';
-import { IIncidence, Incidence } from 'app/incidences/incidence.model';
+import { IIncidence, Incidence } from 'app/core/model/incidence.model';
 import { IncidencesService } from 'app/incidences/incidences.service';
 import { Observable, Observer, Subscription } from 'rxjs';
 import { GoogleMarkerIncidence, IGoogleMarkerIncidence } from './google-marker-incidence.model';

@@ -38,6 +38,7 @@ public class Photo implements Serializable  {
 	
 	public final String PATH_BUCKET = "/incidences/photos/";
 	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "photo_sequence")
 	@SequenceGenerator(name = "photo_sequence", sequenceName="sequence_photo", allocationSize=1)

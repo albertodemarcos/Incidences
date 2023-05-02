@@ -91,7 +91,7 @@ private final Logger log = LoggerFactory.getLogger(OrganizationResource.class);
         	throw new BadRequestAlertException("A photo don't exist", "photoManagement", "idnotexists");
         }        
         Optional<PhotoDTO> updatedPhoto = photoService.updatePhoto(photoDTO);
-        return ResponseUtil.wrapOrNotFound(updatedPhoto, HeaderUtil.createAlert(applicationName, "photoManagement.updated", photoDTO.getName() ) );
+        return ResponseUtil.wrapOrNotFound(updatedPhoto, HeaderUtil.createAlert(applicationName, "photoManagement.updated", updatedPhoto.orElse(null).getName() ) );
     }
     
     /**

@@ -1,0 +1,78 @@
+html, body {
+    background: #e9ecef;
+  }
+  
+  .cursor-grab {
+    cursor: -webkit-grab;
+    cursor: grab;
+  }
+  
+  .tasks {
+    min-height: 450px;
+  }
+
+  /**
+* ICONS COLOR
+*/
+
+.icon-pending{
+  color: rgb(105, 172, 254);
+}
+
+.icon-in-progress{
+  color: rgb(255, 207, 17);
+}
+
+.icon-pending-confirm{
+  color: rgb(223, 233, 34);
+}
+
+.icon-resolved {
+  color: rgb(102, 255, 71);
+}
+
+.icon-cancel{
+  color: rgb(255, 53, 18);
+}
+
+/**
+* COLORS
+*/
+
+.bg-gray-100 {
+  --bs-bg-opacity: 0.5;
+  background-color: #e8e7ed!important;
+}
+
+.bg-gray-300 {
+  --bs-bg-opacity: 1;
+  background-color: #e8e7ed!important;
+}
+
+.border-pending{
+  border-left: solid 5px blue;
+}
+
+.border-in-progress{
+  border-left: solid 5px orange;
+}
+
+.border-pending-confirm{
+  border-left: solid 5px yellow;
+}
+
+.border-resolved{
+  border-left: solid 5px green;
+}
+
+.border-canceled{
+  border-left: solid 5px red;
+}
+
+.rounded-3 {
+  border-radius: 0.5rem!important;
+}
+
+.shadow-none {
+  box-shadow: none!important
+}

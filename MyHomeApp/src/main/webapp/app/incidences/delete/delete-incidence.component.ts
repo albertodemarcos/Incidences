@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Incidence } from '../incidence.model';
+import { Incidence } from '../../core/model/incidence.model';
 import { IncidencesService } from '../incidences.service';
 
 @Component({

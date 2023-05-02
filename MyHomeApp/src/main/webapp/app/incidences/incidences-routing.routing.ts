@@ -3,9 +3,10 @@ import { ActivatedRouteSnapshot, Resolve, Routes } from "@angular/router";
 import { Observable, of } from "rxjs";
 import { CreateIncidenceComponent } from "./create/create-incidence.component";
 import { DetailIncidenceComponent } from "./detail/detail-incidence.component";
-import { IIncidence } from "./incidence.model";
+import { IIncidence } from "../core/model/incidence.model";
 import { IncidencesService } from "./incidences.service";
 import { ListIncidenceComponent } from "./list/list-incidence.component";
+import { KanbaknIncidenceComponent } from "./kanbakn-incidence/kanbakn-incidence.component";
 import { StatusIncidenceComponent } from "./status/status-incidence.component";
 
 
@@ -47,6 +48,13 @@ export const incidencesRoute: Routes = [
   {
     path: ':id/edit',
     component: CreateIncidenceComponent,
+    resolve: {
+      user: IncidenceResolve,
+    },
+  },
+  {
+    path: 'kanban',
+    component: KanbaknIncidenceComponent,
     resolve: {
       user: IncidenceResolve,
     },

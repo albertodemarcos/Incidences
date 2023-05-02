@@ -37,6 +37,7 @@ import es.myhome.portal.domain.app.Incidence;
 import es.myhome.portal.repository.IncidenceRepository;
 import es.myhome.portal.service.IncidenceService;
 import es.myhome.portal.service.dto.IncidenceDTO;
+import es.myhome.portal.service.dto.IncidenceKanbanDTO;
 import es.myhome.portal.service.dto.IncidenceListDTO;
 import es.myhome.portal.service.filters.FilterIncidence;
 import es.myhome.portal.utilities.FilterUtils;
@@ -137,6 +138,19 @@ public class IncidenceResource {
         final Page<IncidenceListDTO> page = incidenceService.getAllManagedIncidences(filters, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+    
+    /**
+     * {@code GET /incidences} : getIncidences with all the details - calling for all users.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body all incidences.
+     */
+    @GetMapping("/incidences/kanban")
+    public ResponseEntity<List<IncidenceKanbanDTO>> getKanbanIncidences() {        
+    	log.debug("REST request to get all Incidence for kanban");
+        final List<IncidenceKanbanDTO> list = incidenceService.getAllIncidences();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     /**

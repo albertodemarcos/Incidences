@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState, MediaMatcher } from '@angular/cdk/layout';
-import { Incidence } from '../incidence.model';
+import { Incidence } from '../../core/model/incidence.model';
 
 
 @Component({

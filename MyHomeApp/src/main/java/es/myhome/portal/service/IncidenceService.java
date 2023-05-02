@@ -1,6 +1,7 @@
 package es.myhome.portal.service;
 
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -23,8 +24,10 @@ import es.myhome.portal.repository.EmployeeRepository;
 import es.myhome.portal.repository.IncidenceRepository;
 import es.myhome.portal.repository.OrganizationRepository;
 import es.myhome.portal.service.dto.IncidenceDTO;
+import es.myhome.portal.service.dto.IncidenceKanbanDTO;
 import es.myhome.portal.service.dto.IncidenceListDTO;
 import es.myhome.portal.service.dto.PhotoDTO;
+import es.myhome.portal.service.dto.PhotoDetailDTO;
 import es.myhome.portal.service.filters.FilterIncidence;
 import es.myhome.portal.specification.incidence.CustomerSpecificationIncidenceWithDate;
 import es.myhome.portal.specification.incidence.CustomerSpecificationIncidenceWithNameOrganization;
@@ -138,6 +141,15 @@ public class IncidenceService {
 		log.debug("Deleted Incidence: {}", idIncidence);
 	}
 
+	@Transactional(readOnly = true)
+	public List<IncidenceKanbanDTO> getAllIncidences(){
+		
+		log.debug("getAllIncidences()");
+		
+		List<IncidenceKanbanDTO> list = incidenceRepository.findAllIncidences();
+		
+		return list;
+	}
 
 	@Transactional(readOnly = true)
     public Page<IncidenceListDTO> getAllManagedIncidences(FilterIncidence filters, Pageable pageable) {
@@ -182,7 +194,7 @@ public class IncidenceService {
 		
 		for(Photo photo: incidenceOpt.orElse(null).getPhotos()) {
 			
-			PhotoDTO photoDTO = new PhotoDTO(photo);
+			PhotoDetailDTO photoDTO = new PhotoDetailDTO(photo);
 			
 			incidenceDTO.getPhotosDTO().add(photoDTO);
 		}

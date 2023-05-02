@@ -27,10 +27,18 @@
   
           <dt><span jhiTranslate="incidences.detail.geolocation">Geolocalización</span></dt>
           <dd><br/>{{ incidenceDTO.latitude }}<br/>{{ incidenceDTO.longitude }}</dd>
-  
-          
 
         </dl>
+
+        <div class="form-group" *ngIf="incidenceDTO.photosDTO!=null&&incidenceDTO.photosDTO.length>0">
+          <div class="row" id="photos">
+            <ng-container *ngFor="let photo of incidenceDTO.photosDTO" >
+              <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                <img [src]="getPhotoFormServe(photo)" class="img-thumbnail" alt="..." />
+              </div>
+            </ng-container>
+          </div>
+        </div>
   
         <button type="submit" routerLink="../../" class="btn btn-info">
           <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>

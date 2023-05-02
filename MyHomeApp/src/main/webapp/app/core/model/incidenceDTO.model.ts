@@ -12,7 +12,7 @@ import { Organization } from "app/admin/organization-management/organization.mod
     longitude?: number | null;
     organization?: Organization | null;
     organizationId?: number | null;
-    /*photos?: string[] | null;*/
+    photosDTO?: [] | null;
     employeeId?: number | null;
     createdBy?: string;
     createdDate?: Date;
@@ -33,7 +33,7 @@ import { Organization } from "app/admin/organization-management/organization.mod
       public longitude?: number | null,
       public organization?: Organization| null,
       public organizationId?: number| null,
-      /*public photos?: string[]| null,*/
+      public photosDTO?: []| null,
       public employeeId?: number| null,
       public createdBy?: string,
       public createdDate?: Date,

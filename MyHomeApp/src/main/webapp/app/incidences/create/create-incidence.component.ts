@@ -1,11 +1,11 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Incidence } from '../incidence.model';
+import { Incidence } from '../../core/model/incidence.model';
 import { IncidencesService } from '../incidences.service';
-import { IncidenceDTO } from '../incidenceDTO.model';
-import { Alert } from 'app/core/util/alert.service';
+import { Alert } from '../../core/util/alert.service';
 import { TranslateService } from '@ngx-translate/core';
+import { IncidenceDTO } from '../../core/model/incidenceDTO.model';
 
 @Component({
   selector: 'jhi-create-incidence',
@@ -20,7 +20,6 @@ export class CreateIncidenceComponent implements OnInit {
   isSaving: boolean = false;
   files: File[] = [];
   alerts: Alert[] = [];
-  
   private alertError: Alert;
   private alertSucces: Alert;
 
@@ -94,7 +93,6 @@ export class CreateIncidenceComponent implements OnInit {
         }
 
         this.editForm = true;
-        
         this.incidenceForm = this.formBuilder.group({
           id: [ (incidenceDto.id) ],
           title: [ incidenceDto.title , [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],

@@ -7,6 +7,7 @@ import { DeleteIncidenceComponent } from './delete/delete-incidence.component';
 import { DetailIncidenceComponent } from './detail/detail-incidence.component';
 import { ListIncidenceComponent } from './list/list-incidence.component';
 import { StatusIncidenceComponent } from './status/status-incidence.component';
+import { KanbaknIncidenceComponent } from './kanbakn-incidence/kanbakn-incidence.component';
 
 
 
@@ -18,6 +19,7 @@ import { StatusIncidenceComponent } from './status/status-incidence.component';
     DetailIncidenceComponent,
     ListIncidenceComponent,
     StatusIncidenceComponent,
+    KanbaknIncidenceComponent,
   ],
 })
 export class IncidencesModule { }

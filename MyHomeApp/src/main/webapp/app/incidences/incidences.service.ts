@@ -4,9 +4,10 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { Pagination } from 'app/core/request/request.model';
 import { map, Observable, Subject } from 'rxjs';
-import { IIncidence } from './incidence.model';
-import { IIncidenceDTO } from './incidenceDTO.model';
-import { IIncidenceListDTO } from './incidenceListDTO.model';
+import { IIncidence } from '../core/model/incidence.model';
+import { IIncidenceDTO } from 'app/core/model/incidenceDTO.model';
+import { IIncidenceListDTO } from '../core/model/incidenceListDTO.model';
+import { IIncidenceKanbanDTO } from '../core/model/incidenceKanbanDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ import { IIncidenceListDTO } from './incidenceListDTO.model';
 export class IncidencesService {
 
   private static URL_ALL_INCIDENCES_USER: String = 'map/list';
+  private static URL_ALL_INCIDENCES_KANBAN: String = '/kanban';
 
   private createIncidence$ = new Subject<IIncidence>(  );
   private updateIncidence$ = new Subject<IIncidence>();
@@ -53,6 +55,10 @@ export class IncidencesService {
 
   delete(login: string): Observable<{}> {
     return this.http.delete(`${this.resourceUrl}/${login}`);
+  }
+
+  findAll(): Observable<IIncidenceKanbanDTO[]>{
+    return this.http.get<IIncidenceKanbanDTO[]>(`${this.resourceUrl}/${IncidencesService.URL_ALL_INCIDENCES_KANBAN}`);
   }
 
   findAllByPosition(position: any): Observable<IIncidence[]>{

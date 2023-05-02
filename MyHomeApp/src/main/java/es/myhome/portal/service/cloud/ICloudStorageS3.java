@@ -1,6 +1,7 @@
 package es.myhome.portal.service.cloud;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -9,6 +10,7 @@ import es.myhome.portal.domain.cloud.Asset;
 
 public interface ICloudStorageS3 {
 
+	InputStream getS3File(String bucketName, String fileName) throws IOException;
 	
     String getS3FileContent(String bucketName, String fileName) throws IOException;
 

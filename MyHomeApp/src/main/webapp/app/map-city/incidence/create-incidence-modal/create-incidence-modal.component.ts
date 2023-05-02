@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Geolocation } from 'app/core/model/geolocation.model';
-import { Incidence } from 'app/incidences/incidence.model';
+import { Incidence } from 'app/core/model/incidence.model';
 import { Alert } from 'app/core/util/alert.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MapGeocoder, MapGeocoderResponse } from '@angular/google-maps';
