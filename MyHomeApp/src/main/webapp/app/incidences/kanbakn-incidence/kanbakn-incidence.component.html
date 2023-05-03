@@ -68,6 +68,15 @@
                     [attr.data-bs-content]="incidence.description">{{incidence.description}}
                 </p> -->
                 <div class="text-right">
+                  <button type="submit" (click)="getIncidence(incidence.id)" title="{{'entity.action.view' | translate}}" class="btn btn-info">
+                    <fa-icon icon="eye"></fa-icon>
+                  </button>
+
+                  <ng-container *ngIf="!incidence.idEmployee" >
+                    <button type="submit" (click)="updateEmployeeIncidence(incidence)" title="{{'entity.action.view' | translate}}" class="btn btn-info">
+                      <fa-icon icon="eye"></fa-icon>
+                    </button>
+                  </ng-container> 
                 </div>
               </div>
             </div>
@@ -122,6 +131,10 @@
                     [attr.data-bs-content]="incidence.description">{{incidence.description}}
                 </p> -->
                 <div class="text-right">
+                  <button type="submit" (click)="getIncidence(incidence.id)" title="{{'entity.action.view' | translate}}" class="btn btn-info">
+                    <fa-icon icon="eye"></fa-icon>
+                    <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span> -->
+                  </button>
                 </div>
               </div>
             </div>

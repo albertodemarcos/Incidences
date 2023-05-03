@@ -20,6 +20,7 @@ public class IncidenceKanbanDTO implements Serializable {
 	private IncidenceStatus status;
 	private PriorityType priority;
 	private Boolean visible;
+	private Long idEmployee;
 	
 	public IncidenceKanbanDTO() {
 		super();		
@@ -33,6 +34,7 @@ public class IncidenceKanbanDTO implements Serializable {
 		this.status = incidence.getStatus();
 		this.priority = incidence.getPriority();
 		this.visible = Boolean.TRUE;
+		this.idEmployee = incidence.getEmployee() != null ? incidence.getEmployee().getId() : null;
 	}
 
 	public Long getId() {
@@ -81,6 +83,14 @@ public class IncidenceKanbanDTO implements Serializable {
 
 	public void setVisible(Boolean visible) {
 		this.visible = visible;
+	}
+
+	public Long getIdEmployee() {
+		return idEmployee;
+	}
+
+	public void setIdEmployee(Long idEmployee) {
+		this.idEmployee = idEmployee;
 	}
 
 }

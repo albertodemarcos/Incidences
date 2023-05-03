@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { IncidenceKanbanDTO } from 'app/core/model/incidenceKanbanDTO.model';
 import { Alert } from 'app/core/util/alert.service';
 import { TranslateService } from '@ngx-translate/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UpdateEmployeeIncidenceComponent } from '../update-employee-incidence/update-employee-incidence.component';
 
 @Component({
   selector: 'jhi-kanbakn-incidence',
@@ -30,6 +32,7 @@ export class KanbaknIncidenceComponent implements OnInit, OnDestroy {
     private incidencesService: IncidencesService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private modalService: NgbModal,
     private translateService: TranslateService) 
   {
     this.alertError = { 
@@ -47,10 +50,13 @@ export class KanbaknIncidenceComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log('KanbaknIncidenceComponent');
     this.init();
+    this.initIncidences();
+  }
 
+  private initIncidences() {
     this.findAllSubcription = this.incidencesService.findAll().subscribe({
-      next: (incidences: IncidenceKanbanDTO[])=>{
-        if(!incidences || incidences.length == 0){
+      next: (incidences: IncidenceKanbanDTO[]) => {
+        if (!incidences || incidences.length == 0) {
           this.alerts.push(this.alertError);
           return;
         }
@@ -62,8 +68,23 @@ export class KanbaknIncidenceComponent implements OnInit, OnDestroy {
         throw new Error('Method not implemented.');
       }
     });
-
   }
+
+  getIncidence(id: any): void{
+    this.router.navigateByUrl(`/incidences/${id}/view`);
+  }
+
+  updateEmployeeIncidence(incidence: IncidenceKanbanDTO){
+    const modalRef = this.modalService.open(UpdateEmployeeIncidenceComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.incidence = incidence;
+    // unsubscribe not needed because closed completes on modal close
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'deleted') {
+        this.initIncidences();
+      }
+    });
+  }
+
 
   private initKanban(incidences: IncidenceKanbanDTO[])
   {

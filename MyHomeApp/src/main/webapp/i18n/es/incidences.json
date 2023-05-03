@@ -117,6 +117,11 @@
         "delete": {
           "question": "¿Seguro que quieres eliminarla incidencia {{ title }}?"
         },
+        "employee": {
+          "title": "Asignar incidencia",
+          "question": "¿Seguro que quieres asignarte la incidencia {{ title }}?",
+          "btn_asignar": "Asignar"
+        },
         "detail": {
           "title_view": "Incidencia",
           "title" : "Título",

@@ -135,6 +135,25 @@ public class IncidenceService {
 	            })
 	            .map(IncidenceDTO::new);
 	}
+	
+	/**
+     * Update all information for a specific organization, and return the modified organization.
+     *
+     * @param organizationDTO organization to update.
+     * @return updated organization.
+     */
+	public Optional<IncidenceDTO> updateEmployeeIncidence(Incidence incidence){
+		
+		Optional<User> userOptional = userService.getUserWithAuthorities();
+		
+		Employee employee = employeeRepository.findById(userOptional.orElse(null).getId()).orElse(null);
+		
+		incidence.setEmployee(employee);
+		
+		this.incidenceRepository.save(incidence);
+		
+		return Optional.of(incidence).map(IncidenceDTO::new);
+	}
     
 	public void deleteIncidence(Long idIncidence) throws Exception {
 		incidenceRepository.deleteById(idIncidence);
