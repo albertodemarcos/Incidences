@@ -39,44 +39,46 @@
         </small> -->
       </div>
       <div class="card-body">
-        <div class="tasks" id="backlog">
+        <div class="tasks" id="backlog" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesPending">
           <!-- Start task -->
           <ng-container *ngFor="let incidence of incidencesPending" >
-            <div class="card border-pending p-1 mb-3 cursor-grab">
-              <!-- <img class="card-img-top" src="https://source.unsplash.com/zNRITe8NPqY/400x200" alt="Bootstrap Kanban Board" /> -->
-              <div class="card-body">
-                <div class="d-flex justify-content-between">
-                  <div>
-                    <h5 class="card-title">{{incidence.title}}</h5>
+            <div class="wrapper">
+              <div [attr.data-id]="incidence.id" [attr.data-status-type]="incidence.status" class="card border-pending p-1 mb-3 cursor-grab">
+                <!-- <img class="card-img-top" src="https://source.unsplash.com/zNRITe8NPqY/400x200" alt="Bootstrap Kanban Board" /> -->
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <h5 class="card-title">{{incidence.title}}</h5>
+                    </div>
+                    <!-- <div><span class="badge bg-danger">{{incidence.priority}}</span></div>  -->
+                    <div>
+                      <span [ngClass]="{
+                          'badge': true,
+                          'bg-danger': incidence.priority != null && incidence.priority == 'HIGH',
+                          'bg-warning': incidence.priority != null && incidence.priority == 'MEDIUM',
+                          'bg-success': incidence.priority != null && incidence.priority == 'LOW',
+                          'text-white': true
+                        }" >
+                        {{ ('incidences.priority.priority_incidence.'+ incidence.priority) | lowercase | translate }}
+                      </span>
+                    </div>
                   </div>
-                  <!-- <div><span class="badge bg-danger">{{incidence.priority}}</span></div>  -->
-                  <div>
-                    <span [ngClass]="{
-                        'badge': true,
-                        'bg-danger': incidence.priority != null && incidence.priority == 'HIGH',
-                        'bg-warning': incidence.priority != null && incidence.priority == 'MEDIUM',
-                        'bg-success': incidence.priority != null && incidence.priority == 'LOW',
-                        'text-white': true
-                      }" >
-                      {{ ('incidences.priority.priority_incidence.'+ incidence.priority) | lowercase | translate }}
-                    </span>
-                  </div>
-                </div>
-                <!-- <p class="mb-0 text-truncate" 
-                    data-bs-toggle="dropdown"
-                    title="{{incidence.description}}"
-                    [attr.data-bs-content]="incidence.description">{{incidence.description}}
-                </p> -->
-                <div class="text-right">
-                  <button type="submit" (click)="getIncidence(incidence.id)" title="{{'entity.action.view' | translate}}" class="btn btn-info">
-                    <fa-icon icon="eye"></fa-icon>
-                  </button>
-
-                  <ng-container *ngIf="!incidence.idEmployee" >
-                    <button type="submit" (click)="updateEmployeeIncidence(incidence)" title="{{'entity.action.view' | translate}}" class="btn btn-info">
+                  <!-- <p class="mb-0 text-truncate" 
+                      data-bs-toggle="dropdown"
+                      title="{{incidence.description}}"
+                      [attr.data-bs-content]="incidence.description">{{incidence.description}}
+                  </p> -->
+                  <div class="text-right">
+                    <button type="submit" (click)="getIncidence(incidence.id)" title="{{'entity.action.view' | translate}}" class="btn btn-info">
                       <fa-icon icon="eye"></fa-icon>
                     </button>
-                  </ng-container> 
+  
+                    <ng-container *ngIf="!incidence.idEmployee" >
+                      <button type="submit" (click)="updateEmployeeIncidence(incidence)" title="{{'entity.action.view' | translate}}" class="btn btn-info">
+                        <fa-icon icon="eye"></fa-icon>
+                      </button>
+                    </ng-container> 
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,10 +104,10 @@
         </small> -->
       </div>
       <div class="card-body">
-        <div class="tasks" id="backlog">
+        <div class="tasks" id="backlog" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesInProgress">
           <!-- Start task -->
           <ng-container *ngFor="let incidence of incidencesInProgress" >
-            <div class="card border-in-progress p-1 mb-3 cursor-grab">
+            <div [attr.data-id]="incidence.id" [attr.data-status-type]="incidence.status" class="card border-in-progress p-1 mb-3 cursor-grab">
               <!-- <img class="card-img-top" src="https://source.unsplash.com/zNRITe8NPqY/400x200" alt="Bootstrap Kanban Board" /> -->
               <div class="card-body">
                 <div class="d-flex justify-content-between">
@@ -160,10 +162,10 @@
         </small> -->
       </div>
       <div class="card-body">
-        <div class="tasks" id="backlog">
+        <div class="tasks" id="backlog" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesPendingConfirm">
           <!-- Start task -->
           <ng-container *ngFor="let incidence of incidencesPendingConfirm" >
-            <div class="card border-pending-confirm p-1 mb-3 cursor-grab">
+            <div [attr.data-id]="incidence.id" [attr.data-status-type]="incidence.status" class="card border-pending-confirm p-1 mb-3 cursor-grab">
               <!-- <img class="card-img-top" src="https://source.unsplash.com/zNRITe8NPqY/400x200" alt="Bootstrap Kanban Board" /> -->
               <div class="card-body">
                 <div class="d-flex justify-content-between">
@@ -214,10 +216,10 @@
         </small> -->
       </div>
       <div class="card-body">
-        <div class="tasks" id="backlog">
+        <div class="tasks" id="backlog" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesResolved">
           <!-- Start task -->
           <ng-container *ngFor="let incidence of incidencesResolved" >
-            <div class="card border-resolved p-1 mb-3 cursor-grab">
+            <div [attr.data-id]="incidence.id" [attr.data-status-type]="incidence.status" class="card border-resolved p-1 mb-3 cursor-grab">
               <!-- <img class="card-img-top" src="https://source.unsplash.com/zNRITe8NPqY/400x200" alt="Bootstrap Kanban Board" /> -->
               <div class="card-body">
                 <div class="d-flex justify-content-between">
