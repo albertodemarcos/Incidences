@@ -27,7 +27,7 @@
   <div class="row">
   <!-- Start lane (STATUS PENDING) -->
   <div class="col-12 col-lg-3">
-    <div class="card mb-3">
+    <div class="card mb-3 ">
       <div class="card-header bg-light">
         <div class="card-title h5 mb-1">
             <div>
@@ -39,7 +39,7 @@
         </small> -->
       </div>
       <div class="card-body">
-        <div class="tasks" id="backlog" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesPending">
+        <div class="tasks" id="backlogPending" data-status="PENDING" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesPending">
           <!-- Start task -->
           <ng-container *ngFor="let incidence of incidencesPending" >
             <div class="wrapper">
@@ -104,7 +104,7 @@
         </small> -->
       </div>
       <div class="card-body">
-        <div class="tasks" id="backlog" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesInProgress">
+        <div class="tasks" id="backlogInProgress" data-status="IN_PROCESS" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesInProgress">
           <!-- Start task -->
           <ng-container *ngFor="let incidence of incidencesInProgress" >
             <div [attr.data-id]="incidence.id" [attr.data-status-type]="incidence.status" class="card border-in-progress p-1 mb-3 cursor-grab">
@@ -162,7 +162,7 @@
         </small> -->
       </div>
       <div class="card-body">
-        <div class="tasks" id="backlog" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesPendingConfirm">
+        <div class="tasks" id="backlogPendingConfirm" data-status="PENDING_CONFIRM" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesPendingConfirm">
           <!-- Start task -->
           <ng-container *ngFor="let incidence of incidencesPendingConfirm" >
             <div [attr.data-id]="incidence.id" [attr.data-status-type]="incidence.status" class="card border-pending-confirm p-1 mb-3 cursor-grab">
@@ -216,7 +216,7 @@
         </small> -->
       </div>
       <div class="card-body">
-        <div class="tasks" id="backlog" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesResolved">
+        <div class="tasks" id="backlogResolved" data-status="RESOLVED" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesResolved">
           <!-- Start task -->
           <ng-container *ngFor="let incidence of incidencesResolved" >
             <div [attr.data-id]="incidence.id" [attr.data-status-type]="incidence.status" class="card border-resolved p-1 mb-3 cursor-grab">

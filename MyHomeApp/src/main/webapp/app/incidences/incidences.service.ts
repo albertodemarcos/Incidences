@@ -44,6 +44,16 @@ export class IncidencesService {
     );
   }
 
+  updateStatus(incidence: IIncidenceKanbanDTO): Observable<IIncidenceKanbanDTO> {
+    let url = `${this.resourceUrl}/update-status`;
+    return this.http.put<IIncidenceKanbanDTO>(url, incidence).pipe(
+      map((incidenceSave: IIncidenceKanbanDTO ) => {
+        this.updateIncidence$.next(incidenceSave);
+        return incidenceSave;
+      })      
+    );
+  }
+
   find(idIncidenceStr: string): Observable<IIncidenceDTO> {
     return this.http.get<IIncidenceDTO>(`${this.resourceUrl}/${idIncidenceStr}`);
   }

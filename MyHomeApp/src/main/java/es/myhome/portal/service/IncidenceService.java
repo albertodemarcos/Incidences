@@ -26,11 +26,9 @@ import es.myhome.portal.repository.OrganizationRepository;
 import es.myhome.portal.service.dto.IncidenceDTO;
 import es.myhome.portal.service.dto.IncidenceKanbanDTO;
 import es.myhome.portal.service.dto.IncidenceListDTO;
-import es.myhome.portal.service.dto.PhotoDTO;
 import es.myhome.portal.service.dto.PhotoDetailDTO;
 import es.myhome.portal.service.filters.FilterIncidence;
 import es.myhome.portal.specification.incidence.CustomerSpecificationIncidenceWithDate;
-import es.myhome.portal.specification.incidence.CustomerSpecificationIncidenceWithNameOrganization;
 import es.myhome.portal.specification.incidence.CustomerSpecificationIncidenceWithPriority;
 import es.myhome.portal.specification.incidence.CustomerSpecificationIncidenceWithStatus;
 import es.myhome.portal.specification.incidence.CustomerSpecificationIncidenceWithTitle;
@@ -134,6 +132,26 @@ public class IncidenceService {
 	                return incidence;
 	            })
 	            .map(IncidenceDTO::new);
+	}
+	
+	/**
+     * Update all information for a specific organization, and return the modified organization.
+     *
+     * @param organizationDTO organization to update.
+     * @return updated organization.
+     */
+	public Optional<IncidenceKanbanDTO> updateStatusIncidence(IncidenceKanbanDTO incidenceKanbanDTO){
+		return Optional
+	            .of(incidenceRepository.findById(incidenceKanbanDTO.getId()))
+	            .filter(Optional::isPresent)
+	            .map(Optional::get)
+	            .map(incidence -> {
+	            	incidence.setId(incidenceKanbanDTO.getId());
+	        		incidence.setStatus(incidenceKanbanDTO.getStatus());
+	                log.debug("Changed Information for Incidence: {}", incidence);
+	                return incidence;
+	            })
+	            .map(IncidenceKanbanDTO::new);
 	}
 	
 	/**

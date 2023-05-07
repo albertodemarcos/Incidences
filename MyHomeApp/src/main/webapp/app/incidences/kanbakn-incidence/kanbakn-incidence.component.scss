@@ -11,6 +11,16 @@ html, body {
     min-height: 450px;
   }
 
+  /*#backlogResolved, #backlogPendingConfirm, #backlogInProgress, #backlogPending {*/
+  .card-body-scroll{
+   /* el div wrapper ha de tener un tamaño fijo */
+  //  width: 1000px; 
+   height: 750px;
+   display: inline-block;
+   overflow: auto;
+}
+
+
   /**
 * ICONS COLOR
 */

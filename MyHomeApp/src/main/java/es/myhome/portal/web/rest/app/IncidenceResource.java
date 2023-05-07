@@ -130,6 +130,24 @@ public class IncidenceResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated incidence.
      * @throws BadRequestAlertException {@code 400 (Bad Request)} if the title don't already in use.
      */
+    @PutMapping("/incidences/update-status")
+    public ResponseEntity<IncidenceKanbanDTO> updateStatusIncidence(@Valid @RequestBody IncidenceKanbanDTO incidenceDTO) {        
+    	log.debug("REST request to update Incidence : {}", incidenceDTO);       
+        Optional<Incidence> existingIncidence = incidenceRepository.findById(incidenceDTO.getId());        
+        if (!existingIncidence.isPresent() ) {        	
+        	throw new BadRequestAlertException("A incidence don't exist", "incidenceManagement", "idnotexists");
+        }        
+        Optional<IncidenceKanbanDTO> updatedIncidence = incidenceService.updateStatusIncidence(incidenceDTO);
+        return ResponseUtil.wrapOrNotFound(updatedIncidence, HeaderUtil.createAlert(applicationName, "incidenceManagement.updated", incidenceDTO.getTitle() ) );
+    }
+    
+    /**
+     * {@code PUT /incidences} : Updates an existing Incidence.
+     *
+     * @param incidenceDTO the incidence to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated incidence.
+     * @throws BadRequestAlertException {@code 400 (Bad Request)} if the title don't already in use.
+     */
     @GetMapping("/incidences/update-employee")
     public ResponseEntity<IncidenceDTO> updateEmployeeIncidence(@Valid @RequestBody Long idIncidence) {
         log.debug("REST request to update Incidence : {}", idIncidence);       

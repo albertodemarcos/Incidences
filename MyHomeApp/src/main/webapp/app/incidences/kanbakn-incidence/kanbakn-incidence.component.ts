@@ -3,7 +3,7 @@ import { Incidence } from '../../core/model/incidence.model';
 import { IncidencesService } from '../incidences.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { IncidenceKanbanDTO } from 'app/core/model/incidenceKanbanDTO.model';
+import { IIncidenceKanbanDTO, IncidenceKanbanDTO } from 'app/core/model/incidenceKanbanDTO.model';
 import { Alert } from 'app/core/util/alert.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -26,10 +26,9 @@ export class KanbaknIncidenceComponent implements OnInit, OnDestroy {
   alerts: Alert[] = [];
 
   private alertError: Alert;
+  private alertSucces: Alert;
 
   private findAllSubcription: Subscription | undefined;
-  //private dragulaSubcription: Subscription;
-  //private dragSubcription: Subscription;
   private dropModelSubcription: Subscription;
 
   constructor( 
@@ -44,17 +43,43 @@ export class KanbaknIncidenceComponent implements OnInit, OnDestroy {
       type: 'danger',
       message: this.translateService.instant('incidences.form.errors.create'),
     };
+
+    
+    this.alertSucces = { 
+      type: 'success',
+      message: this.translateService.instant('incidences.form.update'),
+    };
     
     this.dropModelSubcription = this.dragulaService.dropModel("INCIDENCES_CONTAINER").subscribe(
-      ({ name: string, el: Element, target, source, sibling, item, sourceModel, targetModel, sourceIndex, targetIndex }) => {
+      ({ name, el, target, source, sibling, item, sourceModel, targetModel, sourceIndex, targetIndex }) => {
       console.log('dropModel event!!!');
+      const id = document.querySelector("#"+target.id);
+      const status = id?.attributes.getNamedItem('data-status')?.value;
       if( !item || !item.id  ){
         throw new Error('Incidence is wrong!.');
       }
       //Get element
       let incidence = targetModel[targetIndex];
+      incidence.status = status;
       //Update element
-
+      this.incidencesService.updateStatus(incidence).subscribe({
+        next: (incidenceDTO: IIncidenceKanbanDTO) => {
+          if( !incidenceDTO || !incidenceDTO.id || !incidenceDTO.status ){
+            throw new Error('Incidence is wrong!.');
+          }
+          this.alerts.push(this.alertSucces);
+        },
+        error: (err) => {
+          console.error('Error!. The incident was not updated');          
+          this.alerts.pop();
+          let error: Alert = {
+            type: 'danger',
+            message: this.translateService.instant('incidences.form.errors.update'),
+          };
+          this.alerts.push(error);
+          throw new Error('Incidence is wrong!.');
+        }
+      });
     });
 
   }
