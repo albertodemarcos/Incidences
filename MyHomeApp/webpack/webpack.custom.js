@@ -30,7 +30,7 @@ module.exports = async (config, options, targetOptions) => {
         },
       }),
       new WebpackNotifierPlugin({
-        title: 'My Home App',
+        title: 'Portal Incidencias',
         contentImage: path.join(__dirname, 'logo-jhipster.png'),
       })
     );
