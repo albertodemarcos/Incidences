@@ -1,7 +1,118 @@
 <div class="d-flex justify-content-center">
     <div class="col-8">
       <div *ngIf="incidenceDTO">
-        <h2>
+
+        <div class="card" style="width: auto; box-shadow: 0 1px 5px rgba(0,0,0,0.5);">
+          
+          <div class="card-header bg-primary text-center">
+
+            <h5 class="card-title text-color-white">
+              <span class="" jhiTranslate="incidences.detail.title_view">Incidencia</span> [<strong>{{ incidenceDTO.title }}</strong>]
+            </h5>
+
+          </div>
+          
+          <div class="card-body">
+
+            <div class="row">
+              
+              <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                <dt><span jhiTranslate="incidences.detail.title">Título</span></dt>
+                <dd>{{ incidenceDTO.title }}</dd>
+              </dl>
+
+              <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                <dt><span jhiTranslate="incidences.detail.start_date">Fecha inicio</span></dt>
+                <dd>{{ incidenceDTO.startDate | date: 'dd/MM/yy HH:mm' }}</dd>
+              </dl>
+
+              <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                <dt><span jhiTranslate="incidences.detail.status">Estado</span></dt>
+                <dd>
+                  <span [ngClass]="{
+                    'badge': true,
+                    'bg-pending': incidenceDTO.status != null && incidenceDTO.status == 'PENDING',
+                    'bg-in-progress': incidenceDTO.status != null && incidenceDTO.status == 'IN_PROCESS',
+                    'bg-pending-confirm': incidenceDTO.status != null && incidenceDTO.status == 'PENDING_CONFIRM',
+                    'bg-resolved': incidenceDTO.status != null && incidenceDTO.status == 'RESOLVED',
+                    'bg-cancel': incidenceDTO.status != null && incidenceDTO.status == 'CANCELED',
+                    'text-white': false
+                  }" >
+                    {{ ('incidences.status.status_incidence.' + incidenceDTO.status) | lowercase | translate }}
+                  </span>
+                </dd>
+              </dl>
+
+              <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                <dt><span jhiTranslate="incidences.detail.priority">priority</span></dt>
+                <dd>
+                  <span [ngClass]="{
+                    'badge': true,
+                    'bg-danger': incidenceDTO.priority != null && incidenceDTO.priority == 'HIGH',
+                    'bg-warning': incidenceDTO.priority != null && incidenceDTO.priority == 'MEDIUM',
+                    'bg-success': incidenceDTO.priority != null && incidenceDTO.priority == 'LOW',
+                    'text-white': true
+                  }" >
+                  {{ ('incidences.priority.priority_incidence.' + incidenceDTO.priority) | lowercase | translate }}
+                </span>
+                  </dd>
+              </dl>
+
+              <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                <dt><span jhiTranslate="incidences.detail.end_date">Fecha resolución</span></dt>
+                <dd>{{ incidenceDTO.endDate | date: 'dd/MM/yy HH:mm' }}</dd>
+              </dl>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-12">
+                <span class="subtitle-geolocation" jhiTranslate="incidences.detail.geolocation">Geolocalización</span>
+              </div>
+              <div class="col-12">
+                <div class="row">
+                    <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                      <dt><span jhiTranslate="incidences.list.latitude">Latitud</span></dt>
+                      <dd>{{ incidenceDTO.latitude }}</dd>
+                    </dl>
+                  <dl  class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                    <dt><span jhiTranslate="incidences.list.longitude">Longitud</span></dt>
+                    <dd> {{ incidenceDTO.longitude }}</dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+
+              <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                <dt><span jhiTranslate="incidences.detail.description">description</span></dt>
+                <dd>{{ incidenceDTO.description }}</dd>
+              </dl>
+
+            </div>
+
+            <div class="form-group" *ngIf="incidenceDTO.photosDTO!=null&&incidenceDTO.photosDTO.length>0">
+              <div class="row" id="photos">
+                <ng-container  *ngFor="let number of [0,1,2,3,4]" > <!--*ngFor="let photo of incidenceDTO.photosDTO"-->
+                  <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                    <!-- <img src="{{getPhotoFormServe(photo)}}" class="img-thumbnail" alt="..." /> -->
+                    <img src="https://ethic.es/wp-content/uploads/2023/03/imagen.jpg" class="img-thumbnail" alt="..." />
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="card-footer bg-card-footer mt-3">
+              <button type="submit" routerLink="../../" class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+              </button>
+            </div>
+
+          </div>          
+        </div>
+
+
+        <!-- <h2>
           <span jhiTranslate="incidences.detail.title_view">Incidencia</span> [<strong>{{ incidenceDTO.title }}</strong>]
         </h2>
   
@@ -28,21 +139,19 @@
           <dt><span jhiTranslate="incidences.detail.geolocation">Geolocalización</span></dt>
           <dd><br/>{{ incidenceDTO.latitude }}<br/>{{ incidenceDTO.longitude }}</dd>
 
-        </dl>
+        </dl> -->
 
-        <div class="form-group" *ngIf="incidenceDTO.photosDTO!=null&&incidenceDTO.photosDTO.length>0">
+        <!-- <div class="form-group" *ngIf="incidenceDTO.photosDTO!=null&&incidenceDTO.photosDTO.length>0">
           <div class="row" id="photos">
             <ng-container *ngFor="let photo of incidenceDTO.photosDTO" >
               <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-                <img [src]="getPhotoFormServe(photo)" class="img-thumbnail" alt="..." />
+                < !-- <img src="{{getPhotoFormServe(photo)}}" class="img-thumbnail" alt="..." /> -- >
               </div>
             </ng-container>
           </div>
-        </div>
+        </div> -->
   
-        <button type="submit" routerLink="../../" class="btn btn-info">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
-        </button>
+        
       </div>
     </div>
   </div>

@@ -1,0 +1,113 @@
+// body{
+//   background: #252830;
+// }
+.products {
+padding: 5% 0 0;
+}
+.card {
+  border: none;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+.card-body {
+// color: #fff;
+// background: #2a2f40;
+}
+.card-title {
+  font-size: 30px;
+  font-weight: 700;
+  transition: all .5s ease-in-out;
+}
+.btn-group .btn {
+  background: #fe6d38;
+  color: #fff;
+  font-size: 18px;
+  margin-right: 5px;
+  padding: 10px 20px;
+  font-weight: 700;
+   transition: all .6s ease-in;
+}
+.price {
+  font-size: 25px; 
+  font-weight: 900;    
+  transition: .6s;
+}
+.card:hover .price{
+  animation: pulse .5s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%{
+      transform: scale(1);
+  }
+  50%{
+      transform: scale(.95);
+  }
+  0%{
+      transform: scale(1);
+  }
+}
+.card:hover .card-title{
+  // letter-spacing: 5px;
+  // font-weight: 300;
+}
+.btn:hover {
+background: #fff;
+color: #262626;
+}
+@media (max-width: 991px){
+  .card {
+      margin-bottom: 30px;
+  }
+}
+@media (max-width: 767px){
+  .btn-group .btn {
+      font-size: 9px;
+  }
+}
+
+  /**
+* BACKGROUND COLOR
+*/
+
+.bg-pending{
+  background-color: rgb(105, 172, 254);
+}
+
+.bg-in-progress{
+  background-color: rgb(255, 207, 17);
+}
+
+.bg-pending-confirm{
+  background-color: rgb(223, 233, 34);
+}
+
+.bg-resolved {
+  background-color: rgb(102, 255, 71);
+}
+
+.bg-cancel{
+  background-color: rgb(255, 53, 18);
+}
+
+.bg-box-info{
+  background-color: rgb(234, 248, 255) !important;
+  border: solid 1px rgb(61, 61, 61);
+}
+
+.bg-card-header{
+  background-color: rgb(19, 41, 235);
+}
+
+.bg-card-footer{
+  background-color: white !important;
+  border: none !important;
+}
+
+.text-color-white{
+  color: white !important;
+}
+
+.subtitle-geolocation{
+  font-size: 18px;
+  font-weight: 700;
+  transition: all 0.5s ease-in-out;
+}

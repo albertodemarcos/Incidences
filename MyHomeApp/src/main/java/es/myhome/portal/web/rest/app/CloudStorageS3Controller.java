@@ -51,7 +51,10 @@ public class CloudStorageS3Controller {
     }
 
     @GetMapping("/downloadS3File")
-    public ResponseEntity<ByteArrayResource> downloadS3File(@RequestParam(value = "bucketName") String bucketName, @RequestParam(value = "filePath") String filePath, @RequestParam(value = "fileName") String fileName)
+    public ResponseEntity<ByteArrayResource> downloadS3File(
+    		@RequestParam(value = "bucketName", required = true) String bucketName,
+    		@RequestParam(value = "filePath", required = false) String filePath,
+    		@RequestParam(value = "fileName", required = true) String fileName)
             throws IOException {
         byte[] data = cloudStorageS3Service.downloadFile(bucketName, fileName);
         ByteArrayResource resource = new ByteArrayResource(data);

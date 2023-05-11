@@ -6,9 +6,12 @@ import { IncidenceDTO } from '../../core/model/incidenceDTO.model';
 
 @Component({
   selector: 'jhi-detail-incidence',
-  templateUrl: './detail-incidence.component.html'
+  templateUrl: './detail-incidence.component.html',
+  styleUrls: ['./detail-incidence.component.scss']
 })
 export class DetailIncidenceComponent implements OnInit {
+
+  statusType: string[] = ['PENDING','IN_PROCESS','PENDING_CONFIRM','RESOLVED','CANCELED'];
 
   incidenceDTO: IncidenceDTO | null = null;
   files: any = [];
@@ -41,10 +44,10 @@ export class DetailIncidenceComponent implements OnInit {
   }
 
   public getPhotoFormServe(photo: any): any{
-    if( photo == null || photo.id == null ){
+    if( photo == null || photo.id == null || !photo?.bucket || !photo?.imagenUrl ){
       return '';
     }
-    return '';
+    return `/api/downloadS3File?bucketName=${photo?.bucket}&fileName=${ photo?.imagenUrl}`;
   }
 
   private getViewModel():void {
@@ -61,9 +64,8 @@ export class DetailIncidenceComponent implements OnInit {
         this.incidenceDTO = incidenceDto;
         let photos = incidenceDto.photosDTO ? incidenceDto.photosDTO : [];
 
-        for(let i =0; i < photos.length; i++ )
+        /*for(let i =0; i < photos.length; i++ )
         {
-
           let photo: any = photos[i];
 
           this.photosService.find(photo?.bucket, photo?.imagenUrl).subscribe({
@@ -74,7 +76,7 @@ export class DetailIncidenceComponent implements OnInit {
               //'/api/getS3File?bucketName='+photo.bucket+'&fileName='+photo.imagenUrl;
             }
           });
-        }
+        }*/
 
         //console.log('this.photos'+this.photos);
       },
