@@ -106,8 +106,33 @@ color: #262626;
   color: white !important;
 }
 
+.border-dl-gray{
+  border-left: 4px solid rgb(202, 202, 202);
+}
+
 .subtitle-geolocation{
   font-size: 18px;
   font-weight: 700;
   transition: all 0.5s ease-in-out;
 }
+
+/*@media (min-width: 576px) {  }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {  }*/
+
+// Large devices (desktops, 992px and up)
+@media (max-width: 992px) {
+
+  #button-go-back-id{
+    display: block;
+    width: auto;
+    float: none;
+  }
+}
+
+// X-Large devices (large desktops, 1200px and up)
+/*@media (min-width: 1200px) { ... }
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) { ... }*/

@@ -69,13 +69,13 @@
                       [attr.data-bs-content]="incidence.description">{{incidence.description}}
                   </p> -->
                   <div class="text-right">
-                    <button type="submit" (click)="getIncidence(incidence.id)" title="{{'entity.action.view' | translate}}" class="btn btn-info">
+                    <button type="submit" (click)="getIncidence(incidence.id)" title="{{'entity.action.view' | translate}}" class="btn btn-info bg-info-app">
                       <fa-icon icon="eye"></fa-icon>
                     </button>
   
                     <ng-container *ngIf="!incidence.idEmployee" >
-                      <button type="submit" (click)="updateEmployeeIncidence(incidence)" title="{{'entity.action.view' | translate}}" class="btn btn-info">
-                        <fa-icon icon="eye"></fa-icon>
+                      <button type="submit" (click)="updateEmployeeIncidence(incidence)" title="{{'entity.action.view' | translate}}" class="btn btn-incidence">
+                        <fa-icon icon="shuffle"></fa-icon>
                       </button>
                     </ng-container> 
                   </div>
@@ -133,7 +133,7 @@
                     [attr.data-bs-content]="incidence.description">{{incidence.description}}
                 </p> -->
                 <div class="text-right">
-                  <button type="submit" (click)="getIncidence(incidence.id)" title="{{'entity.action.view' | translate}}" class="btn btn-info">
+                  <button type="submit" (click)="getIncidence(incidence.id)" title="{{'entity.action.view' | translate}}" class="btn btn-info bg-info-app">
                     <fa-icon icon="eye"></fa-icon>
                     <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span> -->
                   </button>

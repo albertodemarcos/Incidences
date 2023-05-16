@@ -124,9 +124,13 @@
         },
         "detail": {
           "title_view": "Incidencia",
+          "subtitle_details" : "Datos generales",
+          "subtitle_geolocation" : "Geolocalzación",
+          "subtitle_photos" : "Imagenes recopiladas",
           "title" : "Título",
           "start_date": "Fecha inicio",
           "end_date" : "Fecha resolución",
+          "not_end_date" : "Aún por resolver",
           "status" : "Estado",
           "priority" : "Prioridad",
           "organization" : "Organización",

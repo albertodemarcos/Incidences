@@ -10,7 +10,7 @@
         <!-- <button class="btn btn-primary jh-create-entity" [routerLink]="['/incidences/create']">
           <fa-icon icon="plus"></fa-icon> <span jhiTranslate="incidences.list.createLabel">Crear una nueva organización</span>
         </button> -->
-        <button class="btn btn-info jh-create-entity" [routerLink]="['/incidences/kanban']">
+        <button class="btn btn-info bg-info-app jh-create-entity" [routerLink]="['/incidences/kanban']">
           <i class="bi bi-bar-chart"></i> Kanban's status
         </button>
       </div>
@@ -67,7 +67,7 @@
             <td></td>
             <td class="text-end">              
               <div class="btn-group">                
-                <button type="submit" [routerLink]="['./', incidence.id, 'view']" title="{{'entity.action.view' | translate}}" class="btn btn-info">
+                <button type="submit" [routerLink]="['./', incidence.id, 'view']" title="{{'entity.action.view' | translate}}" class="btn btn-info bg-info-app">
                   <fa-icon icon="eye"></fa-icon>
                   <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span> -->
                 </button>  

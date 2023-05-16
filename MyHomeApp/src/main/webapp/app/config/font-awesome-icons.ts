@@ -43,7 +43,11 @@ import {
   faSpinner,
   faFlagCheckered,
   faUserClock,
-  faMapLocationDot  
+  faMapLocationDot,
+  faShuffle,
+  faMapLocation,
+  faAddressCard,
+  faImages
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -92,6 +96,10 @@ export const fontAwesomeIcons = [
   faSpinner,
   faFlagCheckered,
   faUserClock,
-  faMapLocationDot
+  faMapLocationDot,
+  faShuffle,
+  faMapLocation,
+  faAddressCard,
+  faImages
   // jhipster-needle-add-icon-import
 ];

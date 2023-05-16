@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-    <div class="col-8">
+    <div class="col-xs-12">
       <div *ngIf="incidenceDTO">
 
         <div class="card" style="width: auto; box-shadow: 0 1px 5px rgba(0,0,0,0.5);">
@@ -16,17 +16,16 @@
 
             <div class="row">
               
-              <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                <dt><span jhiTranslate="incidences.detail.title">Título</span></dt>
-                <dd>{{ incidenceDTO.title }}</dd>
-              </dl>
+              <h4 class="subtitle-geolocation" >
+                <fa-icon icon="address-card"></fa-icon> <span jhiTranslate="incidences.detail.subtitle_details">Datos generales</span>
+              </h4>
 
-              <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4">
                 <dt><span jhiTranslate="incidences.detail.start_date">Fecha inicio</span></dt>
                 <dd>{{ incidenceDTO.startDate | date: 'dd/MM/yy HH:mm' }}</dd>
               </dl>
 
-              <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4">
                 <dt><span jhiTranslate="incidences.detail.status">Estado</span></dt>
                 <dd>
                   <span [ngClass]="{
@@ -43,7 +42,7 @@
                 </dd>
               </dl>
 
-              <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4">
                 <dt><span jhiTranslate="incidences.detail.priority">priority</span></dt>
                 <dd>
                   <span [ngClass]="{
@@ -58,41 +57,46 @@
                   </dd>
               </dl>
 
-              <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4">
                 <dt><span jhiTranslate="incidences.detail.end_date">Fecha resolución</span></dt>
-                <dd>{{ incidenceDTO.endDate | date: 'dd/MM/yy HH:mm' }}</dd>
+                <dd>
+                  <ng-container *ngIf="incidenceDTO.endDate" >{{ incidenceDTO.endDate | date: 'dd/MM/yy HH:mm' }}</ng-container>
+                  <ng-container *ngIf="!incidenceDTO.endDate" ><span jhiTranslate="incidences.detail.not_end_date" ></span></ng-container>
+                </dd>
               </dl>
-            </div>
 
-            <div class="row mb-3">
-              <div class="col-12">
-                <span class="subtitle-geolocation" jhiTranslate="incidences.detail.geolocation">Geolocalización</span>
-              </div>
-              <div class="col-12">
-                <div class="row">
-                    <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                      <dt><span jhiTranslate="incidences.list.latitude">Latitud</span></dt>
-                      <dd>{{ incidenceDTO.latitude }}</dd>
-                    </dl>
-                  <dl  class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                    <dt><span jhiTranslate="incidences.list.longitude">Longitud</span></dt>
-                    <dd> {{ incidenceDTO.longitude }}</dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-
-              <dl class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4">
                 <dt><span jhiTranslate="incidences.detail.description">description</span></dt>
                 <dd>{{ incidenceDTO.description }}</dd>
               </dl>
 
+
+            </div>
+
+            <div class="row mb-3">
+                
+              <h4 class="subtitle-geolocation" >
+                <fa-icon icon="map-location"></fa-icon> <span jhiTranslate="incidences.detail.geolocation">Geolocalización</span>
+              </h4>
+
+              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4" >
+                <dt><span jhiTranslate="incidences.list.latitude">Latitud</span></dt>
+                <dd>{{ incidenceDTO.latitude }}</dd>
+              </dl>
+              <dl  class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                <dt><span jhiTranslate="incidences.list.longitude">Longitud</span></dt>
+                <dd> {{ incidenceDTO.longitude }}</dd>
+              </dl>
+              
             </div>
 
             <div class="form-group" *ngIf="incidenceDTO.photosDTO!=null&&incidenceDTO.photosDTO.length>0">
               <div class="row" id="photos">
+                
+                <h4 class="subtitle-geolocation" >
+                  <fa-icon icon="images"></fa-icon> <span jhiTranslate="incidences.detail.subtitle_photos">Fotos</span>
+                </h4>
+                
                 <ng-container  *ngFor="let number of [0,1,2,3,4]" > <!--*ngFor="let photo of incidenceDTO.photosDTO"-->
                   <div class="col-12 col-md-6 col-lg-4 col-xl-3">
                     <!-- <img src="{{getPhotoFormServe(photo)}}" class="img-thumbnail" alt="..." /> -->
@@ -103,7 +107,7 @@
             </div>
 
             <div class="card-footer bg-card-footer mt-3">
-              <button type="submit" routerLink="../../" class="btn btn-info">
+              <button id="button-go-back-id" type="submit" routerLink="../../" class="btn btn-info bg-info-app">
                 <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
               </button>
             </div>

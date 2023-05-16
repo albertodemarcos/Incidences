@@ -3,7 +3,7 @@
       <span id="organization-management-page-heading" jhiTranslate="organizations.list.title" data-cy="organizationManagementPageHeading">Organizaciones</span>
   
       <div class="d-flex justify-content-end">
-        <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+        <button class="btn btn-info bg-info-app me-2" (click)="loadAll()" [disabled]="isLoading">
           <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
           <span jhiTranslate="global.form.refreshListLabel">Refrescar lista</span>
         </button>
@@ -85,7 +85,7 @@
               
               <div class="btn-group">
                 
-                <button type="submit" [routerLink]="['./', organization.id, 'view']" class="btn btn-info btn-sm">
+                <button type="submit" [routerLink]="['./', organization.id, 'view']" class="btn btn-info bg-info-app btn-sm">
                   <fa-icon icon="eye"></fa-icon>
                   <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
                 </button>
