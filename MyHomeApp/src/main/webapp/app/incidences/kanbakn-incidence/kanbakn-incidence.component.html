@@ -1,6 +1,6 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="d-flex justify-content-between align-items-center ">
   <div><h1>Kanban</h1></div>
-  <div class="d-flex align-items-center">
+  <!-- <div class="d-flex align-items-center">
     <div class="dropdown" ngbDropdown>
       <button class="btn btn-secondary dropdown-toggle" type="button" ngbDropdownToggle  id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
         Ordenar
@@ -21,9 +21,9 @@
         <li><a class="dropdown-item" href="#">Something else here</a></li>
       </ul>
     </div>
-  </div>
+  </div> -->
 </div>
-<div class="container-fluid py-5">
+<div class="container-fluid py-4">
   <div class="row">
   <!-- Start lane (STATUS PENDING) -->
   <div class="col-12 col-lg-3">
@@ -31,14 +31,15 @@
       <div class="card-header bg-light">
         <div class="card-title h5 mb-1">
             <div>
-                <fa-icon icon="table-list" class="icon-pending"></fa-icon> <span >{{statusType[0]}}</span>
+                <fa-icon icon="table-list" class="icon-pending"></fa-icon>
+                <span jhiTranslate="incidences.status.status_incidence.pending" ></span>
             </div>
         </div>
         <!-- <small class="mb-0 text-muted">
           Estas tareas estan pendientes de ser realizadas.
         </small> -->
       </div>
-      <div class="card-body">
+      <div class="card-body scroll-card">
         <div class="tasks" id="backlogPending" data-status="PENDING" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesPending">
           <!-- Start task -->
           <ng-container *ngFor="let incidence of incidencesPending" >
@@ -75,7 +76,7 @@
   
                     <ng-container *ngIf="!incidence.idEmployee" >
                       <button type="submit" (click)="updateEmployeeIncidence(incidence)" title="{{'entity.action.view' | translate}}" class="btn btn-incidence">
-                        <fa-icon icon="shuffle"></fa-icon>
+                        <fa-icon icon="user-check"></fa-icon>
                       </button>
                     </ng-container> 
                   </div>
@@ -85,7 +86,7 @@
           </ng-container>
           <!-- End task -->
         </div>
-        <div class="btn btn-primary btn-block">Add task</div>
+        <!-- <div class="btn btn-primary btn-block">Add task</div> -->
       </div>
     </div>
   </div>
@@ -96,14 +97,15 @@
       <div class="card-header bg-light">
         <div class="card-title h5 mb-1">
           <div>
-            <fa-icon icon="spinner" class="icon-in-progress" ></fa-icon> <span >{{statusType[1]}}</span>
+            <fa-icon icon="spinner" class="icon-in-progress" ></fa-icon>
+            <span jhiTranslate="incidences.status.status_incidence.in_process" ></span>
           </div>
         </div>
         <!-- <small class="mb-0 text-muted">
           Estas tareas estan pendientes de ser realizadas.
         </small> -->
       </div>
-      <div class="card-body">
+      <div class="card-body scroll-card">
         <div class="tasks" id="backlogInProgress" data-status="IN_PROCESS" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesInProgress">
           <!-- Start task -->
           <ng-container *ngFor="let incidence of incidencesInProgress" >
@@ -154,14 +156,15 @@
       <div class="card-header bg-light">
         <div class="card-title h5 mb-1">
           <div>
-            <fa-icon icon="user-clock" class="icon-pending-confirm"></fa-icon> <span >{{statusType[2]}}</span>
+            <fa-icon icon="user-clock" class="icon-pending-confirm"></fa-icon>
+            <span jhiTranslate="incidences.status.status_incidence.pending_confirm" ></span>
           </div>
         </div>
         <!-- <small class="mb-0 text-muted">
           Estas tareas estan pendientes de ser realizadas.
         </small> -->
       </div>
-      <div class="card-body">
+      <div class="card-body scroll-card">
         <div class="tasks" id="backlogPendingConfirm" data-status="PENDING_CONFIRM" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesPendingConfirm">
           <!-- Start task -->
           <ng-container *ngFor="let incidence of incidencesPendingConfirm" >
@@ -191,6 +194,10 @@
                     [attr.data-bs-content]="incidence.description">{{incidence.description}}
                 </p> -->
                 <div class="text-right">
+                  <button type="submit" (click)="getIncidence(incidence.id)" title="{{'entity.action.view' | translate}}" class="btn btn-info bg-info-app">
+                    <fa-icon icon="eye"></fa-icon>
+                    <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span> -->
+                  </button>
                 </div>
               </div>
             </div>
@@ -208,14 +215,15 @@
       <div class="card-header bg-light">
         <div class="card-title h5 mb-1">
           <div>
-            <fa-icon icon="check" class="icon-resolved"></fa-icon> <span >{{statusType[3]}}</span>
+            <fa-icon icon="check" class="icon-resolved"></fa-icon>
+            <span jhiTranslate="incidences.status.status_incidence.resolved"></span>
           </div>
         </div>
         <!-- <small class="mb-0 text-muted">
           Estas tareas estan pendientes de ser realizadas.
         </small> -->
       </div>
-      <div class="card-body">
+      <div class="card-body scroll-card">
         <div class="tasks" id="backlogResolved" data-status="RESOLVED" dragula="INCIDENCES_CONTAINER" [(dragulaModel)]="incidencesResolved">
           <!-- Start task -->
           <ng-container *ngFor="let incidence of incidencesResolved" >
@@ -245,6 +253,10 @@
                     [attr.data-bs-content]="incidence.description">{{incidence.description}}
                 </p> -->
                 <div class="text-right">
+                  <button type="submit" (click)="getIncidence(incidence.id)" title="{{'entity.action.view' | translate}}" class="btn btn-info bg-info-app">
+                    <fa-icon icon="eye"></fa-icon>
+                    <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span> -->
+                  </button>
                 </div>
               </div>
             </div>

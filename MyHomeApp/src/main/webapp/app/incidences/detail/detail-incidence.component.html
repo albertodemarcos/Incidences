@@ -20,21 +20,21 @@
                 <fa-icon icon="address-card"></fa-icon> <span jhiTranslate="incidences.detail.subtitle_details">Datos generales</span>
               </h4>
 
-              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4">
+              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
                 <dt><span jhiTranslate="incidences.detail.start_date">Fecha inicio</span></dt>
                 <dd>{{ incidenceDTO.startDate | date: 'dd/MM/yy HH:mm' }}</dd>
               </dl>
 
-              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4">
+              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
                 <dt><span jhiTranslate="incidences.detail.status">Estado</span></dt>
                 <dd>
                   <span [ngClass]="{
                     'badge': true,
-                    'bg-pending': incidenceDTO.status != null && incidenceDTO.status == 'PENDING',
-                    'bg-in-progress': incidenceDTO.status != null && incidenceDTO.status == 'IN_PROCESS',
-                    'bg-pending-confirm': incidenceDTO.status != null && incidenceDTO.status == 'PENDING_CONFIRM',
-                    'bg-resolved': incidenceDTO.status != null && incidenceDTO.status == 'RESOLVED',
-                    'bg-cancel': incidenceDTO.status != null && incidenceDTO.status == 'CANCELED',
+                    'bd-outline-pending': incidenceDTO.status != null && incidenceDTO.status == 'PENDING',
+                    'bd-outline-in-progress': incidenceDTO.status != null && incidenceDTO.status == 'IN_PROCESS',
+                    'bd-outline-pending-confirm': incidenceDTO.status != null && incidenceDTO.status == 'PENDING_CONFIRM',
+                    'bd-outline-resolved': incidenceDTO.status != null && incidenceDTO.status == 'RESOLVED',
+                    'bd-outline-cancel': incidenceDTO.status != null && incidenceDTO.status == 'CANCELED',
                     'text-white': false
                   }" >
                     {{ ('incidences.status.status_incidence.' + incidenceDTO.status) | lowercase | translate }}
@@ -42,7 +42,7 @@
                 </dd>
               </dl>
 
-              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4">
+              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
                 <dt><span jhiTranslate="incidences.detail.priority">priority</span></dt>
                 <dd>
                   <span [ngClass]="{
@@ -57,7 +57,7 @@
                   </dd>
               </dl>
 
-              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4">
+              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
                 <dt><span jhiTranslate="incidences.detail.end_date">Fecha resolución</span></dt>
                 <dd>
                   <ng-container *ngIf="incidenceDTO.endDate" >{{ incidenceDTO.endDate | date: 'dd/MM/yy HH:mm' }}</ng-container>
@@ -79,11 +79,11 @@
                 <fa-icon icon="map-location"></fa-icon> <span jhiTranslate="incidences.detail.geolocation">Geolocalización</span>
               </h4>
 
-              <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4" >
+              <dl class="border-dl-gray col-3" >
                 <dt><span jhiTranslate="incidences.list.latitude">Latitud</span></dt>
                 <dd>{{ incidenceDTO.latitude }}</dd>
               </dl>
-              <dl  class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4">
+              <dl  class="border-dl-gray col-3">
                 <dt><span jhiTranslate="incidences.list.longitude">Longitud</span></dt>
                 <dd> {{ incidenceDTO.longitude }}</dd>
               </dl>
@@ -106,13 +106,26 @@
               </div>
             </div>
 
-            <div class="card-footer bg-card-footer mt-3">
+            <!-- <div class="card-footer bg-card-footer mt-3">
               <button id="button-go-back-id" type="submit" routerLink="../../" class="btn btn-info bg-info-app">
                 <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
               </button>
-            </div>
+            </div> -->
 
-          </div>          
+          </div>
+
+          <!-- <div class="row">
+            <button class="col-xs-12 col-md-6 col-lg-4 col-xl-3" id="button-go-back-id" type="submit" routerLink="../../" class="btn btn-info bg-info-app">
+              <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+            </button>
+          </div> -->
+
+          <div class="d-grid gap-2 d-md-block ">
+            <button class="btn btn-primary  bg-info-app" id="button-go-back-id" type="button" (click)="backPage()">
+              <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+            </button>
+          </div>
+
         </div>
 
 

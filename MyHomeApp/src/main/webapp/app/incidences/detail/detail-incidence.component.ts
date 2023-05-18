@@ -43,6 +43,10 @@ export class DetailIncidenceComponent implements OnInit {
     });   
   }
 
+  public backPage(){
+    history.go(-1);
+  }
+
   public getPhotoFormServe(photo: any): any{
     if( photo == null || photo.id == null || !photo?.bucket || !photo?.imagenUrl ){
       return '';

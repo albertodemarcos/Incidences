@@ -98,6 +98,7 @@
         "status": {
           "status_incidence.pending" : "Pendiente",
           "status_incidence.in_process" : "En proceso",
+          "status_incidence.pending_confirm" : "Pendiente confirmación",
           "status_incidence.resolved" : "Resuelto",
           "status_incidence.canceled" : "Cancelada"
         },

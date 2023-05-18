@@ -34,7 +34,7 @@ html, body {
 }
 
 .icon-pending-confirm{
-  color: rgb(223, 233, 34);
+  color: rgb(183, 14, 255);
 }
 
 .icon-resolved {
@@ -59,6 +59,10 @@ html, body {
   background-color: #e8e7ed!important;
 }
 
+.bg-card-header{
+  background-color: rgb(241, 241, 241);
+}
+
 .border-pending{
   border-left: solid 5px blue;
 }
@@ -68,7 +72,7 @@ html, body {
 }
 
 .border-pending-confirm{
-  border-left: solid 5px yellow;
+  border-left: solid 5px rgb(183, 14, 255);
 }
 
 .border-resolved{
@@ -90,4 +94,23 @@ html, body {
 
 .shadow-none {
   box-shadow: none!important
+}
+
+.scroll-card {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.scroll-card::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scroll-card::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.3); 
+  border-radius: 5px;
+}
+
+.scroll-card::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.5); 
 }
