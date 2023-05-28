@@ -169,6 +169,33 @@ public class OrganizationResource {
         return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "organizations.deleted", idOrganizationStr )).build();
     }
     
+    /**
+     * {@code POST  /admin/organizations}  : Creates a new organization.
+     * <p>
+     * The organization needs to be admin on creation.
+     *
+     * @param organizationDTO the organization to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new organization, or with status {@code 400 (Bad Request)} if the login or email is already in use.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @throws BadRequestAlertException {@code 400 (Bad Request)} if the login or email is already in use.
+     */
+    /*@PostMapping("/organizations")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<Organization> importerOrganization(@Valid @RequestBody List organizationDTO) throws URISyntaxException {
+        log.debug("REST request to save Organization : {}", organizationDTO);
+        Organization newOrganization = null;
+        if (organizationDTO.getId() != null) {
+ 			throw new BadRequestAlertException("A new organization cannot already have an ID", "organizationManagement", "idexists");
+        } else if (organizationRepository.findOneByName(organizationDTO.getName().toLowerCase()).isPresent()) { // Lowercase the user login before comparing with database
+        	throw new NameOrganizationAlreadyUsedException();
+        }  
+        newOrganization = organizationService.createOrganization(organizationDTO);
+        return ResponseEntity
+                .created(new URI("/api/admin/organizations/" + newOrganization.getId() ))
+                .headers(HeaderUtil.createAlert(applicationName, "organizationService.created", newOrganization.getId().toString() ))
+                .body(newOrganization);
+    }*/
+    
     private boolean onlyContainsAllowedProperties(Pageable pageable) {
         return pageable.getSort().stream().map(Sort.Order::getProperty).allMatch(FilterUtils.ORGANIZATION_RESOURCE_ALLOWED_ORDERED_PROPERTIES::contains);
     }
