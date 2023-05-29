@@ -6,6 +6,7 @@ import { CreateOrganizationComponent } from './create/create-organization.compon
 import { DeleteOrganizationComponent } from './delete/delete-organization.component';
 import { DetailOrganizationComponent } from './detail/detail-organization.component';
 import { ListOrganizationsComponent } from './list/list-organizations.component';
+import { ImporterComponent } from './importer/importer.component';
 
 /*@Injectable({ providedIn: 'root' })
 export class UserManagementResolve implements Resolve<IUser | null> {
@@ -44,4 +45,8 @@ export const organizationsRoute: Routes = [
     path: ':id/delete',
     component: DeleteOrganizationComponent,
   },
+  {
+    path: 'importer',
+    component: ImporterComponent,
+  }
 ];

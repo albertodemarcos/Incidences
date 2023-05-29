@@ -19,7 +19,7 @@ import es.myhome.portal.service.filters.FilterGoogleMarkerIncidence;
 @RequestMapping("/api")
 public class GoogleMakersIncidencesResource {
 
-private final Logger log = LoggerFactory.getLogger(OrganizationResource.class);
+	private final Logger log = LoggerFactory.getLogger(GoogleMakersIncidencesResource.class);
 	
 	@Value("${jhipster.clientApp.name}")
     private String applicationName;

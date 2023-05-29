@@ -97,10 +97,10 @@
                   <fa-icon icon="images"></fa-icon> <span jhiTranslate="incidences.detail.subtitle_photos">Fotos</span>
                 </h4>
                 
-                <ng-container  *ngFor="let number of [0,1,2,3,4]" > <!--*ngFor="let photo of incidenceDTO.photosDTO"-->
+                <ng-container  *ngFor="let photo of incidenceDTO.photosDTO" > <!--*ngFor="let number of [0,1,2,3,4]"-->
                   <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-                    <!-- <img src="{{getPhotoFormServe(photo)}}" class="img-thumbnail" alt="..." /> -->
-                    <img src="https://ethic.es/wp-content/uploads/2023/03/imagen.jpg" class="img-thumbnail" alt="..." />
+                    <img src="{{getPhotoFormServe(photo)}}" class="img-thumbnail" alt="..." />
+                    <!-- <img src="https://ethic.es/wp-content/uploads/2023/03/imagen.jpg" class="img-thumbnail" alt="..." /> -->
                   </div>
                 </ng-container>
               </div>
