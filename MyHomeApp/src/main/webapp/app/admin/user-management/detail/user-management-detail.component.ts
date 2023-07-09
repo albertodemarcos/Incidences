@@ -13,6 +13,7 @@ export class UserManagementDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    console.log('UserManagementDetailComponent');
     this.route.data.subscribe(({ user }) => {
       this.user = user;
     });

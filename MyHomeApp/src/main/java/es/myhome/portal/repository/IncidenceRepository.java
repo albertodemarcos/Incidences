@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import es.myhome.portal.domain.app.Incidence;
-import es.myhome.portal.domain.app.Organization;
 import es.myhome.portal.service.dto.GoogleMarkerIncidenceDTO;
 import es.myhome.portal.service.dto.IncidenceKanbanDTO;
 

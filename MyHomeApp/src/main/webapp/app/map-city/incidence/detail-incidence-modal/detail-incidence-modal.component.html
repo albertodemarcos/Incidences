@@ -1,10 +1,142 @@
 <div class="modal-header">
+  <h4 class="modal-title text-color-white" id="showHealthLabel" *ngIf="incidence">
+      <span jhiTranslate="incidences.detail.title_view">Incidencia</span> [<strong>{{ incidence.title }}</strong>]
+  </h4>
+
+  <button aria-label="Close" data-dismiss="modal" class="btn btn-close" type="button" (click)="dismiss()">
+  </button>
+</div>
+
+<div class="modal-body pad">
+
+<div class="d-flex justify-content-center">
+  <div class="col-xs-12">
+    <div *ngIf="incidence">
+
+      <div class="card" style="width: auto; box-shadow: 0 1px 5px rgba(0,0,0,0.5);">
+        
+        <!-- <div class="card-header bg-primary text-center">
+
+          <h5 class="card-title text-color-white">
+            <span class="" jhiTranslate="incidences.detail.title_view">Incidencia</span> [<strong>{{ incidence.title }}</strong>]
+          </h5>
+
+        </div> -->
+        
+        <div class="card-body">
+
+          <div class="row">
+            
+            <h4 class="subtitle-geolocation" >
+              <fa-icon icon="address-card"></fa-icon> <span jhiTranslate="incidences.detail.subtitle_details">Datos generales</span>
+            </h4>
+
+            <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+              <dt><span jhiTranslate="incidences.detail.start_date">Fecha inicio</span></dt>
+              <dd>{{ incidence.startDate | date: 'dd/MM/yy HH:mm' }}</dd>
+            </dl>
+
+            <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+              <dt><span jhiTranslate="incidences.detail.status">Estado</span></dt>
+              <dd>
+                <span [ngClass]="{
+                  'badge': true,
+                  'bd-outline-pending': incidence.status != null && incidence.status == 'PENDING',
+                  'bd-outline-in-progress': incidence.status != null && incidence.status == 'IN_PROCESS',
+                  'bd-outline-pending-confirm': incidence.status != null && incidence.status == 'PENDING_CONFIRM',
+                  'bd-outline-resolved': incidence.status != null && incidence.status == 'RESOLVED',
+                  'bd-outline-cancel': incidence.status != null && incidence.status == 'CANCELED',
+                  'text-white': false
+                }" >
+                  {{ ('incidences.status.status_incidence.' + incidence.status) | lowercase | translate }}
+                </span>
+              </dd>
+            </dl>
+
+            <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+              <dt><span jhiTranslate="incidences.detail.priority">priority</span></dt>
+              <dd>
+                <span [ngClass]="{
+                  'badge': true,
+                  'bg-danger': incidence.priority != null && incidence.priority == 'HIGH',
+                  'bg-warning': incidence.priority != null && incidence.priority == 'MEDIUM',
+                  'bg-success': incidence.priority != null && incidence.priority == 'LOW',
+                  'text-white': true
+                }" >
+                {{ ('incidences.priority.priority_incidence.' + incidence.priority) | lowercase | translate }}
+              </span>
+                </dd>
+            </dl>
+
+            <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+              <dt><span jhiTranslate="incidences.detail.end_date">Fecha resolución</span></dt>
+              <dd>
+                <ng-container *ngIf="incidence.endDate" >{{ incidence.endDate | date: 'dd/MM/yy HH:mm' }}</ng-container>
+                <ng-container *ngIf="!incidence.endDate" ><span jhiTranslate="incidences.detail.not_end_date" ></span></ng-container>
+              </dd>
+            </dl>
+
+            <dl class="border-dl-gray col-xs-12 col-sm-12 col-md-6 col-lg-4">
+              <dt><span jhiTranslate="incidences.detail.description">description</span></dt>
+              <dd>{{ incidence.description }}</dd>
+            </dl>
+
+
+          </div>
+
+          <div class="row mb-3">
+              
+            <h4 class="subtitle-geolocation" >
+              <fa-icon icon="map-location"></fa-icon> <span jhiTranslate="incidences.detail.geolocation">Geolocalización</span>
+            </h4>
+
+            <dl class="border-dl-gray col-3" >
+              <dt><span jhiTranslate="incidences.list.latitude">Latitud</span></dt>
+              <dd>{{ incidence.latitude }}</dd>
+            </dl>
+            <dl  class="border-dl-gray col-3">
+              <dt><span jhiTranslate="incidences.list.longitude">Longitud</span></dt>
+              <dd> {{ incidence.longitude }}</dd>
+            </dl>
+            
+          </div>
+
+          <div class="form-group" *ngIf="incidence.photosDTO!=null&&incidence.photosDTO.length>0">
+            <div class="row" id="photos">
+              
+              <h4 class="subtitle-geolocation" >
+                <fa-icon icon="images"></fa-icon> <span jhiTranslate="incidences.detail.subtitle_photos">Fotos</span>
+              </h4>
+              
+              <ng-container  *ngFor="let photo of incidence.photosDTO" > <!--*ngFor="let number of [0,1,2,3,4]"-->
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                  <img src="{{getPhotoFormServe(photo)}}" class="img-thumbnail" alt="..." />
+                  <!-- <img src="https://ethic.es/wp-content/uploads/2023/03/imagen.jpg" class="img-thumbnail" alt="..." /> -->
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="d-grid gap-2 d-md-block ">
+          
+        </div>
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- <div class="modal-header">
     <h4 class="modal-title" id="showHealthLabel" *ngIf="incidence">
         <span jhiTranslate="incidences.detail.title_view">Incidencia</span> [<strong>{{ incidence.title }}</strong>]
     </h4>
   
     <button aria-label="Close" data-dismiss="modal" class="btn btn-close" type="button" (click)="dismiss()">
-      <!-- <span aria-hidden="true">&times;</span> -->
     </button>
 </div>
   
@@ -34,20 +166,6 @@
 
         <dt><span jhiTranslate="incidences.detail.geolocation">Geolocalización</span></dt>
         <dd><br/>{{ incidence.latitude }}<br/>{{ incidence.longitude }}</dd>
-        <!--<dt><span jhiTranslate="incidences.detail.createdBy">Creado por</span></dt>
-        <dd>{{ incidence.createdBy }}</dd>
-
-        <dt><span jhiTranslate="incidences.detail.createdDate">Fecha de creación</span></dt>
-        <dd>{{ incidence.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
-
-        <dt><span jhiTranslate="incidences.detail.lastModifiedBy">Modificado por</span></dt>
-        <dd>{{ incidence.lastModifiedBy }}</dd>
-
-        <dt><span jhiTranslate="incidences.detail.lastModifiedDate">Fecha de modificación</span></dt>
-        <dd>{{ incidence.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>  -->
-
     </dl>
-</div>  
-  <!-- <div class="modal-footer">
-    <button data-dismiss="modal" class="btn btn-secondary float-start" type="button" (click)="dismiss()">Done</button>
-   </div> -->
+</div>   -->
+ 

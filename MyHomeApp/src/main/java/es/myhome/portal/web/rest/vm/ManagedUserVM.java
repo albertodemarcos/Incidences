@@ -6,6 +6,7 @@ import javax.validation.constraints.Size;
 /**
  * View Model extending the AdminUserDTO, which is meant to be used in the user management UI.
  */
+@SuppressWarnings("serial")
 public class ManagedUserVM extends AdminUserDTO {
 
     public static final int PASSWORD_MIN_LENGTH = 4;

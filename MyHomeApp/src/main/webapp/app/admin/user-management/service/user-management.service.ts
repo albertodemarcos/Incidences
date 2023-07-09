@@ -22,6 +22,7 @@ export class UserManagementService {
   }
 
   find(login: string): Observable<IUser> {
+    console.log('find: ' + login);
     return this.http.get<IUser>(`${this.resourceUrl}/${login}`);
   }
 

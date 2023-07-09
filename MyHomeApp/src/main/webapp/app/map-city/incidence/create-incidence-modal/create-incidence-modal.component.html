@@ -2,7 +2,7 @@
     
     <div class="d-flex justify-content-center">
 
-      <h4 class="modal-title" id="showHealthLabel">
+      <h4 class="modal-title text-color-white" id="showHealthLabel">
         {{ 'incidences.form.title-form-create' | translate }}
       </h4>
 
@@ -136,7 +136,7 @@
     
             </div>
     
-            <div class="form-group">
+            <div class="form-group" style="display: none;">
                 <label class="form-control-label" for="latitude" jhiTranslate="incidences.form.latitude.label">Latitud</label>
                 <input type="latitude" class="form-control" id="latitude" name="latitude" formControlName="latitude" data-cy="latitude" placeholder="{{ 'incidences.form.latitude.placeholder' | translate }}"/>
                 <div *ngIf="incidenceForm.get('latitude')!.invalid && (incidenceForm.get('latitude')!.dirty || incidenceForm.get('latitude')!.touched)">
@@ -146,7 +146,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="display: none;">
                 <label class="form-label" for="longitude" jhiTranslate="incidences.form.longitude.label">Longitud</label>
                 <input type="longitude" class="form-control" id="longitude" name="longitude" formControlName="longitude" data-cy="longitude" placeholder="{{ 'incidences.form.longitude.placeholder' | translate }}"/>
                 <div *ngIf="incidenceForm.get('longitude')!.invalid && (incidenceForm.get('longitude')!.dirty || incidenceForm.get('longitude')!.touched)">

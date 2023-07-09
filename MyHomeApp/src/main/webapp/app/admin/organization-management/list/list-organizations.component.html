@@ -85,23 +85,23 @@
               
               <div class="btn-group">
                 
-                <button type="submit" [routerLink]="['./', organization.id, 'view']" class="btn btn-info bg-info-app btn-sm">
+                <button type="submit" [routerLink]="['./', organization.id, 'view']" class="btn btn-info bg-info-app ">
                   <fa-icon icon="eye"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                  <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span> -->
                 </button>
   
-                <button type="submit" [routerLink]="['./', organization.id, 'edit']" queryParamsHandling="merge" class="btn btn-primary btn-sm">
+                <button type="submit" [routerLink]="['./', organization.id, 'edit']" queryParamsHandling="merge" class="btn btn-warning ">
                   <fa-icon icon="pencil-alt"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                  <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span> -->
                 </button>
   
                 <button
                   type="button"
                   (click)="deleteOrganization(organization)"
-                  class="btn btn-danger btn-sm"
+                  class="btn btn-danger "
                   [disabled]="organization.id !== 1 ">
                   <fa-icon icon="times"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                  <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span> -->
                 </button>
               </div>
             </td>

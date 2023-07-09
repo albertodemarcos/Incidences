@@ -42,8 +42,4 @@ export class OrganizationService {
   authorities(): Observable<string[]> {
     return this.http.get<string[]>(this.applicationConfigService.getEndpointFor('api/authorities'));
   }
-
-  importer(): Observable<string>{
-    return this.http.get<string>(this.applicationConfigService.getEndpointFor('api/organizations/importer'));
-  }
 }

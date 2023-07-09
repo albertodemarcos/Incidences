@@ -34,7 +34,7 @@ public class CloudStorageS3Service implements ICloudStorageS3 {
 	public InputStream getS3File(String bucketName, String fileName) throws IOException {
 		// TODO Auto-generated method stub
 		
-		InputStream input = cloudStorageS3RepositoryImpl.getObject(bucketName, fileName);
+		//InputStream input = cloudStorageS3RepositoryImpl.getObject(bucketName, fileName);
 		
 		 return null;
 	}

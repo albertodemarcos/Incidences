@@ -1,4 +1,5 @@
 package es.myhome.portal.domain.users;
+import org.hibernate.validator.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.myhome.portal.config.Constants;
@@ -8,7 +9,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -18,6 +18,7 @@ import org.hibernate.annotations.BatchSize;
 /**
  * A user.
  */
+@SuppressWarnings("deprecation")
 @Entity
 @Table(name = "jhi_user")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -52,7 +53,7 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Column(name = "last_name", length = 50)
     private String lastName;
 
-    @Email
+	@Email
     @Size(min = 5, max = 254)
     @Column(length = 254, unique = true)
     private String email;

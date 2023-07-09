@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.myhome.portal.domain.app.Organization;
-import es.myhome.portal.domain.app.OrganizationType;
 import es.myhome.portal.repository.OrganizationRepository;
 import es.myhome.portal.service.dto.OrganizationDTO;
 import es.myhome.portal.service.filters.FilterOrganization;

@@ -30,7 +30,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class AccountResource {
 
-    private static class AccountResourceException extends RuntimeException {
+    @SuppressWarnings("serial")
+	private static class AccountResourceException extends RuntimeException {
 
         private AccountResourceException(String message) {
             super(message);

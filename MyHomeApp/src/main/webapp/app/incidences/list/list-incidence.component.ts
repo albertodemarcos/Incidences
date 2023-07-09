@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ASC, DESC, SORT } from 'app/config/navigation.constants';
-import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
+import { ITEMS_PER_PAGE, ITEMS_PER_PAGE_5 } from 'app/config/pagination.constants';
 import { combineLatest } from 'rxjs';
 import { DeleteIncidenceComponent } from '../delete/delete-incidence.component';
 import { Incidence } from '../../core/model/incidence.model';
@@ -19,7 +19,7 @@ export class ListIncidenceComponent implements OnInit {
   incidences: IncidenceListDTO[] | null = null;
   isLoading = false;
   totalItems = 0;
-  itemsPerPage = ITEMS_PER_PAGE;
+  itemsPerPage = ITEMS_PER_PAGE_5;
   page!: number;
   predicate!: string;
   ascending!: boolean;

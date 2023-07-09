@@ -1,0 +1,179 @@
+// body{
+//   background: #252830;
+// }
+.products {
+    padding: 5% 0 0;
+    }
+    .card {
+      border: none;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    }
+    .card-body {
+    // color: #fff;
+    // background: #2a2f40;
+    }
+    .card-title {
+      font-size: 30px;
+      font-weight: 700;
+      transition: all .5s ease-in-out;
+    }
+    .btn-group .btn {
+      background: #fe6d38;
+      color: #fff;
+      font-size: 18px;
+      margin-right: 5px;
+      padding: 10px 20px;
+      font-weight: 700;
+       transition: all .6s ease-in;
+    }
+    .price {
+      font-size: 25px; 
+      font-weight: 900;    
+      transition: .6s;
+    }
+    .card:hover .price{
+      animation: pulse .5s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%{
+          transform: scale(1);
+      }
+      50%{
+          transform: scale(.95);
+      }
+      0%{
+          transform: scale(1);
+      }
+    }
+    .card:hover .card-title{
+      // letter-spacing: 5px;
+      // font-weight: 300;
+    }
+    .btn:hover {
+    background: #fff;
+    color: #262626;
+    }
+    @media (max-width: 991px){
+      .card {
+          margin-bottom: 30px;
+      }
+    }
+    @media (max-width: 767px){
+      .btn-group .btn {
+          font-size: 9px;
+      }
+    }
+    
+    /**
+    * BADAGE OUTLINE COLOR
+    */
+    .bd-outline-pending{
+      border: rgb(105, 172, 254) solid;
+      color: rgb(105, 172, 254);
+    }
+    
+    .bd-outline-in-progress{
+      border: rgb(255, 207, 17) solid;
+      color: rgb(255, 207, 17);
+    }
+    
+    .bd-outline-pending-confirm{
+      border: rgb(183, 14, 255) solid;
+      color: rgb(183, 14, 255);
+    }
+    
+    .bd-outline-resolved {
+      border: rgb(102, 255, 71) solid;
+      color: rgb(102, 255, 71);
+    }
+    
+    .bd-outline-cancel{
+      border: rgb(255, 53, 18) solid;
+      color: rgb(255, 53, 18);
+    }
+      /**
+    * BACKGROUND COLOR
+    */
+    
+    .bg-pending{
+      background-color: rgb(105, 172, 254);
+    }
+    
+    .bg-in-progress{
+      background-color: rgb(255, 207, 17);
+    }
+    
+    .bg-pending-confirm{
+      background-color: rgb(183, 14, 255);
+    }
+    
+    .bg-resolved {
+      background-color: rgb(102, 255, 71);
+    }
+    
+    .bg-cancel{
+      background-color: rgb(255, 53, 18);
+    }
+    
+    .bg-box-info{
+      background-color: rgb(234, 248, 255) !important;
+      border: solid 1px rgb(61, 61, 61);
+    }
+    
+    .bg-card-header{
+      background-color: rgb(19, 41, 235);
+    }
+    
+    .bg-card-footer{
+      background-color: white !important;
+      border: none !important;
+    }
+    
+    .text-color-white{
+      color: white !important;
+    }
+    
+    .border-dl-gray{
+      border-left: 4px solid rgb(202, 202, 202);
+    }
+    
+    .subtitle-geolocation{
+      font-size: 18px;
+      font-weight: 700;
+      transition: all 0.5s ease-in-out;
+    }
+    
+    /*.botonera{
+      width: auto;
+      @media (max-width: 992px) {
+        #button-go-back-id{
+          display: flex;
+          width: 50%;
+          
+        }
+      }
+    }*/
+    
+    #button-go-back-id{
+      margin: 0% 2% 2% 2%;
+    }
+    
+    @media (max-width: 992px) {
+      #button-go-back-id{
+        width: 95%;
+      }
+    }
+    /*@media (min-width: 576px) {  }
+    
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {  }*/
+    
+    // Large devices (desktops, 992px and up)
+    
+    
+    // X-Large devices (large desktops, 1200px and up)
+    /*@media (min-width: 1200px) { ... }
+    
+    // XX-Large devices (larger desktops, 1400px and up)
+    @media (min-width: 1400px) { ... }*/
+    

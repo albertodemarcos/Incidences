@@ -1,6 +1,6 @@
 <form *ngIf="user" name="deleteForm" (ngSubmit)="confirmDelete(user.login!)">
   <div class="modal-header">
-    <h4 class="modal-title" jhiTranslate="entity.delete.title">Confirmar operación de borrado</h4>
+    <h4 class="modal-title text-color-white" jhiTranslate="entity.delete.title">Confirmar operación de borrado</h4>
 
     <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
   </div>

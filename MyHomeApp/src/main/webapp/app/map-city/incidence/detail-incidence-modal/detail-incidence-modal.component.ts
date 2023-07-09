@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IncidenceDTO } from 'app/core/model/incidenceDTO.model';
+import { IncidencesService } from 'app/incidences/incidences.service';
 import { MapCityService } from 'app/map-city/map-city.service';
 
 @Component({
@@ -11,11 +12,20 @@ import { MapCityService } from 'app/map-city/map-city.service';
 })
 export class DetailIncidenceModalComponent implements OnInit {
 
-  location: Geolocation | undefined;
+  //location: Geolocation | undefined;
+  //incidence: IncidenceDTO | null = null;
+  //idIncidence: string = '';
+
+  statusType: string[] = ['PENDING','IN_PROCESS','PENDING_CONFIRM','RESOLVED','CANCELED'];
+
   incidence: IncidenceDTO | null = null;
+  files: any = [];
   idIncidence: string = '';
 
-  constructor(private activeModal: NgbActiveModal, private mapCityService: MapCityService ) 
+  constructor(private activeModal: NgbActiveModal,
+    private mapCityService: MapCityService,
+    private activatedRoute: ActivatedRoute,
+    private incidencesService: IncidencesService, ) 
   {
 
   }
@@ -47,7 +57,17 @@ export class DetailIncidenceModalComponent implements OnInit {
         console.error('Error code: ' + JSON.stringify(err));
       }
     });
+  }
 
+  public close(){
+    this.dismiss();
+  }
+
+  public getPhotoFormServe(photo: any): any{
+    if( photo == null || photo.id == null || !photo?.bucket || !photo?.imagenUrl ){
+      return '';
+    }
+    return `/api/downloadS3File?bucketName=${photo?.bucket}&fileName=${ photo?.imagenUrl}`;
   }
 
 }

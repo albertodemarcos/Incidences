@@ -142,5 +142,5 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "Aquest és el teu peu de pàgina"
+  "footer": "Portal incidencias <a href=\"https://uah.es/es/\">UAH 2023</a>"
 }

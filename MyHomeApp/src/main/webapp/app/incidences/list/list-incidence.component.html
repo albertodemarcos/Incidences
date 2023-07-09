@@ -1,6 +1,6 @@
 <div>
     <h2>
-      <span id="incidence-management-page-heading" jhiTranslate="incidences.list.title" data-cy="incidenceManagementPageHeading">Organizaciones</span>
+      <span id="incidence-management-page-heading" jhiTranslate="incidences.list.title_list" data-cy="incidenceManagementPageHeading">Incidencias</span>
   
       <div class="d-flex justify-content-end">
         <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
@@ -79,8 +79,7 @@
                   type="button"
                   (click)="deleteIncidence(incidence)"
                   title="{{'entity.action.delete' | translate}}"
-                  class="btn btn-danger"
-                  [disabled]="incidence.id !== 1 ">
+                  class="btn btn-danger" >
                   <fa-icon icon="times"> </fa-icon>
                   <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span> -->
                 </button>
