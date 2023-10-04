@@ -99,10 +99,11 @@ public class IncidenceResource {
         	throw new NameOrganizationAlreadyUsedException();
         }  
         newIncidence = incidenceService.createIncidence(incidence);
-        return ResponseEntity
+        /*return ResponseEntity
         		.created(new URI("/api/incidences/" + newIncidence.getId() ))
         		.headers(HeaderUtil.createAlert(applicationName, "incidenceService.created", newIncidence.getId().toString() ))
-        		.body(newIncidence);
+        		.body(null);*/
+        return new ResponseEntity<>(newIncidence, HttpStatus.OK);
     }
 
     /**

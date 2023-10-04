@@ -124,7 +124,10 @@ export class CreateIncidenceModalComponent implements OnInit {
       },
       error: (error: any) => {
         console.error("Error: "+JSON.stringify(error) );
-        this.alerts.push(this.alertError);
+        //this.alerts.push(this.alertError);
+        setTimeout(()=>{
+          this.dismiss();
+        }, 3000);
       }
 
     });

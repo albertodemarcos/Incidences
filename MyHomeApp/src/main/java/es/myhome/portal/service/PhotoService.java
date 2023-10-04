@@ -57,6 +57,8 @@ public class PhotoService {
 			photo.setImageUrl( imageUrl );
 			photo.setIncidence(incidence);
 			
+			this.photoRepository.save(photo);
+			
 			this.cloudStorageS3Service.uploadFileFromIncidence(BUCKET_NAME, imageUrl, file);
 			
 		}catch(Exception e) {

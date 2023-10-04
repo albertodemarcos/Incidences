@@ -94,8 +94,9 @@ public class IncidenceService {
 		
 		if( CollectionUtils.isNotEmpty( incidenceDTO.getPhotos() ) ) {
 			for( MultipartFile file : incidenceDTO.getPhotos() ) {
-				Photo photo = photoService.createPhoto(incidence, file);
-				incidence.getPhotos().add(photo);
+				photoService.createPhoto(incidence, file);
+				//Photo photo = photoService.createPhoto(incidence, file);
+				//incidence.getPhotos().add(photo);
 			}
 		}
 		
